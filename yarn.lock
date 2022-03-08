@@ -1042,7 +1042,7 @@
     core-js-pure "^3.20.2"
     regenerator-runtime "^0.13.4"
 
-"@babel/runtime@^7.0.0", "@babel/runtime@^7.10.2", "@babel/runtime@^7.11.2", "@babel/runtime@^7.12.5", "@babel/runtime@^7.13.10", "@babel/runtime@^7.16.3", "@babel/runtime@^7.17.2", "@babel/runtime@^7.5.5", "@babel/runtime@^7.7.2", "@babel/runtime@^7.8.4", "@babel/runtime@^7.8.7", "@babel/runtime@^7.9.2":
+"@babel/runtime@^7.0.0", "@babel/runtime@^7.10.2", "@babel/runtime@^7.11.2", "@babel/runtime@^7.12.5", "@babel/runtime@^7.13.10", "@babel/runtime@^7.16.3", "@babel/runtime@^7.17.2", "@babel/runtime@^7.5.5", "@babel/runtime@^7.7.2", "@babel/runtime@^7.7.6", "@babel/runtime@^7.8.4", "@babel/runtime@^7.8.7", "@babel/runtime@^7.9.2":
   version "7.17.2"
   resolved "https://artifactory.ubisoft.org/api/npm/npm/@babel/runtime/-/runtime-7.17.2.tgz#66f68591605e59da47523c631416b18508779941"
   integrity sha1-ZvaFkWBeWdpHUjxjFBaxhQh3mUE=
@@ -1856,6 +1856,16 @@
   dependencies:
     "@jridgewell/resolve-uri" "^3.0.3"
     "@jridgewell/sourcemap-codec" "^1.4.10"
+
+"@mdi/js@^6.5.95":
+  version "6.5.95"
+  resolved "https://artifactory.ubisoft.org/api/npm/npm/@mdi/js/-/js-6.5.95.tgz#2d895b013408f213252b77c30e0fdaaba6dc8b4b"
+  integrity sha1-LYlbATQI8hMlK3fDDg/aq6bci0s=
+
+"@mdi/react@^1.5.0":
+  version "1.5.0"
+  resolved "https://artifactory.ubisoft.org/api/npm/npm/@mdi/react/-/react-1.5.0.tgz#461d2064ba12d509723bffc95e2f7169a6ac884a"
+  integrity sha1-Rh0gZLoS1QlyO//JXi9xaaasiEo=
 
 "@mui/base@5.0.0-alpha.70":
   version "5.0.0-alpha.70"
@@ -5762,6 +5772,13 @@ header-case@^2.0.4:
     capital-case "^1.0.4"
     tslib "^2.0.3"
 
+history@^5.2.0:
+  version "5.3.0"
+  resolved "https://artifactory.ubisoft.org/api/npm/npm/history/-/history-5.3.0.tgz#1548abaa245ba47992f063a0783db91ef201c73b"
+  integrity sha1-FUirqiRbpHmS8GOgeD25HvIBxzs=
+  dependencies:
+    "@babel/runtime" "^7.7.6"
+
 hoist-non-react-statics@^3.3.1, hoist-non-react-statics@^3.3.2:
   version "3.3.2"
   resolved "https://artifactory.ubisoft.org/api/npm/npm/hoist-non-react-statics/-/hoist-non-react-statics-3.3.2.tgz#ece0acaf71d62c2969c2ec59feff42a4b1a85b45"
@@ -8872,6 +8889,21 @@ react-refresh@^0.11.0:
   version "0.11.0"
   resolved "https://artifactory.ubisoft.org/api/npm/npm/react-refresh/-/react-refresh-0.11.0.tgz#77198b944733f0f1f1a90e791de4541f9f074046"
   integrity sha1-dxmLlEcz8PHxqQ55HeRUH58HQEY=
+
+react-router-dom@^6.2.2:
+  version "6.2.2"
+  resolved "https://artifactory.ubisoft.org/api/npm/npm/react-router-dom/-/react-router-dom-6.2.2.tgz#f1a2c88365593c76b9612ae80154a13fcb72e442"
+  integrity sha1-8aLIg2VZPHa5YSroAVShP8ty5EI=
+  dependencies:
+    history "^5.2.0"
+    react-router "6.2.2"
+
+react-router@6.2.2:
+  version "6.2.2"
+  resolved "https://artifactory.ubisoft.org/api/npm/npm/react-router/-/react-router-6.2.2.tgz#495e683a0c04461eeb3d705fe445d6cf42f0c249"
+  integrity sha1-SV5oOgwERh7rPXBf5EXWz0Lwwkk=
+  dependencies:
+    history "^5.2.0"
 
 react-scripts@5.0.0:
   version "5.0.0"

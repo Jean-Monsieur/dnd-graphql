@@ -6,7 +6,6 @@ import {
   GridColDef,
   GridColumnHeaderParams,
   GridRenderCellParams,
-  GridValueGetterParams,
 } from "@mui/x-data-grid";
 
 import CastleIcon from "@mui/icons-material/Castle";
@@ -140,7 +139,7 @@ const MonsterList: React.FC<Props> = ({ data }) => {
   ];
 
   const [pageSize, setPageSize] = useState(15);
-  console.log(data);
+
   return (
     <div style={{ display: "flex" }}>
       <div style={{ flexGrow: 1 }}>
@@ -152,8 +151,6 @@ const MonsterList: React.FC<Props> = ({ data }) => {
           pageSize={pageSize}
           pagination
           onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
-          // autoPageSize
-          // rowsPerPageOptions={[5, 10, 20, 50]}
           checkboxSelection
         />
       </div>

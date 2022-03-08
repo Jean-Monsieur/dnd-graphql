@@ -15168,12 +15168,13 @@ export type WeaponProperty = {
 export type GetMonstersListQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetMonstersListQuery = { __typename?: 'Query', monsters: Array<{ __typename?: 'Monster', url?: string | null, name?: string | null, challenge_rating?: number | null, hit_dice?: string | null, hit_points?: number | null, type?: string | null, xp?: number | null, armor_class?: number | null, charisma?: number | null, constitution?: number | null, dexterity?: number | null, strength?: number | null, wisdom?: number | null, intelligence?: number | null, damage_immunities?: Array<string | null> | null, damage_resistances?: Array<string | null> | null, speed?: { __typename?: 'MonsterSpeed', burrow?: string | null, climb?: string | null, fly?: string | null, hover?: boolean | null, swim?: string | null, walk?: string | null } | null, special_abilities?: Array<{ __typename?: 'MonsterSpecial_abilities', desc?: string | null, name?: string | null, _id?: any | null } | null> | null }> };
+export type GetMonstersListQuery = { __typename?: 'Query', monsters: Array<{ __typename: 'Monster', url?: string | null, name?: string | null, challenge_rating?: number | null, hit_dice?: string | null, hit_points?: number | null, type?: string | null, xp?: number | null, armor_class?: number | null, charisma?: number | null, constitution?: number | null, dexterity?: number | null, strength?: number | null, wisdom?: number | null, intelligence?: number | null, damage_immunities?: Array<string | null> | null, damage_resistances?: Array<string | null> | null, speed?: { __typename?: 'MonsterSpeed', burrow?: string | null, climb?: string | null, fly?: string | null, hover?: boolean | null, swim?: string | null, walk?: string | null } | null, special_abilities?: Array<{ __typename?: 'MonsterSpecial_abilities', desc?: string | null, name?: string | null, _id?: any | null } | null> | null }> };
 
 
 export const GetMonstersListDocument = gql`
     query GetMonstersList {
   monsters(limit: 1000, sort: CHALLENGE_RATING_ASC) {
+    __typename
     url
     name
     challenge_rating

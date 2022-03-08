@@ -3,6 +3,7 @@ import { gql } from "@apollo/client";
 export const QUERY_MONSTERS = gql`
   query GetMonstersList {
     monsters(limit: 1000, sort: CHALLENGE_RATING_ASC) {
+      __typename
       url
       name
       challenge_rating
@@ -22,7 +23,6 @@ export const QUERY_MONSTERS = gql`
         name
         _id
       }
-
       xp
       armor_class
       charisma

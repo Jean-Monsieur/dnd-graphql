@@ -1,17 +1,15 @@
 import { PaletteMode } from "@mui/material";
-import { deepPurple, grey, indigo, orange } from "@mui/material/colors";
+import { amber, deepPurple, grey, indigo, orange } from "@mui/material/colors";
 
 export const getDesignTokens = (mode: PaletteMode) => ({
   palette: {
     mode,
     ...(mode === "light"
       ? {
-          // palette values for light mode
           primary: indigo,
-          secondary: orange,
+          secondary: amber,
           text: {
             primary: grey[900],
-            secondary: grey[800],
           },
         }
       : {

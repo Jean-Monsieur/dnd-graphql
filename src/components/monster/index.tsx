@@ -2,7 +2,7 @@ import React from "react";
 import { useGetMonstersListQuery } from "../../generated/graphql";
 import MonsterList from "./MonsterList";
 
-const MonsterPage = () => {
+const MonsterTableContainer = () => {
   const { data, error, loading } = useGetMonstersListQuery();
 
   if (loading) {
@@ -16,4 +16,4 @@ const MonsterPage = () => {
   return <MonsterList data={data} />;
 };
 
-export default MonsterPage;
+export default MonsterTableContainer;
