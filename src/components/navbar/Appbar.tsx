@@ -4,13 +4,14 @@ import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 import HomeIcon from "@mui/icons-material/Home";
+import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 
 import {
-  AppBar,
   Breadcrumbs,
   Button,
   IconButton,
   PaletteMode,
+  styled,
   Toolbar,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -21,17 +22,20 @@ import { Link as RouterLink, useLocation } from "react-router-dom";
 import Link, { LinkProps } from "@mui/material/Link";
 import { PATHS } from "../../rootStruct";
 import { getPathIcon } from "../../theme/getPathIcon";
+import { drawerWidth } from "../../theme/mixins";
 
 type AppbarProps = {
   currentMode: PaletteMode;
-  title: string;
   onMenuToggled: () => void;
   onThemeToggled: () => void;
 };
 
+interface AppBarProps extends MuiAppBarProps {
+  open?: boolean;
+}
+
 const Appbar = ({
   currentMode,
-  title,
   onThemeToggled,
   onMenuToggled,
 }: AppbarProps) => {
@@ -51,8 +55,29 @@ const Appbar = ({
     [PATHS.MONSTERS]: "Monsters",
   };
 
+  const AppBar = styled(MuiAppBar, {
+    shouldForwardProp: (prop) => prop !== "open",
+  })<AppBarProps>(({ theme, open }) => ({
+    zIndex: theme.zIndex.drawer + 1,
+    transition: theme.transitions.create(["width", "margin"], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
+    ...(open && {
+      marginLeft: drawerWidth,
+      width: `calc(100% - ${drawerWidth}px)`,
+      transition: theme.transitions.create(["width", "margin"], {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.enteringScreen,
+      }),
+    }),
+  }));
+
   return (
-    <AppBar position="static">
+    <AppBar
+      position="fixed"
+      sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
+    >
       <Toolbar>
         <IconButton
           color="inherit"

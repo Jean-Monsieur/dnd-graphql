@@ -4,9 +4,14 @@ import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 import {
+  Box,
   createTheme,
   CssBaseline,
+  CSSObject,
+  styled,
+  Theme,
   ThemeProvider,
+  Toolbar,
   useMediaQuery,
   useTheme,
 } from "@mui/material";
@@ -17,9 +22,29 @@ import { Appbar } from "./components/navbar";
 
 import Router from "./Router";
 import AppDrawer from "./components/app-drawer/AppDrawer";
-import { useLocation } from "react-router-dom";
+import { drawerWidth } from "./theme/mixins";
 
 const ColorModeContext = React.createContext({ toggleColorMode: () => {} });
+
+const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })<{
+  open?: boolean;
+}>(({ theme, open }) => ({
+  height: "100%",
+  flexGrow: 1,
+  padding: theme.spacing(3),
+  transition: theme.transitions.create("margin", {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen,
+  }),
+  marginLeft: `-${drawerWidth}px`,
+  ...(open && {
+    transition: theme.transitions.create("margin", {
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+    marginLeft: 0,
+  }),
+}));
 
 function App() {
   const theme = useTheme();
@@ -27,25 +52,34 @@ function App() {
 
   const [open, setOpen] = React.useState(false);
 
-  const location = useLocation();
-
   return (
-    <>
+    <Box sx={{ display: "flex" }}>
       <Appbar
         currentMode={theme.palette.mode}
-        title={location.pathname}
         onThemeToggled={colorMode.toggleColorMode}
-        onMenuToggled={() => setOpen(true)}
+        onMenuToggled={() => setOpen(!open)}
       />
       <AppDrawer
+        variant="persistent"
+        sx={{
+          width: drawerWidth,
+          flexShrink: 0,
+          [`& .MuiDrawer-paper`]: {
+            width: drawerWidth,
+            boxSizing: "border-box",
+          },
+        }}
         open={open}
         onToggle={(value) => setOpen(value)}
         onClose={() => setOpen(false)}
       />
-      <div style={{ padding: "1rem", width: "100%" }}>
-        <Router />
-      </div>
-    </>
+      <Main open={open}>
+        <div style={{ width: "100%" }}>
+          <Toolbar />
+          <Router />
+        </div>
+      </Main>
+    </Box>
   );
 }
 export default function ToggleColorMode() {
