@@ -15165,12 +15165,73 @@ export type WeaponProperty = {
   url?: Maybe<Scalars['String']>;
 };
 
+export type GetEquipmentsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetEquipmentsQuery = { __typename?: 'Query', equipments: Array<{ __typename: 'Equipment', weight?: number | null, name?: string | null, quantity?: number | null, capacity?: string | null, category_range?: string | null, desc?: Array<string | null> | null, special?: Array<string | null> | null, gear_category?: { __typename?: 'EquipmentGear_category', name?: string | null } | null, cost?: { __typename: 'EquipmentCost', quantity?: number | null, unit?: string | null } | null, damage?: { __typename?: 'EquipmentDamage', damage_dice?: string | null, damage_type?: { __typename: 'EquipmentDamageDamage_type', name?: string | null } | null } | null }> };
+
 export type GetMonstersListQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type GetMonstersListQuery = { __typename?: 'Query', monsters: Array<{ __typename: 'Monster', url?: string | null, name?: string | null, challenge_rating?: number | null, hit_dice?: string | null, hit_points?: number | null, type?: string | null, xp?: number | null, armor_class?: number | null, charisma?: number | null, constitution?: number | null, dexterity?: number | null, strength?: number | null, wisdom?: number | null, intelligence?: number | null, damage_immunities?: Array<string | null> | null, damage_resistances?: Array<string | null> | null, speed?: { __typename?: 'MonsterSpeed', burrow?: string | null, climb?: string | null, fly?: string | null, hover?: boolean | null, swim?: string | null, walk?: string | null } | null, special_abilities?: Array<{ __typename?: 'MonsterSpecial_abilities', desc?: string | null, name?: string | null, _id?: any | null } | null> | null }> };
 
 
+export const GetEquipmentsDocument = gql`
+    query getEquipments {
+  equipments(limit: 1000) {
+    __typename
+    weight
+    name
+    quantity
+    capacity
+    category_range
+    gear_category {
+      name
+    }
+    desc
+    special
+    cost {
+      quantity
+      unit
+      __typename
+    }
+    damage {
+      damage_dice
+      damage_type {
+        name
+        __typename
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetEquipmentsQuery__
+ *
+ * To run a query within a React component, call `useGetEquipmentsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetEquipmentsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetEquipmentsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetEquipmentsQuery(baseOptions?: Apollo.QueryHookOptions<GetEquipmentsQuery, GetEquipmentsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetEquipmentsQuery, GetEquipmentsQueryVariables>(GetEquipmentsDocument, options);
+      }
+export function useGetEquipmentsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetEquipmentsQuery, GetEquipmentsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetEquipmentsQuery, GetEquipmentsQueryVariables>(GetEquipmentsDocument, options);
+        }
+export type GetEquipmentsQueryHookResult = ReturnType<typeof useGetEquipmentsQuery>;
+export type GetEquipmentsLazyQueryHookResult = ReturnType<typeof useGetEquipmentsLazyQuery>;
+export type GetEquipmentsQueryResult = Apollo.QueryResult<GetEquipmentsQuery, GetEquipmentsQueryVariables>;
 export const GetMonstersListDocument = gql`
     query GetMonstersList {
   monsters(limit: 1000, sort: CHALLENGE_RATING_ASC) {
