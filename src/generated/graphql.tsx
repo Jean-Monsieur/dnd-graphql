@@ -15168,18 +15168,33 @@ export type WeaponProperty = {
 export type GetEquipmentsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetEquipmentsQuery = { __typename?: 'Query', equipments: Array<{ __typename: 'Equipment', weight?: number | null, name?: string | null, quantity?: number | null, capacity?: string | null, category_range?: string | null, desc?: Array<string | null> | null, special?: Array<string | null> | null, gear_category?: { __typename?: 'EquipmentGear_category', name?: string | null } | null, cost?: { __typename: 'EquipmentCost', quantity?: number | null, unit?: string | null } | null, damage?: { __typename?: 'EquipmentDamage', damage_dice?: string | null, damage_type?: { __typename: 'EquipmentDamageDamage_type', name?: string | null } | null } | null }> };
+export type GetEquipmentsQuery = { __typename?: 'Query', equipments: Array<{ __typename: 'Equipment', index?: string | null, weight?: number | null, name?: string | null, quantity?: number | null, capacity?: string | null, category_range?: string | null, desc?: Array<string | null> | null, special?: Array<string | null> | null, gear_category?: { __typename?: 'EquipmentGear_category', name?: string | null } | null, cost?: { __typename: 'EquipmentCost', quantity?: number | null, unit?: string | null } | null, damage?: { __typename?: 'EquipmentDamage', damage_dice?: string | null, damage_type?: { __typename: 'EquipmentDamageDamage_type', name?: string | null } | null } | null }> };
 
 export type GetMonstersListQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type GetMonstersListQuery = { __typename?: 'Query', monsters: Array<{ __typename: 'Monster', url?: string | null, name?: string | null, challenge_rating?: number | null, hit_dice?: string | null, hit_points?: number | null, type?: string | null, xp?: number | null, armor_class?: number | null, charisma?: number | null, constitution?: number | null, dexterity?: number | null, strength?: number | null, wisdom?: number | null, intelligence?: number | null, damage_immunities?: Array<string | null> | null, damage_resistances?: Array<string | null> | null, speed?: { __typename?: 'MonsterSpeed', burrow?: string | null, climb?: string | null, fly?: string | null, hover?: boolean | null, swim?: string | null, walk?: string | null } | null, special_abilities?: Array<{ __typename?: 'MonsterSpecial_abilities', desc?: string | null, name?: string | null, _id?: any | null } | null> | null }> };
 
+export type GetSpellQueryVariables = Exact<{
+  filter?: InputMaybe<FilterFindOneSpellInput>;
+}>;
+
+
+export type GetSpellQuery = { __typename?: 'Query', spell?: { __typename?: 'Spell', index?: string | null, level?: number | null, name?: string | null, ritual?: boolean | null, range?: string | null, higher_level?: Array<string | null> | null, heal_at_slot_level?: any | null, duration?: string | null, desc?: Array<string | null> | null, concentration?: boolean | null, components?: Array<string | null> | null, casting_time?: string | null, attack_type?: string | null, material?: string | null, school?: { __typename?: 'MagicSchool', url?: string | null, name?: string | null, index?: string | null, desc?: string | null } | null, subclasses?: Array<{ __typename?: 'SpellSubclasses', url?: string | null, name?: string | null, index?: string | null } | null> | null, dc?: { __typename?: 'SpellDc', desc?: string | null, dc_success?: string | null, dc_type?: { __typename?: 'SpellDcDc_type', index?: string | null, name?: string | null, url?: string | null } | null } | null, classes?: Array<{ __typename?: 'SpellClasses', url?: string | null, name?: string | null, index?: string | null } | null> | null, area_of_effect?: { __typename?: 'SpellArea_of_effect', type?: string | null, size?: number | null } | null, damage?: { __typename?: 'SpellDamage', damage_at_slot_level?: any | null, damage_at_character_level?: any | null, damage_type?: { __typename?: 'SpellDamageDamage_type', url?: string | null, name?: string | null, index?: string | null } | null } | null } | null };
+
+export type GetSpellsQueryVariables = Exact<{
+  filter?: InputMaybe<FilterFindManySpellInput>;
+}>;
+
+
+export type GetSpellsQuery = { __typename?: 'Query', spells: Array<{ __typename: 'Spell', index?: string | null, level?: number | null, name?: string | null, url?: string | null, duration?: string | null, school?: { __typename: 'MagicSchool', name?: string | null, index?: string | null } | null, classes?: Array<{ __typename: 'SpellClasses', index?: string | null, name?: string | null } | null> | null, subclasses?: Array<{ __typename?: 'SpellSubclasses', index?: string | null, name?: string | null } | null> | null }> };
+
 
 export const GetEquipmentsDocument = gql`
     query getEquipments {
   equipments(limit: 1000) {
     __typename
+    index
     weight
     name
     quantity
@@ -15295,3 +15310,143 @@ export function useGetMonstersListLazyQuery(baseOptions?: Apollo.LazyQueryHookOp
 export type GetMonstersListQueryHookResult = ReturnType<typeof useGetMonstersListQuery>;
 export type GetMonstersListLazyQueryHookResult = ReturnType<typeof useGetMonstersListLazyQuery>;
 export type GetMonstersListQueryResult = Apollo.QueryResult<GetMonstersListQuery, GetMonstersListQueryVariables>;
+export const GetSpellDocument = gql`
+    query getSpell($filter: FilterFindOneSpellInput) {
+  spell(filter: $filter) {
+    index
+    level
+    name
+    ritual
+    school {
+      url
+      name
+      index
+      desc
+    }
+    subclasses {
+      url
+      name
+      index
+    }
+    range
+    higher_level
+    heal_at_slot_level
+    duration
+    desc
+    dc {
+      desc
+      dc_type {
+        index
+        name
+        url
+      }
+      dc_success
+    }
+    concentration
+    components
+    classes {
+      url
+      name
+      index
+    }
+    casting_time
+    attack_type
+    area_of_effect {
+      type
+      size
+    }
+    damage {
+      damage_type {
+        url
+        name
+        index
+      }
+      damage_at_slot_level
+      damage_at_character_level
+    }
+    material
+  }
+}
+    `;
+
+/**
+ * __useGetSpellQuery__
+ *
+ * To run a query within a React component, call `useGetSpellQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetSpellQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetSpellQuery({
+ *   variables: {
+ *      filter: // value for 'filter'
+ *   },
+ * });
+ */
+export function useGetSpellQuery(baseOptions?: Apollo.QueryHookOptions<GetSpellQuery, GetSpellQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetSpellQuery, GetSpellQueryVariables>(GetSpellDocument, options);
+      }
+export function useGetSpellLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetSpellQuery, GetSpellQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetSpellQuery, GetSpellQueryVariables>(GetSpellDocument, options);
+        }
+export type GetSpellQueryHookResult = ReturnType<typeof useGetSpellQuery>;
+export type GetSpellLazyQueryHookResult = ReturnType<typeof useGetSpellLazyQuery>;
+export type GetSpellQueryResult = Apollo.QueryResult<GetSpellQuery, GetSpellQueryVariables>;
+export const GetSpellsDocument = gql`
+    query getSpells($filter: FilterFindManySpellInput) {
+  spells(filter: $filter) {
+    __typename
+    index
+    level
+    name
+    url
+    school {
+      name
+      index
+      __typename
+    }
+    classes {
+      index
+      name
+      __typename
+    }
+    subclasses {
+      index
+      name
+    }
+    duration
+  }
+}
+    `;
+
+/**
+ * __useGetSpellsQuery__
+ *
+ * To run a query within a React component, call `useGetSpellsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetSpellsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetSpellsQuery({
+ *   variables: {
+ *      filter: // value for 'filter'
+ *   },
+ * });
+ */
+export function useGetSpellsQuery(baseOptions?: Apollo.QueryHookOptions<GetSpellsQuery, GetSpellsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetSpellsQuery, GetSpellsQueryVariables>(GetSpellsDocument, options);
+      }
+export function useGetSpellsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetSpellsQuery, GetSpellsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetSpellsQuery, GetSpellsQueryVariables>(GetSpellsDocument, options);
+        }
+export type GetSpellsQueryHookResult = ReturnType<typeof useGetSpellsQuery>;
+export type GetSpellsLazyQueryHookResult = ReturnType<typeof useGetSpellsLazyQuery>;
+export type GetSpellsQueryResult = Apollo.QueryResult<GetSpellsQuery, GetSpellsQueryVariables>;

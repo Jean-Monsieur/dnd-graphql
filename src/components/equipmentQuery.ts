@@ -4,6 +4,7 @@ export const QUERY_EQUIPMENT = gql`
   query getEquipments {
     equipments(limit: 1000) {
       __typename
+      index
       weight
       name
       quantity

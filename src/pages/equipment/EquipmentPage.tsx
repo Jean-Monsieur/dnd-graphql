@@ -1,11 +1,13 @@
 import { DataGrid, GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
-import { FunctionComponent } from "react";
+import { FunctionComponent, useState } from "react";
 
 import { PageContainer } from "../../components/page";
 import { EquipmentCost, useGetEquipmentsQuery } from "../../generated/graphql";
 
 const EquipmentPage: FunctionComponent = () => {
   const { data, error, loading } = useGetEquipmentsQuery();
+
+  const [pageSize, setPageSize] = useState(15);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -43,13 +45,14 @@ const EquipmentPage: FunctionComponent = () => {
       <div style={{ display: "flex" }}>
         <div style={{ flexGrow: 1 }}>
           <DataGrid
-            rowsPerPageOptions={[5, 10, 20]}
+            rowsPerPageOptions={[5, 15, 25, 50, 100]}
             autoHeight
             rows={data.equipments.map((m) => ({ ...m, id: m.name }))}
             columns={columns}
-            pageSize={10}
             pagination
             checkboxSelection
+            pageSize={pageSize}
+            onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
           />
         </div>
       </div>
