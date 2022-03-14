@@ -23,9 +23,18 @@ import Link, { LinkProps } from "@mui/material/Link";
 import { PATHS } from "../../rootStruct";
 import { getPathIcon } from "../../theme/getPathIcon";
 import { drawerWidth } from "../../theme/mixins";
+import { useAuth0 } from "@auth0/auth0-react";
+import AccountCircle from "@mui/icons-material/AccountCircle";
+import Switch from "@mui/material/Switch";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import FormGroup from "@mui/material/FormGroup";
+import MenuItem from "@mui/material/MenuItem";
+import Menu from "@mui/material/Menu";
+import React from "react";
 
 type AppbarProps = {
   currentMode: PaletteMode;
+  username: string;
   onMenuToggled: () => void;
   onThemeToggled: () => void;
 };
@@ -36,12 +45,27 @@ interface AppBarProps extends MuiAppBarProps {
 
 const Appbar = ({
   currentMode,
+  username,
   onThemeToggled,
   onMenuToggled,
 }: AppbarProps) => {
   const location = useLocation();
   const pathnames = location.pathname.split("/").filter((x) => x);
 
+  const { isLoading, isAuthenticated, error, loginWithRedirect, logout } =
+    useAuth0();
+
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+
+  const { user } = useAuth0<{ name: string }>();
+
+  const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
   interface LinkRouterProps extends LinkProps {
     to: string;
     replace?: boolean;
@@ -112,8 +136,50 @@ const Appbar = ({
             );
           })}
         </Breadcrumbs>
-
-        <Button color="inherit">Login</Button>
+        {isAuthenticated ? (
+          <div>
+            <IconButton
+              size="small"
+              // size="large"
+              // aria-label="account of current user"
+              // aria-controls="menu-appbar"
+              aria-haspopup="true"
+              onClick={handleMenu}
+              color="inherit"
+            >
+              <>
+                <AccountCircle /> {user?.name ?? "bruh"}
+              </>
+            </IconButton>
+            <Menu
+              id="menu-appbar"
+              anchorEl={anchorEl}
+              anchorOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
+              open={Boolean(anchorEl)}
+              onClose={handleClose}
+            >
+              <MenuItem onClick={handleClose}>Profile</MenuItem>
+              <MenuItem onClick={handleClose}>My account</MenuItem>
+              <MenuItem
+                onClick={() => logout({ returnTo: window.location.origin })}
+              >
+                Logout
+              </MenuItem>
+            </Menu>
+          </div>
+        ) : (
+          <Button onClick={loginWithRedirect} color="inherit">
+            Login
+          </Button>
+        )}
         <IconButton sx={{ ml: 1 }} onClick={onThemeToggled} color="secondary">
           {currentMode === ThemeMode.DARK ? (
             <Brightness7Icon />
