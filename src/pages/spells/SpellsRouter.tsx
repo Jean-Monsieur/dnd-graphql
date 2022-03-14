@@ -1,5 +1,6 @@
 import React from "react";
 import { Route, Switch, useLocation } from "react-router-dom";
+import SpellPage from "./SpellPage";
 import SpellsPage from "./SpellsPage";
 const SpellsRouter = () => {
   const location = useLocation();
@@ -8,12 +9,8 @@ const SpellsRouter = () => {
   return (
     <>
       <Switch>
-        <Route exact path={`/:id`}>
-          <>
-            homehomehomehomehomehomehomehomehomehomehomehomehomehomehomehomehomehomehomehomehomehomehomehomehomehome
-          </>
-        </Route>
-        <Route path="/" component={SpellsPage}></Route>
+        <Route exact path="/spells" component={SpellsPage}></Route>
+        <Route path={`/spells/:id`} component={SpellPage}></Route>
         {/* <Route path={`${location.pathname}`} element={<SpellsPage />} /> */}
       </Switch>
     </>
