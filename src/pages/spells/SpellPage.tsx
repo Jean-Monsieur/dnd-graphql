@@ -97,8 +97,6 @@ const SpellPage: FunctionComponent = () => {
               ))}
             </Typography>
             <Typography sx={{ mb: 1.5 }} variant="body2">
-              <ReactMarkdown>*React-Markdown* is **Awesome**</ReactMarkdown>
-
               {data.spell?.desc !== null ? (
                 <ReactMarkdown remarkPlugins={[remarkGfm]}>
                   {data.spell?.desc
