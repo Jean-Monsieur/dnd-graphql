@@ -1,4 +1,3 @@
-import { StarBorder } from "@mui/icons-material";
 import {
   Box,
   Collapse,

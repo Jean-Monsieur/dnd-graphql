@@ -1,6 +1,6 @@
 import { DataGrid, GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
 import { FunctionComponent, useState } from "react";
-import { Link, useLocation, useParams } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 import { PageContainer } from "../../components/page";
 import { SpellClasses, useGetSpellsQuery } from "../../generated/graphql";
@@ -10,7 +10,6 @@ const SpellsPage: FunctionComponent = () => {
   const { data, error, loading } = useGetSpellsQuery();
 
   const location = useLocation();
-  const params = useParams();
 
   const [pageSize, setPageSize] = useState(15);
 

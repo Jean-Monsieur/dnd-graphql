@@ -5,23 +5,15 @@ import {
   CardActions,
   Button,
 } from "@mui/material";
-import { DataGrid, GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
-import { FunctionComponent, useState } from "react";
+import { FunctionComponent } from "react";
 import { useHistory, useParams } from "react-router-dom";
-
 import { PageContainer } from "../../components/page";
 import {
   FilterFindOneSpellInput,
-  GetSpellDocument,
-  GetSpellQuery,
-  SpellClasses,
   useGetSpellQuery,
 } from "../../generated/graphql";
-
 import remarkGfm from "remark-gfm";
-
 import ReactMarkdown from "react-markdown";
-import { parseMarkdown } from "../../components/parseMarkdown";
 
 const SpellPage: FunctionComponent = () => {
   const { id } = useParams<{ id: string }>();
@@ -42,19 +34,15 @@ const SpellPage: FunctionComponent = () => {
     return <div>ERROR</div>;
   }
 
-  // const aaa = parseMarkdown(md);
-
-  // console.log(String(aaa));
-
-  console.log(
-    data.spell?.desc
-      ?.toString()
-      .replaceAll("|,|", " |\n|")
-      .replaceAll("|,", " | \n")
-      .replaceAll(",|", "\n|")
-      .replaceAll(",#", " \n#")
-      .replaceAll(",", " \n") ?? ""
-  );
+  // console.log(
+  //   data.spell?.desc
+  //     ?.toString()
+  //     .replaceAll("|,|", " |\n|")
+  //     .replaceAll("|,", " | \n")
+  //     .replaceAll(",|", "\n|")
+  //     .replaceAll(",#", " \n#")
+  //     .replaceAll(",", " \n") ?? ""
+  // );
   return (
     <PageContainer>
       <div style={{ display: "flex" }}>
@@ -110,7 +98,6 @@ const SpellPage: FunctionComponent = () => {
             </Typography>
             <Typography sx={{ mb: 1.5 }} variant="body2">
               <ReactMarkdown>*React-Markdown* is **Awesome**</ReactMarkdown>
-              {/* <ReactMarkdown remarkPlugins={[remarkGfm]}>{md}</ReactMarkdown> */}
 
               {data.spell?.desc !== null ? (
                 <ReactMarkdown remarkPlugins={[remarkGfm]}>
