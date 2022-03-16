@@ -21,7 +21,6 @@ export const QUERY_MONSTERS = gql`
       special_abilities {
         desc
         name
-        _id
       }
       xp
       armor_class

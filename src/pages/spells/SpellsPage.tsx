@@ -3,7 +3,7 @@ import { FunctionComponent, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 
 import { PageContainer } from "../../components/page";
-import { SpellClasses, useGetSpellsQuery } from "../../generated/graphql";
+import {  useGetSpellsQuery } from "../../generated/graphql";
 import SpellPage from "./SpellPage";
 
 const SpellsPage: FunctionComponent = () => {
@@ -44,11 +44,11 @@ const SpellsPage: FunctionComponent = () => {
       field: "classes",
       flex: 1,
       headerName: "Classes",
-      renderCell: (params: GridRenderCellParams<SpellClasses[]>) => (
+      renderCell: (params: GridRenderCellParams) => (
         <>
-          {params.value.map((c, index) => (
+          {params.value.map((c:any, index:number) => (
             <>
-              {c.name}
+              {c?.name??''}
               {index + 1 !== params.value.length ? ", " : ""}
             </>
           ))}
