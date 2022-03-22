@@ -23,8 +23,7 @@ import AppDrawer from "./components/app-drawer/AppDrawer";
 import { drawerWidth } from "./theme/mixins";
 
 import { useAuth0 } from "@auth0/auth0-react";
-
-const ColorModeContext = React.createContext({ toggleColorMode: () => {} });
+import { ColorModeContext } from "./theme/ColorModeContext";
 
 const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })<{
   open?: boolean;
@@ -52,16 +51,7 @@ function App() {
 
   const [open, setOpen] = React.useState(false);
 
-  const { isLoading, isAuthenticated, error, loginWithRedirect, logout } =
-    useAuth0();
-
   const { user } = useAuth0<{ name: string }>();
-  // if (isLoading) {
-  //   return <div>Loading...</div>;
-  // }
-  // if (error) {
-  //   return <div>Oops... {error.message}</div>;
-  // }
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -71,12 +61,6 @@ function App() {
         onMenuToggled={() => setOpen(!open)}
         username={user?.name ?? "sadasd"}
       />
-      <div>
-        Hello {user?.name ?? "sadasd"}{" "}
-        <button onClick={() => logout({ returnTo: window.location.origin })}>
-          Log out
-        </button>
-      </div>
       <AppDrawer
         variant="persistent"
         sx={{
@@ -99,9 +83,6 @@ function App() {
       </Main>
     </Box>
   );
-  // } else {
-  //   return <button onClick={loginWithRedirect}>Log in</button>;
-  // }
 }
 export default function ToggleColorMode() {
   const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");

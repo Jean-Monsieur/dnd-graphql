@@ -17,3 +17,6 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 ### Playground 
 https://www.dnd5eapi.co/graphql
 
+### Board 
+https://trello.com/b/wFH4VScm
+
