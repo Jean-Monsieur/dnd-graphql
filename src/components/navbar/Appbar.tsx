@@ -1,7 +1,3 @@
-import "@fontsource/roboto/300.css";
-import "@fontsource/roboto/400.css";
-import "@fontsource/roboto/500.css";
-import "@fontsource/roboto/700.css";
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 
 import {
@@ -69,7 +65,6 @@ const Appbar = ({
           <MenuIcon />
         </IconButton>
         <DynamicBreadcrumbs />
-
         {isAuthenticated ? (
           <UserMenu
             onLogoutClicked={() => logout({ returnTo: window.location.origin })}
