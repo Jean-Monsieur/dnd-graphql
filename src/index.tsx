@@ -6,7 +6,6 @@ import { Auth0Provider } from "@auth0/auth0-react";
 import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
 import { BrowserRouter } from "react-router-dom";
 import { Auth0 } from "./auth";
-import isDev from "./isDev";
 
 const client = new ApolloClient({
   uri: "https://www.dnd5eapi.co/graphql",
