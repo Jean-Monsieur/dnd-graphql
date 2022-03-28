@@ -1,6 +1,6 @@
 {
   "homepage": "https://Jean-Monsieur.github.io/dnd-graphql",
-  "name": "graphql-typescript-react",
+  "name": "dnd-graphql",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
