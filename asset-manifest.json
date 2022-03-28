@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/dnd-graphql/static/css/main.9fffc3c5.css",
-    "main.js": "/dnd-graphql/static/js/main.e03083df.js",
+    "main.js": "/dnd-graphql/static/js/main.21363ce0.js",
     "static/js/787.7a367419.chunk.js": "/dnd-graphql/static/js/787.7a367419.chunk.js",
     "static/media/roboto-all-500-normal.woff": "/dnd-graphql/static/media/roboto-all-500-normal.52cb737b682eb9661ee1.woff",
     "static/media/roboto-all-700-normal.woff": "/dnd-graphql/static/media/roboto-all-700-normal.ef6d1d09b20b877fee4e.woff",
@@ -37,11 +37,11 @@
     "static/media/roboto-greek-ext-700-normal.woff2": "/dnd-graphql/static/media/roboto-greek-ext-700-normal.9674bc0ae12c2551d9d1.woff2",
     "index.html": "/dnd-graphql/index.html",
     "main.9fffc3c5.css.map": "/dnd-graphql/static/css/main.9fffc3c5.css.map",
-    "main.e03083df.js.map": "/dnd-graphql/static/js/main.e03083df.js.map",
+    "main.21363ce0.js.map": "/dnd-graphql/static/js/main.21363ce0.js.map",
     "787.7a367419.chunk.js.map": "/dnd-graphql/static/js/787.7a367419.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.9fffc3c5.css",
-    "static/js/main.e03083df.js"
+    "static/js/main.21363ce0.js"
   ]
 }
