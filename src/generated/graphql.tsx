@@ -9042,6 +9042,7 @@ export type GetSpellQuery = { __typename?: 'Query', spell?: { __typename?: 'Spel
 
 export type GetSpellsQueryVariables = Exact<{
   filter?: InputMaybe<FilterFindManySpellInput>;
+  limit?: InputMaybe<Scalars['Int']>;
 }>;
 
 
@@ -9254,8 +9255,8 @@ export type GetSpellQueryHookResult = ReturnType<typeof useGetSpellQuery>;
 export type GetSpellLazyQueryHookResult = ReturnType<typeof useGetSpellLazyQuery>;
 export type GetSpellQueryResult = Apollo.QueryResult<GetSpellQuery, GetSpellQueryVariables>;
 export const GetSpellsDocument = gql`
-    query getSpells($filter: FilterFindManySpellInput) {
-  spells(filter: $filter) {
+    query getSpells($filter: FilterFindManySpellInput, $limit: Int) {
+  spells(filter: $filter, limit: 1000) {
     __typename
     index
     level
@@ -9293,6 +9294,7 @@ export const GetSpellsDocument = gql`
  * const { data, loading, error } = useGetSpellsQuery({
  *   variables: {
  *      filter: // value for 'filter'
+ *      limit: // value for 'limit'
  *   },
  * });
  */
