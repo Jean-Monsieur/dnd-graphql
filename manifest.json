@@ -1,6 +1,6 @@
 {
-  "short_name": "DDJM",
-  "name": "DDJM",
+  "short_name": "dnd-graphql",
+  "name": "dnd-graphql",
   "icons": [
     {
       "src": "favicon.ico",
