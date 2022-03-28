@@ -6,24 +6,26 @@ export const getDesignTokens = (mode: PaletteMode) => ({
     mode,
     ...(mode === "light"
       ? {
-          primary: indigo,
-          secondary: amber,
-          text: {
-            primary: grey[900],
-          },
-        }
+        primary: indigo,
+        secondary: amber,
+        text: {
+          primary: grey[900],
+        },
+      }
       : {
-          // palette values for dark mode
-          primary: indigo,
-          secondary: orange,
-          background: {
-            default: "#303030",
-            link: "red",
-          },
-          text: {
-            primary: "#fff",
-            secondary: grey[500],
-          },
-        }),
+        // palette values for dark mode
+        primary: indigo,
+        secondary: orange,
+        link: 'red',
+        background: {
+          default: "#303030",
+          link: "red",
+        },
+        text: {
+          primary: "#fff",
+          secondary: grey[500],
+          link: 'red'
+        },
+      }),
   },
 });

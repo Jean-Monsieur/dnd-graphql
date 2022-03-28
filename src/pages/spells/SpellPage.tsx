@@ -34,15 +34,6 @@ const SpellPage: FunctionComponent = () => {
     return <div>ERROR</div>;
   }
 
-  // console.log(
-  //   data.spell?.desc
-  //     ?.toString()
-  //     .replaceAll("|,|", " |\n|")
-  //     .replaceAll("|,", " | \n")
-  //     .replaceAll(",|", "\n|")
-  //     .replaceAll(",#", " \n#")
-  //     .replaceAll(",", " \n") ?? ""
-  // );
   return (
     <PageContainer>
       <div style={{ display: "flex" }}>

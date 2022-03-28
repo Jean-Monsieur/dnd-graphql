@@ -1,15 +1,18 @@
+import { Button } from "@mui/material";
 import { DataGrid, GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
 import { FunctionComponent, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 
 import { PageContainer } from "../../components/page";
-import {  useGetSpellsQuery } from "../../generated/graphql";
+import { useGetSpellsQuery } from "../../generated/graphql";
 import SpellPage from "./SpellPage";
 
 const SpellsPage: FunctionComponent = () => {
   const { data, error, loading } = useGetSpellsQuery();
 
   const location = useLocation();
+
+  const history = useHistory();
 
   const [pageSize, setPageSize] = useState(15);
 
@@ -24,15 +27,8 @@ const SpellsPage: FunctionComponent = () => {
   const columns: GridColDef[] = [
     {
       field: "name",
-      flex: 1,
+      flex: 2,
       headerName: "Name",
-      renderCell: (params: GridRenderCellParams<string>) => (
-        <>
-          <Link to={`/spells/${params.id}`} key={params.id}>
-            {params.value}
-          </Link>
-        </>
-      ),
     },
     {
       field: "level",
@@ -46,9 +42,9 @@ const SpellsPage: FunctionComponent = () => {
       headerName: "Classes",
       renderCell: (params: GridRenderCellParams) => (
         <>
-          {params.value.map((c:any, index:number) => (
+          {params.value.map((c: any, index: number) => (
             <>
-              {c?.name??''}
+              {c?.name ?? ""}
               {index + 1 !== params.value.length ? ", " : ""}
             </>
           ))}
@@ -56,7 +52,7 @@ const SpellsPage: FunctionComponent = () => {
       ),
     },
   ];
-  console.log(location);
+
   if (location.search === "") {
     return (
       <PageContainer>
@@ -68,9 +64,11 @@ const SpellsPage: FunctionComponent = () => {
               rows={data.spells.map((m) => ({ ...m, id: m.index }))}
               columns={columns}
               pagination
-              checkboxSelection
               pageSize={pageSize}
               onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
+              disableSelectionOnClick
+              isRowSelectable={() => false}
+              onRowDoubleClick={({ id }) => history.push(`/spells/${id}`)}
             />
           </div>
         </div>

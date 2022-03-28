@@ -83,7 +83,7 @@ const AppDrawer = ({ onToggle, ...props }: AppDrawerProps) => {
                 );
               } else {
                 return (
-                  <ListItem component={Link} to={path} key={id} sx={style}>
+                  <ListItem key={id} component={Link} to={path} sx={style}>
                     <ListItemIcon>{getPathIcon(iconName)}</ListItemIcon>
                     <ListItemText color="white" primary={name} />
                   </ListItem>

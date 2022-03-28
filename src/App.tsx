@@ -24,6 +24,7 @@ import { drawerWidth } from "./theme/mixins";
 
 import { useAuth0 } from "@auth0/auth0-react";
 import { ColorModeContext } from "./theme/ColorModeContext";
+import { BrowserRouter } from "react-router-dom";
 
 const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })<{
   open?: boolean;
@@ -54,34 +55,36 @@ function App() {
   const { user } = useAuth0<{ name: string }>();
 
   return (
-    <Box sx={{ display: "flex" }}>
-      <Appbar
-        currentMode={theme.palette.mode}
-        onThemeToggled={colorMode.toggleColorMode}
-        onMenuToggled={() => setOpen(!open)}
-        username={user?.name ?? "sadasd"}
-      />
-      <AppDrawer
-        variant="persistent"
-        sx={{
-          width: drawerWidth,
-          flexShrink: 0,
-          [`& .MuiDrawer-paper`]: {
+    <BrowserRouter>
+      <Box sx={{ display: "flex" }}>
+        <Appbar
+          currentMode={theme.palette.mode}
+          onThemeToggled={colorMode.toggleColorMode}
+          onMenuToggled={() => setOpen(!open)}
+          username={user?.name ?? "sadasd"}
+        />
+        <AppDrawer
+          variant="persistent"
+          sx={{
             width: drawerWidth,
-            boxSizing: "border-box",
-          },
-        }}
-        open={open}
-        onToggle={(value) => setOpen(value)}
-        onClose={() => setOpen(false)}
-      />
-      <Main open={open}>
-        <div style={{ width: "100%" }}>
-          <Toolbar />
-          <Router />
-        </div>
-      </Main>
-    </Box>
+            flexShrink: 0,
+            [`& .MuiDrawer-paper`]: {
+              width: drawerWidth,
+              boxSizing: "border-box",
+            },
+          }}
+          open={open}
+          onToggle={(value) => setOpen(value)}
+          onClose={() => setOpen(false)}
+        />
+        <Main open={open}>
+          <div style={{ width: "100%" }}>
+            <Toolbar />
+            <Router />
+          </div>
+        </Main>
+      </Box>
+    </BrowserRouter>
   );
 }
 export default function ToggleColorMode() {
