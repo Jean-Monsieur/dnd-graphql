@@ -1,7 +1,6 @@
-import { Button } from "@mui/material";
 import { DataGrid, GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
 import { FunctionComponent, useState } from "react";
-import { Link, useHistory, useLocation } from "react-router-dom";
+import {  useHistory, useLocation } from "react-router-dom";
 
 import { PageContainer } from "../../components/page";
 import { useGetSpellsQuery } from "../../generated/graphql";
