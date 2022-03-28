@@ -1,7 +1,7 @@
 {
-  "homepage": "https://Jean-Monsieur.github.io/dnd-graphql",
+  "homepage": "https://Jean-Monsieur.github.io/dnd-graphql/",
   "name": "dnd-graphql",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "dependencies": {
     "@apollo/client": "^3.5.10",
