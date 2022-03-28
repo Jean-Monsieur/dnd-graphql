@@ -22,7 +22,6 @@ import Router from "./Router";
 import AppDrawer from "./components/app-drawer/AppDrawer";
 import { drawerWidth } from "./theme/mixins";
 
-import { useAuth0 } from "@auth0/auth0-react";
 import { ColorModeContext } from "./theme/ColorModeContext";
 import { BrowserRouter } from "react-router-dom";
 
@@ -52,8 +51,6 @@ function App() {
 
   const [open, setOpen] = React.useState(false);
 
-  const { user } = useAuth0<{ name: string }>();
-
   return (
     <BrowserRouter>
       <Box sx={{ display: "flex" }}>
@@ -61,7 +58,6 @@ function App() {
           currentMode={theme.palette.mode}
           onThemeToggled={colorMode.toggleColorMode}
           onMenuToggled={() => setOpen(!open)}
-          username={user?.name ?? "sadasd"}
         />
         <AppDrawer
           variant="persistent"

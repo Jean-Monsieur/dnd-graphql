@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 
 export const QUERY_SPELLS = gql`
-    query getSpells($filter: FilterFindManySpellInput, $limit: Int) {
+    query getSpells($filter: FilterFindManySpellInput) {
       spells(filter: $filter, limit: 1000) {
         __typename
         index

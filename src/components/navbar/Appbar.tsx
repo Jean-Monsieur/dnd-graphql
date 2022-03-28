@@ -16,7 +16,6 @@ import DynamicBreadcrumbs from "./breadcrumbs/DynamicBreadcrumbs";
 
 type AppbarProps = {
   currentMode: PaletteMode;
-  username: string;
   onMenuToggled: () => void;
   onThemeToggled: () => void;
 };

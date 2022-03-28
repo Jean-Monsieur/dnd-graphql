@@ -9028,6 +9028,18 @@ export type GetEquipmentsQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetEquipmentsQuery = { __typename?: 'Query', equipments: Array<{ __typename: 'Equipment', index?: string | null, weight?: number | null, name?: string | null, quantity?: number | null, capacity?: string | null, category_range?: string | null, desc?: Array<string | null> | null, special?: Array<string | null> | null, gear_category?: { __typename?: 'AbilityScoreSkills', name?: string | null } | null, cost?: { __typename: 'EquipmentCost', quantity?: number | null, unit?: string | null } | null, damage?: { __typename?: 'EquipmentDamage', damage_dice?: string | null, damage_type?: { __typename: 'AbilityScoreSkills', name?: string | null } | null } | null }> };
 
+export type GetMagicalItemQueryVariables = Exact<{
+  filter?: InputMaybe<FilterFindOneMagicItemInput>;
+}>;
+
+
+export type GetMagicalItemQuery = { __typename?: 'Query', magicItem?: { __typename?: 'MagicItem', name?: string | null, index?: string | null, desc?: Array<string | null> | null, url?: string | null, equipment_category?: { __typename?: 'AbilityScoreSkills', index?: string | null, name?: string | null, url?: string | null } | null } | null };
+
+export type GetMagicalItemsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetMagicalItemsQuery = { __typename?: 'Query', magicItems: Array<{ __typename?: 'MagicItem', index?: string | null, name?: string | null, url?: string | null, equipment_category?: { __typename?: 'AbilityScoreSkills', index?: string | null, name?: string | null, url?: string | null } | null }> };
+
 export type GetMonstersListQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -9042,7 +9054,6 @@ export type GetSpellQuery = { __typename?: 'Query', spell?: { __typename?: 'Spel
 
 export type GetSpellsQueryVariables = Exact<{
   filter?: InputMaybe<FilterFindManySpellInput>;
-  limit?: InputMaybe<Scalars['Int']>;
 }>;
 
 
@@ -9106,6 +9117,90 @@ export function useGetEquipmentsLazyQuery(baseOptions?: Apollo.LazyQueryHookOpti
 export type GetEquipmentsQueryHookResult = ReturnType<typeof useGetEquipmentsQuery>;
 export type GetEquipmentsLazyQueryHookResult = ReturnType<typeof useGetEquipmentsLazyQuery>;
 export type GetEquipmentsQueryResult = Apollo.QueryResult<GetEquipmentsQuery, GetEquipmentsQueryVariables>;
+export const GetMagicalItemDocument = gql`
+    query getMagicalItem($filter: FilterFindOneMagicItemInput) {
+  magicItem(filter: $filter) {
+    name
+    index
+    equipment_category {
+      index
+      name
+      url
+    }
+    desc
+    url
+  }
+}
+    `;
+
+/**
+ * __useGetMagicalItemQuery__
+ *
+ * To run a query within a React component, call `useGetMagicalItemQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetMagicalItemQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetMagicalItemQuery({
+ *   variables: {
+ *      filter: // value for 'filter'
+ *   },
+ * });
+ */
+export function useGetMagicalItemQuery(baseOptions?: Apollo.QueryHookOptions<GetMagicalItemQuery, GetMagicalItemQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetMagicalItemQuery, GetMagicalItemQueryVariables>(GetMagicalItemDocument, options);
+      }
+export function useGetMagicalItemLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetMagicalItemQuery, GetMagicalItemQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetMagicalItemQuery, GetMagicalItemQueryVariables>(GetMagicalItemDocument, options);
+        }
+export type GetMagicalItemQueryHookResult = ReturnType<typeof useGetMagicalItemQuery>;
+export type GetMagicalItemLazyQueryHookResult = ReturnType<typeof useGetMagicalItemLazyQuery>;
+export type GetMagicalItemQueryResult = Apollo.QueryResult<GetMagicalItemQuery, GetMagicalItemQueryVariables>;
+export const GetMagicalItemsDocument = gql`
+    query getMagicalItems {
+  magicItems(limit: 1000) {
+    index
+    name
+    url
+    equipment_category {
+      index
+      name
+      url
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetMagicalItemsQuery__
+ *
+ * To run a query within a React component, call `useGetMagicalItemsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetMagicalItemsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetMagicalItemsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetMagicalItemsQuery(baseOptions?: Apollo.QueryHookOptions<GetMagicalItemsQuery, GetMagicalItemsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetMagicalItemsQuery, GetMagicalItemsQueryVariables>(GetMagicalItemsDocument, options);
+      }
+export function useGetMagicalItemsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetMagicalItemsQuery, GetMagicalItemsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetMagicalItemsQuery, GetMagicalItemsQueryVariables>(GetMagicalItemsDocument, options);
+        }
+export type GetMagicalItemsQueryHookResult = ReturnType<typeof useGetMagicalItemsQuery>;
+export type GetMagicalItemsLazyQueryHookResult = ReturnType<typeof useGetMagicalItemsLazyQuery>;
+export type GetMagicalItemsQueryResult = Apollo.QueryResult<GetMagicalItemsQuery, GetMagicalItemsQueryVariables>;
 export const GetMonstersListDocument = gql`
     query GetMonstersList {
   monsters(limit: 1000, sort: CHALLENGE_RATING_ASC) {
@@ -9255,7 +9350,7 @@ export type GetSpellQueryHookResult = ReturnType<typeof useGetSpellQuery>;
 export type GetSpellLazyQueryHookResult = ReturnType<typeof useGetSpellLazyQuery>;
 export type GetSpellQueryResult = Apollo.QueryResult<GetSpellQuery, GetSpellQueryVariables>;
 export const GetSpellsDocument = gql`
-    query getSpells($filter: FilterFindManySpellInput, $limit: Int) {
+    query getSpells($filter: FilterFindManySpellInput) {
   spells(filter: $filter, limit: 1000) {
     __typename
     index
@@ -9294,7 +9389,6 @@ export const GetSpellsDocument = gql`
  * const { data, loading, error } = useGetSpellsQuery({
  *   variables: {
  *      filter: // value for 'filter'
- *      limit: // value for 'limit'
  *   },
  * });
  */
