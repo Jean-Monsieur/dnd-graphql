@@ -31,6 +31,7 @@ const Appbar = ({
 }: AppbarProps) => {
   const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
 
+
   const AppBar = styled(MuiAppBar, {
     shouldForwardProp: (prop) => prop !== "open",
   })<AppBarProps>(({ theme, open }) => ({

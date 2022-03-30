@@ -107,7 +107,7 @@ export default function ToggleColorMode() {
     <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <div style={{ height: "100vh" }}>
+        <div style={{ height: "100vh"}}>
           <App />
         </div>
       </ThemeProvider>
