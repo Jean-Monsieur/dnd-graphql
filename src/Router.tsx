@@ -6,7 +6,6 @@ import { MonsterPage } from "./pages/monsters";
 import { SpellsPage } from "./pages/spells";
 import { PATHS } from "./rootStruct";
 
-// const getPath = (path: string) => path.replaceAll("/", "");
 const Router = () => {
   return (
     <Fade>
