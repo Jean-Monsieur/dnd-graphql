@@ -1,1 +1,1 @@
-export { default as EquipmentPage } from "./EquipmentPage";
+export { default as EquipmentPage } from "./EquipementRouter";

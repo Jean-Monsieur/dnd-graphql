@@ -111,7 +111,6 @@ const SpellPage: FunctionComponent = () => {
           </CardActions>
         </Card>
 
-        <div style={{ flexGrow: 1 }}></div>
       </div>
     </PageContainer>
   );

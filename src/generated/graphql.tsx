@@ -9023,6 +9023,13 @@ export type WeaponProperty = {
   url?: Maybe<Scalars['String']>;
 };
 
+export type GetEquipmentQueryVariables = Exact<{
+  filter?: InputMaybe<FilterFindOneEquipmentInput>;
+}>;
+
+
+export type GetEquipmentQuery = { __typename?: 'Query', equipment?: { __typename?: 'Equipment', index?: string | null, name?: string | null, armor_category?: string | null, capacity?: string | null, category_range?: string | null, desc?: Array<string | null> | null, quantity?: number | null, special?: Array<string | null> | null, stealth_disadvantage?: boolean | null, str_minimum?: number | null, tool_category?: string | null, url?: string | null, vehicle_category?: string | null, weapon_category?: string | null, weapon_range?: string | null, weight?: number | null, armor_class?: { __typename?: 'EquipmentArmor_class', base?: number | null, dex_bonus?: boolean | null, max_bonus?: number | null } | null, contents?: Array<{ __typename?: 'EquipmentContents', quantity?: number | null, item?: { __typename?: 'AbilityScoreSkills', index?: string | null, name?: string | null, url?: string | null } | null } | null> | null, cost?: { __typename?: 'EquipmentCost', quantity?: number | null, unit?: string | null } | null, damage?: { __typename?: 'EquipmentDamage', damage_dice?: string | null, damage_type?: { __typename?: 'AbilityScoreSkills', index?: string | null, name?: string | null, url?: string | null } | null } | null, equipment_category?: { __typename?: 'AbilityScoreSkills', index?: string | null, name?: string | null, url?: string | null } | null, gear_category?: { __typename?: 'AbilityScoreSkills', index?: string | null, name?: string | null, url?: string | null } | null, properties: Array<{ __typename?: 'WeaponProperty', desc?: Array<string | null> | null, index?: string | null, name?: string | null, url?: string | null }>, range?: { __typename?: 'EquipmentRange', long?: number | null, normal?: number | null } | null, speed?: { __typename?: 'EquipmentSpeed', quantity?: number | null, unit?: string | null } | null, throw_range?: { __typename?: 'EquipmentThrow_range', long?: number | null, normal?: number | null } | null, two_handed_damage?: { __typename?: 'EquipmentTwo_handed_damage', damage_dice?: string | null, damage_type?: { __typename?: 'AbilityScoreSkills', index?: string | null, name?: string | null, url?: string | null } | null } | null } | null };
+
 export type GetEquipmentsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -9060,6 +9067,117 @@ export type GetSpellsQueryVariables = Exact<{
 export type GetSpellsQuery = { __typename?: 'Query', spells: Array<{ __typename: 'Spell', index?: string | null, level: number, name?: string | null, url?: string | null, duration?: string | null, school?: { __typename: 'MagicSchool', name?: string | null, index?: string | null } | null, classes?: Array<{ __typename: 'AbilityScoreSkills', index?: string | null, name?: string | null } | null> | null, subclasses?: Array<{ __typename?: 'AbilityScoreSkills', index?: string | null, name?: string | null } | null> | null }> };
 
 
+export const GetEquipmentDocument = gql`
+    query getEquipment($filter: FilterFindOneEquipmentInput) {
+  equipment(filter: $filter) {
+    index
+    name
+    armor_category
+    armor_class {
+      base
+      dex_bonus
+      max_bonus
+    }
+    capacity
+    category_range
+    contents {
+      item {
+        index
+        name
+        url
+      }
+      quantity
+    }
+    cost {
+      quantity
+      unit
+    }
+    damage {
+      damage_dice
+      damage_type {
+        index
+        name
+        url
+      }
+    }
+    desc
+    equipment_category {
+      index
+      name
+      url
+    }
+    gear_category {
+      index
+      name
+      url
+    }
+    properties {
+      desc
+      index
+      name
+      url
+    }
+    quantity
+    range {
+      long
+      normal
+    }
+    special
+    speed {
+      quantity
+      unit
+    }
+    stealth_disadvantage
+    str_minimum
+    throw_range {
+      long
+      normal
+    }
+    tool_category
+    two_handed_damage {
+      damage_dice
+      damage_type {
+        index
+        name
+        url
+      }
+    }
+    url
+    vehicle_category
+    weapon_category
+    weapon_range
+    weight
+  }
+}
+    `;
+
+/**
+ * __useGetEquipmentQuery__
+ *
+ * To run a query within a React component, call `useGetEquipmentQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetEquipmentQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetEquipmentQuery({
+ *   variables: {
+ *      filter: // value for 'filter'
+ *   },
+ * });
+ */
+export function useGetEquipmentQuery(baseOptions?: Apollo.QueryHookOptions<GetEquipmentQuery, GetEquipmentQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetEquipmentQuery, GetEquipmentQueryVariables>(GetEquipmentDocument, options);
+      }
+export function useGetEquipmentLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetEquipmentQuery, GetEquipmentQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetEquipmentQuery, GetEquipmentQueryVariables>(GetEquipmentDocument, options);
+        }
+export type GetEquipmentQueryHookResult = ReturnType<typeof useGetEquipmentQuery>;
+export type GetEquipmentLazyQueryHookResult = ReturnType<typeof useGetEquipmentLazyQuery>;
+export type GetEquipmentQueryResult = Apollo.QueryResult<GetEquipmentQuery, GetEquipmentQueryVariables>;
 export const GetEquipmentsDocument = gql`
     query getEquipments {
   equipments(limit: 1000) {

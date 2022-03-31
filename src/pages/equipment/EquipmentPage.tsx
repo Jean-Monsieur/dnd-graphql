@@ -1,13 +1,15 @@
 import { DataGrid, GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
 import { FunctionComponent, useState } from "react";
+import { useHistory } from "react-router-dom";
 
-import { PageContainer } from "../../components/page";
 import { EquipmentCost, useGetEquipmentsQuery } from "../../generated/graphql";
 
 const EquipmentPage: FunctionComponent = () => {
   const { data, error, loading } = useGetEquipmentsQuery();
 
-  const [pageSize, setPageSize] = useState(15);
+  const history = useHistory();
+
+  const [pageSize, setPageSize] = useState(100);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -41,22 +43,20 @@ const EquipmentPage: FunctionComponent = () => {
   ];
 
   return (
-    <PageContainer>
-      <div style={{ display: "flex" }}>
-        <div style={{ flexGrow: 1 }}>
-          <DataGrid
-            rowsPerPageOptions={[5, 15, 25, 50, 100]}
-            autoHeight
-            rows={data.equipments.map((m) => ({ ...m, id: m.name }))}
-            columns={columns}
-            pagination
-            checkboxSelection
-            pageSize={pageSize}
-            onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
-          />
-        </div>
+    <div style={{ display: "flex" }}>
+      <div style={{ flexGrow: 1 }}>
+        <DataGrid
+          rowsPerPageOptions={[5, 15, 25, 50, 100]}
+          autoHeight
+          rows={data.equipments.map((m) => ({ ...m, id: m.index }))}
+          columns={columns}
+          pagination
+          pageSize={pageSize}
+          onRowDoubleClick={({ id }) => history.push(`/equipment/${id}`)}
+          onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
+        />
       </div>
-    </PageContainer>
+    </div>
   );
 };
 
