@@ -13,7 +13,7 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import React from "react";
+import React, { useCallback, useState } from "react";
 import { ThemeMode } from "./theme/theme";
 import { getDesignTokens } from "./theme/getDesignTokens";
 import { Appbar } from "./components/navbar";
@@ -24,6 +24,7 @@ import { drawerWidth } from "./theme/mixins";
 
 import { ColorModeContext } from "./theme/ColorModeContext";
 import { BrowserRouter } from "react-router-dom";
+import { useDeviceSelectors } from "react-device-detect";
 
 const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })<{
   open?: boolean;
@@ -48,8 +49,16 @@ const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })<{
 function App() {
   const theme = useTheme();
   const colorMode = React.useContext(ColorModeContext);
+  const [{ isMobile }] = useDeviceSelectors(window.navigator.userAgent);
 
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
+
+
+  const handleItemClicked = useCallback(() => {
+    if (isMobile) {
+      setOpen(!open);
+    }
+  }, [isMobile, open]);
 
   return (
     <BrowserRouter>
@@ -70,6 +79,7 @@ function App() {
             },
           }}
           open={open}
+          onItemClick={handleItemClicked}
           onToggle={(value) => setOpen(value)}
           onClose={() => setOpen(false)}
         />
@@ -107,7 +117,7 @@ export default function ToggleColorMode() {
     <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <div style={{ height: "100vh"}}>
+        <div style={{ height: "100vh" }}>
           <App />
         </div>
       </ThemeProvider>
