@@ -46,7 +46,7 @@ const EquipmentPage: FunctionComponent = () => {
     <div style={{ display: "flex" }}>
       <div style={{ flexGrow: 1 }}>
         <DataGrid
-          rowsPerPageOptions={[5, 15, 25, 50, 100]}
+          rowsPerPageOptions={[5, 15, 25, 50, 100, 200]}
           autoHeight
           rows={data.equipments.map((m) => ({ ...m, id: m.index }))}
           columns={columns}

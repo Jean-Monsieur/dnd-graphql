@@ -144,7 +144,7 @@ const MonsterList: React.FC<Props> = ({ data }) => {
     <div style={{ display: "flex" }}>
       <div style={{ flexGrow: 1 }}>
         <DataGrid
-          rowsPerPageOptions={[5, 15, 25, 50, 100]}
+          rowsPerPageOptions={[5, 15, 25, 50, 100, 200]}
           autoHeight
           rows={data.monsters.map((m) => ({ ...m, id: m.url }))}
           columns={columns}
