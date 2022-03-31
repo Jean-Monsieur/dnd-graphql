@@ -10,7 +10,6 @@ import {
   styled,
   ThemeProvider,
   Toolbar,
-  useMediaQuery,
   useTheme,
 } from "@mui/material";
 import React, { useCallback, useState } from "react";
@@ -53,7 +52,6 @@ function App() {
 
   const [open, setOpen] = useState(false);
 
-
   const handleItemClicked = useCallback(() => {
     if (isMobile) {
       setOpen(!open);
@@ -94,11 +92,8 @@ function App() {
   );
 }
 export default function ToggleColorMode() {
-  const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
 
-  const [mode, setMode] = React.useState<ThemeMode>(
-    prefersDarkMode ? ThemeMode.DARK : ThemeMode.LIGHT
-  );
+  const [mode, setMode] = React.useState<ThemeMode>(ThemeMode.DARK);
 
   const colorMode = React.useMemo(
     () => ({
