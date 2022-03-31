@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 
 import { Link } from "react-router-dom";
-import { RootStruct } from "../../rootStruct";
+import { rootStruct } from "../../rootStruct";
 import { getPathIcon } from "../../theme/getPathIcon";
 
 type AppDrawerProps = {
@@ -40,7 +40,7 @@ const AppDrawer = ({ onToggle, onItemClick, ...props }: AppDrawerProps) => {
         <Toolbar />
         <Box sx={{ width: 250, height: "100% " }} role="presentation">
           <List>
-            {RootStruct.map(({ id, name, iconName, path }) => (
+            {rootStruct.map(({ id, name, iconName, path }) => (
               <ListItem
                 key={id}
                 component={Link}
