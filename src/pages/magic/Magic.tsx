@@ -1,13 +1,9 @@
 import { FunctionComponent } from "react";
-import { Link, Route } from "react-router-dom";
-import MonsterTableContainer from "../../components/monster";
-import { PageContainer } from "../../components/page";
-import { PathCategory, rootStruct } from "../../rootStruct";
+import { Link } from "react-router-dom";
 
-import Box from "@mui/material/Box";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import Typography from "@mui/material/Typography";
+import { PageContainer } from "../../components/page";
+import { rootStruct } from "../../rootStruct";
+
 import { getPathIcon } from "../../theme/getPathIcon";
 import { List, ListItem, ListItemIcon, ListItemText } from "@mui/material";
 
