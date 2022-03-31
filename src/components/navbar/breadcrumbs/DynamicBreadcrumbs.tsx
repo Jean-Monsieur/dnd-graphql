@@ -8,6 +8,7 @@ import Link, { LinkProps } from "@mui/material/Link";
 
 import { breadcrumbNameMap } from "./utils";
 import { getPathIcon } from "../../../theme/getPathIcon";
+import { useDeviceSelectors } from "react-device-detect";
 
 interface LinkRouterProps extends LinkProps {
   to: string;
@@ -22,13 +23,17 @@ const DynamicBreadcrumbs = () => {
   const location = useLocation();
   const pathnames = location.pathname.split("/").filter((x) => x);
 
+  const [{ isMobile }] = useDeviceSelectors(window.navigator.userAgent);
+
   return (
     <Breadcrumbs aria-label="breadcrumb" maxItems={2} sx={{ flexGrow: 1 }}>
-      <LinkRouter variant="h6" underline="hover" color="white" to="/">
-        <HomeIcon sx={{ mr: 0.5 }} fontSize="inherit" /> Home
-      </LinkRouter>
+      {!isMobile && (
+        <LinkRouter variant="h6" underline="hover" color="white" to="/">
+          <HomeIcon sx={{ mr: 0.5 }} fontSize="inherit" /> Home
+        </LinkRouter>
+      )}
       {pathnames.map((value, index) => {
-        const last = index === pathnames.length - 1;
+        const last: boolean = index === pathnames.length - 1;
         const to = `/${pathnames.slice(0, index + 1).join("/")}`;
 
         return last ? (
