@@ -1,8 +1,12 @@
 import { DataGrid, GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
+
 import { FunctionComponent, useState } from "react";
 import { useHistory } from "react-router-dom";
 
 import { EquipmentCost, useGetEquipmentsQuery } from "../../generated/graphql";
+import { Typography } from "@mui/material";
+import CurrencyIcon from "../../components/CurrencyIcon";
+import { convertgQLCurrency, GqlCurrencies } from "../../types/gqlCurrency";
 
 const EquipmentPage: FunctionComponent = () => {
   const { data, error, loading } = useGetEquipmentsQuery();
@@ -36,7 +40,22 @@ const EquipmentPage: FunctionComponent = () => {
       headerName: "cost",
       renderCell: (params: GridRenderCellParams<EquipmentCost>) => (
         <>
-          {params.value.quantity} {params.value.unit}
+          <span style={{ marginRight: "0.25rem" }}>
+            {params.value.quantity}
+          </span>
+          <CurrencyIcon
+            currency={convertgQLCurrency(params.value.unit as GqlCurrencies)}
+          />
+          <Typography
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              fontStyle: "italic",
+              fontWeight: 100,
+            }}
+          >
+            {params.value.unit}
+          </Typography>
         </>
       ),
     },
