@@ -8,6 +8,7 @@ import BackpackIcon from "@mui/icons-material/Backpack";
 import AutoFixHighIcon from "@mui/icons-material/AutoFixHigh";
 import OfflineBoltIcon from "@mui/icons-material/OfflineBolt";
 import SchoolIcon from "@mui/icons-material/School";
+import BuildIcon from '@mui/icons-material/Build';
 
 export const getPathIcon = (icon: PathIcons | string) => {
   switch (icon) {
@@ -25,6 +26,8 @@ export const getPathIcon = (icon: PathIcons | string) => {
       return <OfflineBoltIcon />;
     case PathIcons.MAGIC_SCHOOL:
       return <SchoolIcon />;
+    case PathIcons.TOOLS:
+      return <BuildIcon />;
     default:
       return <PendingIcon />;
   }

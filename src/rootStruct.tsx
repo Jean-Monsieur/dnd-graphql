@@ -6,6 +6,7 @@ export enum PathIcons {
   SPELLS = "/spells",
   MAGIC_ITEMS = "/magic-item",
   MAGIC_SCHOOL = "/magic-schools",
+  TOOLS = "/tools",
 }
 
 export enum PATHS {
@@ -16,6 +17,7 @@ export enum PATHS {
   SPELLS = "/spells",
   MAGIC_ITEMS = "/magic-item",
   MAGIC_SCHOOL = "/magic-schools",
+  TOOLS = "/tools",
 }
 
 export enum PathCategory {
@@ -74,6 +76,13 @@ export const rootStruct: RootItem[] = [
     name: "Magic Schools",
     path: PATHS.MAGIC_SCHOOL,
     iconName: PathIcons.MAGIC_SCHOOL,
+    category: PathCategory.MAGIC,
+  },
+  {
+    id: "tools",
+    name: "Tools",
+    path: PATHS.TOOLS,
+    iconName: PathIcons.TOOLS,
     category: PathCategory.MAGIC,
   },
 ];
