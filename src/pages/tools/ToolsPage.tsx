@@ -6,10 +6,8 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import PersonPinIcon from "@mui/icons-material/PersonPin";
 import CurrencyExchangeIcon from "@mui/icons-material/CurrencyExchange";
 import { Box, Typography } from "@mui/material";
-import CircleIcon from "@mui/icons-material/Circle";
-import DiamondIcon from "@mui/icons-material/Diamond";
 
-type ToolsPageProps = {};
+import CurrencyConverter from "./currency-converter/CurrencyConverter";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -37,7 +35,7 @@ function TabPanel(props: TabPanelProps) {
   );
 }
 
-const ToolsPage: FunctionComponent<ToolsPageProps> = ({}) => {
+const ToolsPage: FunctionComponent = () => {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -49,7 +47,6 @@ const ToolsPage: FunctionComponent<ToolsPageProps> = ({}) => {
       <Box>
         <Tabs
           value={value}
-          sx={{width:'100%'}}
           onChange={handleChange}
           aria-label="icon label tabs example"
         >
@@ -58,21 +55,7 @@ const ToolsPage: FunctionComponent<ToolsPageProps> = ({}) => {
           <Tab icon={<PersonPinIcon />} label="NEARBY" />
         </Tabs>
         <TabPanel value={value} index={0}>
-          <div style={{ display: "flex", alignItems: "center" }}>
-            Platinum <DiamondIcon sx={{ color: "#C0C0C0" }} />
-          </div>
-          <div style={{ display: "flex", alignItems: "center" }}>
-            GOLD <CircleIcon sx={{ color: "#ffb01c" }} />
-          </div>
-          <div style={{ display: "flex", alignItems: "center" }}>
-            Electrum <CircleIcon sx={{ color: "#4682B4" }} />
-          </div>
-          <div style={{ display: "flex", alignItems: "center" }}>
-            Silver <CircleIcon sx={{ color: "#C0C0C0" }} />
-          </div>
-          <div style={{ display: "flex", alignItems: "center" }}>
-            Copper <CircleIcon sx={{ color: "#b87333" }} />
-          </div>
+          <CurrencyConverter />
         </TabPanel>
         <TabPanel value={value} index={1}>
           FAVORITE
