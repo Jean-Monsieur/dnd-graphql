@@ -2,6 +2,12 @@
     "conventionalCommits.scopes": [
         "Domain",
         "Global",
-        "Equipment"
+        "Equipment",
+        "RootStruct",
+        "Spells",
+        "Equipment",
+        "MagicItems",
+        "Monsters",
+        "Tools"
     ]
 }
