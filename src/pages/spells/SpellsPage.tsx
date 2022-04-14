@@ -1,10 +1,10 @@
-import { DataGrid, GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
-import { FunctionComponent, useState } from "react";
-import {  useHistory, useLocation } from "react-router-dom";
+import SpellPage from './SpellPage';
+import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
+import { FunctionComponent, useState } from 'react';
+import { PageContainer } from '../../components/page';
+import { useGetSpellsQuery } from '../../generated/graphql';
+import { useHistory, useLocation } from 'react-router-dom';
 
-import { PageContainer } from "../../components/page";
-import { useGetSpellsQuery } from "../../generated/graphql";
-import SpellPage from "./SpellPage";
 
 const SpellsPage: FunctionComponent = () => {
   const { data, error, loading } = useGetSpellsQuery();

@@ -1,8 +1,18 @@
-import "./App.css";
-import "@fontsource/roboto/300.css";
-import "@fontsource/roboto/400.css";
-import "@fontsource/roboto/500.css";
-import "@fontsource/roboto/700.css";
+import AppDrawer from './components/app-drawer/AppDrawer';
+import React, { useCallback, useState } from 'react';
+import Router from './Router';
+import { Appbar } from './components/navbar';
+import { BrowserRouter } from 'react-router-dom';
+import { ColorModeContext } from './theme/ColorModeContext';
+import { drawerWidth } from './theme/mixins';
+import { getDesignTokens } from './theme/getDesignTokens';
+import { ThemeMode } from './theme/theme';
+import { useDeviceSelectors } from 'react-device-detect';
+import './App.css';
+import '@fontsource/roboto/300.css';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700.css';
 import {
   Box,
   createTheme,
@@ -12,18 +22,6 @@ import {
   Toolbar,
   useTheme,
 } from "@mui/material";
-import React, { useCallback, useState } from "react";
-import { ThemeMode } from "./theme/theme";
-import { getDesignTokens } from "./theme/getDesignTokens";
-import { Appbar } from "./components/navbar";
-
-import Router from "./Router";
-import AppDrawer from "./components/app-drawer/AppDrawer";
-import { drawerWidth } from "./theme/mixins";
-
-import { ColorModeContext } from "./theme/ColorModeContext";
-import { BrowserRouter } from "react-router-dom";
-import { useDeviceSelectors } from "react-device-detect";
 
 const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })<{
   open?: boolean;
@@ -92,7 +90,6 @@ function App() {
   );
 }
 export default function ToggleColorMode() {
-
   const [mode, setMode] = React.useState<ThemeMode>(ThemeMode.DARK);
 
   const colorMode = React.useMemo(

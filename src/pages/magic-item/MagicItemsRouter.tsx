@@ -1,6 +1,6 @@
-import { Route, Switch } from "react-router-dom";
-import MagicItemPage from "./MagicItemPage";
-import MagicItemsTable from "./MagicItemsTable";
+import MagicItemPage from './MagicItemPage';
+import MagicItemsTable from './MagicItemsTable';
+import { Route, Switch } from 'react-router-dom';
 const MagicItemsRouter = () => (
   <Switch>
     <Route exact path="/magic-item" component={MagicItemsTable}></Route>

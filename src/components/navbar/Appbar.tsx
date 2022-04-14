@@ -1,4 +1,10 @@
-import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
+import DynamicBreadcrumbs from './breadcrumbs/DynamicBreadcrumbs';
+import MenuIcon from '@mui/icons-material/Menu';
+import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
+import ToggleThemeButton from './ToggleThemeButton';
+import { drawerWidth } from '../../theme/mixins';
+import { useAuth0 } from '@auth0/auth0-react';
+import { UserMenu } from './user-menu';
 
 import {
   Button,
@@ -7,12 +13,6 @@ import {
   styled,
   Toolbar,
 } from "@mui/material";
-import MenuIcon from "@mui/icons-material/Menu";
-import { drawerWidth } from "../../theme/mixins";
-import { useAuth0 } from "@auth0/auth0-react";
-import { UserMenu } from "./user-menu";
-import ToggleThemeButton from "./ToggleThemeButton";
-import DynamicBreadcrumbs from "./breadcrumbs/DynamicBreadcrumbs";
 
 type AppbarProps = {
   currentMode: PaletteMode;
@@ -30,7 +30,6 @@ const Appbar = ({
   onMenuToggled,
 }: AppbarProps) => {
   const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
-
 
   const AppBar = styled(MuiAppBar, {
     shouldForwardProp: (prop) => prop !== "open",

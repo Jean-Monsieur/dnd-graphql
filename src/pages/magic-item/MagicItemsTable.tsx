@@ -1,8 +1,8 @@
-import { DataGrid, GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
-import React, { FunctionComponent, useState } from "react";
-import { useHistory } from "react-router-dom";
-import { PageContainer } from "../../components/page";
-import { useGetMagicalItemsQuery } from "../../generated/graphql";
+import React, { FunctionComponent, useState } from 'react';
+import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
+import { PageContainer } from '../../components/page';
+import { useGetMagicalItemsQuery } from '../../generated/graphql';
+import { useHistory } from 'react-router-dom';
 const MagicItemsTable: FunctionComponent = () => {
   const { data, error, loading } = useGetMagicalItemsQuery();
   const history = useHistory();
@@ -35,7 +35,7 @@ const MagicItemsTable: FunctionComponent = () => {
       <div style={{ display: "flex" }}>
         <div style={{ flexGrow: 1 }}>
           <DataGrid
-            rowsPerPageOptions={[5, 15, 25, 50, 100,200]}
+            rowsPerPageOptions={[5, 15, 25, 50, 100, 200]}
             autoHeight
             rows={data.magicItems.map((m) => ({ ...m, id: m.index }))}
             columns={columns}

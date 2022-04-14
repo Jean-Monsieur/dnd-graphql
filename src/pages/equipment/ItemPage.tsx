@@ -1,3 +1,8 @@
+import CurrencyIcon from '../../components/CurrencyIcon';
+import { convertgQLCurrency, GqlCurrencies } from '../../types/gqlCurrency';
+import { FunctionComponent } from 'react';
+import { useGetEquipmentQuery } from '../../generated/graphql';
+import { useHistory, useParams } from 'react-router-dom';
 import {
   Card,
   CardContent,
@@ -5,11 +10,6 @@ import {
   CardActions,
   Button,
 } from "@mui/material";
-import { FunctionComponent } from "react";
-import { useHistory, useParams } from "react-router-dom";
-import CurrencyIcon from "../../components/CurrencyIcon";
-import { useGetEquipmentQuery } from "../../generated/graphql";
-import { convertgQLCurrency, GqlCurrencies } from "../../types/gqlCurrency";
 const ItemPage: FunctionComponent = () => {
   const { id } = useParams<{ id: string }>();
   const history = useHistory();
@@ -48,7 +48,11 @@ const ItemPage: FunctionComponent = () => {
               gutterBottom
             >
               Cost {data.equipment?.cost?.quantity}{" "}
-              <CurrencyIcon currency={convertgQLCurrency(data.equipment?.cost?.unit as GqlCurrencies)} />
+              <CurrencyIcon
+                currency={convertgQLCurrency(
+                  data.equipment?.cost?.unit as GqlCurrencies
+                )}
+              />
             </Typography>
           )}
           {data.equipment?.weight && (

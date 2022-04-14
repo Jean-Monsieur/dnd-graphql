@@ -1,11 +1,16 @@
-import { FunctionComponent } from "react";
-import { Link } from "react-router-dom";
+import { FunctionComponent } from 'react';
+import { getPathIcon } from '../../theme/getPathIcon';
+import { Link } from 'react-router-dom';
+import {
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText
+  } from '@mui/material';
+import { PageContainer } from '../../components/page';
+import { rootStruct } from '../../rootStruct';
 
-import { PageContainer } from "../../components/page";
-import { rootStruct } from "../../rootStruct";
 
-import { getPathIcon } from "../../theme/getPathIcon";
-import { List, ListItem, ListItemIcon, ListItemText } from "@mui/material";
 
 const Magic: FunctionComponent = () => {
   const style = {

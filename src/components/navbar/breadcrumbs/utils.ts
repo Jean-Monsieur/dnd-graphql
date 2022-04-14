@@ -1,4 +1,4 @@
-import { PATHS } from "../../../rootStruct";
+import { PATHS } from '../../../rootStruct';
 
 export const breadcrumbNameMap: { [key: string]: string } = {
   [PATHS.MONSTERS]: "Monsters",

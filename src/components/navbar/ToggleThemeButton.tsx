@@ -1,8 +1,8 @@
-import { IconButton, PaletteMode, useTheme } from "@mui/material";
-import React from "react";
-import { ThemeMode } from "../../theme/theme";
-import Brightness4Icon from "@mui/icons-material/Brightness4";
-import Brightness7Icon from "@mui/icons-material/Brightness7";
+import Brightness4Icon from '@mui/icons-material/Brightness4';
+import Brightness7Icon from '@mui/icons-material/Brightness7';
+import React from 'react';
+import { IconButton, PaletteMode, useTheme } from '@mui/material';
+import { ThemeMode } from '../../theme/theme';
 
 type ToggleThemeButtonProps = {
   currentMode: PaletteMode;

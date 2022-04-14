@@ -1,6 +1,6 @@
-import React from "react";
-import { useGetMonstersListQuery } from "../../generated/graphql";
-import MonsterList from "./MonsterList";
+import MonsterList from './MonsterList';
+import React from 'react';
+import { useGetMonstersListQuery } from '../../generated/graphql';
 
 const MonsterTableContainer = () => {
   const { data, error, loading } = useGetMonstersListQuery();

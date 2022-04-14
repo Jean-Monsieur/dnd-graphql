@@ -1,3 +1,7 @@
+import CurrencyIcon from '../../../components/CurrencyIcon';
+import React, { FunctionComponent, useCallback, useState } from 'react';
+import { Currency } from '../../../types/gqlCurrency';
+import { useDeviceSelectors } from 'react-device-detect';
 import {
   Box,
   FormControl,
@@ -17,10 +21,6 @@ import {
   ToggleButtonGroup,
   Typography,
 } from "@mui/material";
-import React, { FunctionComponent, useCallback, useState } from "react";
-import { Currency } from "../../../types/gqlCurrency";
-import CurrencyIcon from "../../../components/CurrencyIcon";
-import { useDeviceSelectors } from "react-device-detect";
 
 const CurrencyConverter: FunctionComponent = () => {
   const [{ isMobile }] = useDeviceSelectors(window.navigator.userAgent);

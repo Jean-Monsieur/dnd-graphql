@@ -1,7 +1,7 @@
-import * as React from "react";
-import { FunctionComponent } from "react";
+import * as React from 'react';
+import { FunctionComponent } from 'react';
+import './style.css';
 
-import "./style.css";
 
 const PageContainer: FunctionComponent = (props) => (
   <div className="page-container">{props.children}</div>

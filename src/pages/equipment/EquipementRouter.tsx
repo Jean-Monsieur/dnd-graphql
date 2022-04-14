@@ -1,7 +1,7 @@
-import { Route, Switch } from "react-router-dom";
-import { PageContainer } from "../../components/page";
-import EquipmentPage from "./EquipmentPage";
-import ItemPage from "./ItemPage";
+import EquipmentPage from './EquipmentPage';
+import ItemPage from './ItemPage';
+import { PageContainer } from '../../components/page';
+import { Route, Switch } from 'react-router-dom';
 
 const EquipmentRouter = () => (
   <PageContainer>

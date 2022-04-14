@@ -1,6 +1,11 @@
-import * as React from "react";
-import { GetMonstersListQuery, MonsterSpeed } from "../../generated/graphql";
-import "./styles.css";
+import * as React from 'react';
+import BarChartIcon from '@mui/icons-material/BarChart';
+import CastleIcon from '@mui/icons-material/Castle';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import ShieldIcon from '@mui/icons-material/Shield';
+import { GetMonstersListQuery, MonsterSpeed } from '../../generated/graphql';
+import { useState } from 'react';
+import './styles.css';
 import {
   DataGrid,
   GridColDef,
@@ -8,12 +13,7 @@ import {
   GridRenderCellParams,
 } from "@mui/x-data-grid";
 
-import CastleIcon from "@mui/icons-material/Castle";
-import BarChartIcon from "@mui/icons-material/BarChart";
 
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import ShieldIcon from "@mui/icons-material/Shield";
-import { useState } from "react";
 
 interface Props {
   data: GetMonstersListQuery;

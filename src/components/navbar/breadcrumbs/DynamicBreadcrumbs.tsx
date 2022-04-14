@@ -1,14 +1,11 @@
-import Typography from "@mui/material/Typography";
-import HomeIcon from "@mui/icons-material/Home";
-
-import { Breadcrumbs } from "@mui/material";
-
-import { Link as RouterLink, useLocation } from "react-router-dom";
-import Link, { LinkProps } from "@mui/material/Link";
-
-import { breadcrumbNameMap } from "./utils";
-import { getPathIcon } from "../../../theme/getPathIcon";
-import { useDeviceSelectors } from "react-device-detect";
+import HomeIcon from '@mui/icons-material/Home';
+import Link, { LinkProps } from '@mui/material/Link';
+import Typography from '@mui/material/Typography';
+import { breadcrumbNameMap } from './utils';
+import { Breadcrumbs } from '@mui/material';
+import { getPathIcon } from '../../../theme/getPathIcon';
+import { Link as RouterLink, useLocation } from 'react-router-dom';
+import { useDeviceSelectors } from 'react-device-detect';
 
 interface LinkRouterProps extends LinkProps {
   to: string;

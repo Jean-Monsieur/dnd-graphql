@@ -1,14 +1,14 @@
-import { mdiGhost } from "@mdi/js";
-import { PathIcons } from "../rootStruct";
-import HomeIcon from "@mui/icons-material/Home";
-import Icon from "@mdi/react";
-import PendingIcon from "@mui/icons-material/Pending";
-import BookIcon from "@mui/icons-material/Book";
-import BackpackIcon from "@mui/icons-material/Backpack";
-import AutoFixHighIcon from "@mui/icons-material/AutoFixHigh";
-import OfflineBoltIcon from "@mui/icons-material/OfflineBolt";
-import SchoolIcon from "@mui/icons-material/School";
+import AutoFixHighIcon from '@mui/icons-material/AutoFixHigh';
+import BackpackIcon from '@mui/icons-material/Backpack';
+import BookIcon from '@mui/icons-material/Book';
 import BuildIcon from '@mui/icons-material/Build';
+import HomeIcon from '@mui/icons-material/Home';
+import Icon from '@mdi/react';
+import OfflineBoltIcon from '@mui/icons-material/OfflineBolt';
+import PendingIcon from '@mui/icons-material/Pending';
+import SchoolIcon from '@mui/icons-material/School';
+import { mdiGhost } from '@mdi/js';
+import { PathIcons } from '../rootStruct';
 
 export const getPathIcon = (icon: PathIcons | string) => {
   switch (icon) {

@@ -1,12 +1,10 @@
-import { DataGrid, GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
-
-import { FunctionComponent, useState } from "react";
-import { useHistory } from "react-router-dom";
-
-import { EquipmentCost, useGetEquipmentsQuery } from "../../generated/graphql";
-import { Typography } from "@mui/material";
-import CurrencyIcon from "../../components/CurrencyIcon";
-import { convertgQLCurrency, GqlCurrencies } from "../../types/gqlCurrency";
+import CurrencyIcon from '../../components/CurrencyIcon';
+import { convertgQLCurrency, GqlCurrencies } from '../../types/gqlCurrency';
+import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
+import { EquipmentCost, useGetEquipmentsQuery } from '../../generated/graphql';
+import { FunctionComponent, useState } from 'react';
+import { Typography } from '@mui/material';
+import { useHistory } from 'react-router-dom';
 
 const EquipmentPage: FunctionComponent = () => {
   const { data, error, loading } = useGetEquipmentsQuery();

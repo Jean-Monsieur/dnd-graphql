@@ -1,13 +1,12 @@
-import React, { FunctionComponent } from "react";
-import { PageContainer } from "../../components/page";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import PersonPinIcon from "@mui/icons-material/PersonPin";
-import CurrencyExchangeIcon from "@mui/icons-material/CurrencyExchange";
-import { Box, Typography } from "@mui/material";
-
-import CurrencyConverter from "./currency-converter/CurrencyConverter";
+import CurrencyConverter from './currency-converter/CurrencyConverter';
+import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import PersonPinIcon from '@mui/icons-material/PersonPin';
+import React, { FunctionComponent } from 'react';
+import Tab from '@mui/material/Tab';
+import Tabs from '@mui/material/Tabs';
+import { Box, Typography } from '@mui/material';
+import { PageContainer } from '../../components/page';
 
 interface TabPanelProps {
   children?: React.ReactNode;

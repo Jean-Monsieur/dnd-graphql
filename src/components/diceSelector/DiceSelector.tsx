@@ -1,4 +1,11 @@
-import React, { FunctionComponent, useState } from "react";
+import Icon from '@mdi/react';
+import React, { FunctionComponent, useState } from 'react';
+import {
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select
+  } from '@mui/material';
 
 import {
   mdiDiceD20,
@@ -8,9 +15,7 @@ import {
   mdiDiceD6,
   mdiDiceD4,
 } from "@mdi/js";
-import Icon from "@mdi/react";
 
-import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 type DiceSelectorProps = {};
 
 export enum Dice {

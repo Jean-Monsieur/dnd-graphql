@@ -1,3 +1,6 @@
+import { getPathIcon } from '../../theme/getPathIcon';
+import { Link } from 'react-router-dom';
+import { rootStruct } from '../../rootStruct';
 import {
   Box,
   Drawer,
@@ -8,10 +11,6 @@ import {
   ListItemText,
   Toolbar,
 } from "@mui/material";
-
-import { Link } from "react-router-dom";
-import { rootStruct } from "../../rootStruct";
-import { getPathIcon } from "../../theme/getPathIcon";
 
 type AppDrawerProps = {
   onToggle: (newValue: boolean) => void;

@@ -1,6 +1,6 @@
-import { Route, Switch } from "react-router-dom";
-import SpellPage from "./SpellPage";
-import SpellsPage from "./SpellsPage";
+import SpellPage from './SpellPage';
+import SpellsPage from './SpellsPage';
+import { Route, Switch } from 'react-router-dom';
 const SpellsRouter = () => (
   <Switch>
     <Route exact path="/spells" component={SpellsPage}></Route>

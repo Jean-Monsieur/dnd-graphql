@@ -1,3 +1,6 @@
+import { FunctionComponent } from 'react';
+import { PageContainer } from '../../components/page';
+import { useHistory, useParams } from 'react-router-dom';
 import {
   Card,
   CardContent,
@@ -5,9 +8,6 @@ import {
   CardActions,
   Button,
 } from "@mui/material";
-import { FunctionComponent } from "react";
-import { useHistory, useParams } from "react-router-dom";
-import { PageContainer } from "../../components/page";
 import {
   FilterFindOneMagicItemInput,
   useGetMagicalItemQuery,

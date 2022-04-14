@@ -1,3 +1,9 @@
+import Logout from '@mui/icons-material/Logout';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import React from 'react';
+import Settings from '@mui/icons-material/Settings';
+import { useAuth0 } from '@auth0/auth0-react';
 import {
   Avatar,
   Divider,
@@ -5,13 +11,7 @@ import {
   ListItemIcon,
   Tooltip,
 } from "@mui/material";
-import { useAuth0 } from "@auth0/auth0-react";
-import MenuItem from "@mui/material/MenuItem";
-import Menu from "@mui/material/Menu";
-import React from "react";
 
-import Settings from "@mui/icons-material/Settings";
-import Logout from "@mui/icons-material/Logout";
 
 type UserMenuProps = {
   onLogoutClicked: () => void;
@@ -32,53 +32,53 @@ const UserMenu = ({ onLogoutClicked }: UserMenuProps) => {
 
   return (
     <div>
-        <Tooltip title="Account settings">
-          <IconButton
-            onClick={handleMenu}
-            size="small"
-            sx={{ ml: 2 }}
-            aria-haspopup="true"
-            aria-expanded={open ? "true" : undefined}
-            aria-controls={open ? "menu-appbar" : undefined}
-          >
-            <Avatar sx={{ width: 32, height: 32 }} src={user?.picture}/>
-          </IconButton>
-        </Tooltip>
-        <Menu
-          id="menu-appbar"
-          anchorEl={anchorEl}
-          open={open}
-          onClose={handleClose}
-          MenuListProps={{
-            "aria-labelledby": "basic-button",
-          }}
+      <Tooltip title="Account settings">
+        <IconButton
+          onClick={handleMenu}
+          size="small"
+          sx={{ ml: 2 }}
+          aria-haspopup="true"
+          aria-expanded={open ? "true" : undefined}
+          aria-controls={open ? "menu-appbar" : undefined}
         >
-          <MenuItem onClick={handleClose}>
-            <ListItemIcon>
-            <Avatar sx={{ width: 32, height: 32 }} src={user?.picture}/>
-            </ListItemIcon>
-            Profile
-          </MenuItem>
-          <MenuItem onClick={handleClose}>
-            <ListItemIcon>
-            <Avatar sx={{ width: 32, height: 32 }} src={user?.picture}/>
-            </ListItemIcon>
-            My account
-          </MenuItem>
-          <Divider />
-          <MenuItem>
-            <ListItemIcon>
-              <Settings fontSize="small" />
-            </ListItemIcon>{" "}
-            Settings
-          </MenuItem>
-          <MenuItem onClick={onLogoutClicked}>
-            <ListItemIcon>
-              <Logout fontSize="small" />
-            </ListItemIcon>
-            Logout
-          </MenuItem>
-        </Menu>
+          <Avatar sx={{ width: 32, height: 32 }} src={user?.picture} />
+        </IconButton>
+      </Tooltip>
+      <Menu
+        id="menu-appbar"
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        MenuListProps={{
+          "aria-labelledby": "basic-button",
+        }}
+      >
+        <MenuItem onClick={handleClose}>
+          <ListItemIcon>
+            <Avatar sx={{ width: 32, height: 32 }} src={user?.picture} />
+          </ListItemIcon>
+          Profile
+        </MenuItem>
+        <MenuItem onClick={handleClose}>
+          <ListItemIcon>
+            <Avatar sx={{ width: 32, height: 32 }} src={user?.picture} />
+          </ListItemIcon>
+          My account
+        </MenuItem>
+        <Divider />
+        <MenuItem>
+          <ListItemIcon>
+            <Settings fontSize="small" />
+          </ListItemIcon>{" "}
+          Settings
+        </MenuItem>
+        <MenuItem onClick={onLogoutClicked}>
+          <ListItemIcon>
+            <Logout fontSize="small" />
+          </ListItemIcon>
+          Logout
+        </MenuItem>
+      </Menu>
     </div>
   );
 };

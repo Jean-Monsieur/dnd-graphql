@@ -1,3 +1,8 @@
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+import { FunctionComponent } from 'react';
+import { PageContainer } from '../../components/page';
+import { useHistory, useParams } from 'react-router-dom';
 import {
   Card,
   CardContent,
@@ -5,15 +10,10 @@ import {
   CardActions,
   Button,
 } from "@mui/material";
-import { FunctionComponent } from "react";
-import { useHistory, useParams } from "react-router-dom";
-import { PageContainer } from "../../components/page";
 import {
   FilterFindOneSpellInput,
   useGetSpellQuery,
 } from "../../generated/graphql";
-import remarkGfm from "remark-gfm";
-import ReactMarkdown from "react-markdown";
 
 const SpellPage: FunctionComponent = () => {
   const { id } = useParams<{ id: string }>();
@@ -110,7 +110,6 @@ const SpellPage: FunctionComponent = () => {
             </Button>
           </CardActions>
         </Card>
-
       </div>
     </PageContainer>
   );
