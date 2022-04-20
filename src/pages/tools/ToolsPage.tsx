@@ -1,12 +1,13 @@
-import CurrencyConverter from './currency-converter/CurrencyConverter';
-import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import PersonPinIcon from '@mui/icons-material/PersonPin';
-import React, { FunctionComponent } from 'react';
-import Tab from '@mui/material/Tab';
-import Tabs from '@mui/material/Tabs';
-import { Box, Typography } from '@mui/material';
-import { PageContainer } from '../../components/page';
+import CurrencyConverter from "./currency-converter/CurrencyConverter";
+import CurrencyExchangeIcon from "@mui/icons-material/CurrencyExchange";
+import React, { FunctionComponent } from "react";
+import Tab from "@mui/material/Tab";
+import Tabs from "@mui/material/Tabs";
+import { Box, Typography } from "@mui/material";
+import { PageContainer } from "../../components/page";
+import DistanceConverter from "./distance-converter/DistanceConverter";
+import SquareFootIcon from "@mui/icons-material/SquareFoot";
+import BalanceIcon from "@mui/icons-material/Balance";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -49,18 +50,18 @@ const ToolsPage: FunctionComponent = () => {
           onChange={handleChange}
           aria-label="icon label tabs example"
         >
-          <Tab icon={<CurrencyExchangeIcon />} label="Converter" />
-          <Tab icon={<FavoriteIcon />} label="FAVORITES" />
-          <Tab icon={<PersonPinIcon />} label="NEARBY" />
+          <Tab icon={<CurrencyExchangeIcon />} label="Currency Converter" />
+          <Tab icon={<SquareFootIcon />} label="Distance Converter" />
+          <Tab icon={<BalanceIcon />} label="Weight Converter" />
         </Tabs>
         <TabPanel value={value} index={0}>
           <CurrencyConverter />
         </TabPanel>
         <TabPanel value={value} index={1}>
-          FAVORITE
+          <DistanceConverter />
         </TabPanel>
         <TabPanel value={value} index={2}>
-          NEARBY
+          En construction
         </TabPanel>
       </Box>
     </PageContainer>
