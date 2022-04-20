@@ -1,10 +1,11 @@
-import CurrencyIcon from '../../components/CurrencyIcon';
-import { convertgQLCurrency, GqlCurrencies } from '../../types/gqlCurrency';
-import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
-import { EquipmentCost, useGetEquipmentsQuery } from '../../generated/graphql';
-import { FunctionComponent, useState } from 'react';
-import { Typography } from '@mui/material';
-import { useHistory } from 'react-router-dom';
+import { CurrencyIcon } from "../../components/currency-icon";
+import { GqlCurrencies } from "../../types/gqlCurrency";
+import { DataGrid, GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
+import { EquipmentCost, useGetEquipmentsQuery } from "../../generated/graphql";
+import { FunctionComponent, useState } from "react";
+import { Typography } from "@mui/material";
+import { useHistory } from "react-router-dom";
+import { convertgQLCurrency } from "../../utils/convertGqlCurrency";
 
 const EquipmentPage: FunctionComponent = () => {
   const { data, error, loading } = useGetEquipmentsQuery();

@@ -1,7 +1,7 @@
-import CircleIcon from '@mui/icons-material/Circle';
-import DiamondIcon from '@mui/icons-material/Diamond';
-import React, { FunctionComponent } from 'react';
-import { Currency } from '../types/gqlCurrency';
+import CircleIcon from "@mui/icons-material/Circle";
+import DiamondIcon from "@mui/icons-material/Diamond";
+import React, { FunctionComponent } from "react";
+import { Currency } from "../../types";
 
 type CurrencyIconProps = { currency: Currency };
 

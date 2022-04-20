@@ -1,8 +1,8 @@
-import CurrencyIcon from '../../components/CurrencyIcon';
-import { convertgQLCurrency, GqlCurrencies } from '../../types/gqlCurrency';
-import { FunctionComponent } from 'react';
-import { useGetEquipmentQuery } from '../../generated/graphql';
-import { useHistory, useParams } from 'react-router-dom';
+import { CurrencyIcon } from "../../components/currency-icon";
+import { GqlCurrencies } from "../../types";
+import { FunctionComponent } from "react";
+import { useGetEquipmentQuery } from "../../generated/graphql";
+import { useHistory, useParams } from "react-router-dom";
 import {
   Card,
   CardContent,
@@ -10,6 +10,7 @@ import {
   CardActions,
   Button,
 } from "@mui/material";
+import { convertgQLCurrency } from "../../utils/convertGqlCurrency";
 const ItemPage: FunctionComponent = () => {
   const { id } = useParams<{ id: string }>();
   const history = useHistory();

@@ -1,7 +1,7 @@
-import CurrencyIcon from '../../../components/CurrencyIcon';
-import React, { FunctionComponent, useCallback, useState } from 'react';
-import { Currency } from '../../../types/gqlCurrency';
-import { useDeviceSelectors } from 'react-device-detect';
+import { CurrencyIcon } from "../../../components/currency-icon";
+import React, { FunctionComponent, useMemo, useState } from "react";
+import { Currency } from "../../../types";
+import { useDeviceSelectors } from "react-device-detect";
 import {
   Box,
   FormControl,
@@ -21,6 +21,7 @@ import {
   ToggleButtonGroup,
   Typography,
 } from "@mui/material";
+import { getConvertedCurrencyValue } from "../../../utils";
 
 const CurrencyConverter: FunctionComponent = () => {
   const [{ isMobile }] = useDeviceSelectors(window.navigator.userAgent);
@@ -41,99 +42,10 @@ const CurrencyConverter: FunctionComponent = () => {
     setInitialCurrency(event.target.value as Currency);
   };
 
-  const getConvertedValue = useCallback(
-    (currency: Currency) => {
-      if (initialCurrency === currency) {
-        return value;
-      } else {
-        //platinum
-        if (initialCurrency === Currency.PLATINUM) {
-          switch (currency) {
-            case Currency.PLATINUM:
-              return value;
-            case Currency.GOLD:
-              return value * 10;
-            case Currency.ELECTRUM:
-              return value * 20;
-            case Currency.SILVER:
-              return value * 100;
-            case Currency.COPPER:
-              return value * 1000;
-            default:
-              break;
-          }
-        }
-        //gold
-        if (initialCurrency === Currency.GOLD) {
-          switch (currency) {
-            case Currency.PLATINUM:
-              return value / 10;
-            case Currency.GOLD:
-              return value;
-            case Currency.ELECTRUM:
-              return value * 2;
-            case Currency.SILVER:
-              return value * 10;
-            case Currency.COPPER:
-              return value * 100;
-            default:
-              break;
-          }
-        }
-        //electrum
-        if (initialCurrency === Currency.ELECTRUM) {
-          switch (currency) {
-            case Currency.PLATINUM:
-              return value / 20;
-            case Currency.GOLD:
-              return value / 2;
-            case Currency.ELECTRUM:
-              return value;
-            case Currency.SILVER:
-              return value * 5;
-            case Currency.COPPER:
-              return value * 50;
-            default:
-              break;
-          }
-        }
-        //silver
-        if (initialCurrency === Currency.SILVER) {
-          switch (currency) {
-            case Currency.PLATINUM:
-              return value / 100;
-            case Currency.GOLD:
-              return value / 10;
-            case Currency.ELECTRUM:
-              return value / 5;
-            case Currency.SILVER:
-              return value;
-            case Currency.COPPER:
-              return value * 10;
-            default:
-              break;
-          }
-        }
-        //copper
-        if (initialCurrency === Currency.COPPER) {
-          switch (currency) {
-            case Currency.PLATINUM:
-              return value / 1000;
-            case Currency.GOLD:
-              return value / 100;
-            case Currency.ELECTRUM:
-              return value / 50;
-            case Currency.SILVER:
-              return value / 10;
-            case Currency.COPPER:
-              return value;
-            default:
-              break;
-          }
-        }
-        return 0;
-      }
-    },
+  const convertedValue = useMemo(
+    () => (currency: Currency) =>
+      getConvertedCurrencyValue(value, initialCurrency, currency),
+
     [initialCurrency, value]
   );
 
@@ -215,7 +127,7 @@ const CurrencyConverter: FunctionComponent = () => {
                               marginRight: ".5rem",
                             }}
                           >
-                            {getConvertedValue(key as Currency)}{" "}
+                            {convertedValue(key as Currency)}{" "}
                           </span>
                           <span
                             style={{
