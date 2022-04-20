@@ -2,14 +2,15 @@ import React, { useMemo, useState } from "react";
 import { Currency, DistanceUnit } from "../../../types";
 import {
   Box,
+  Card,
+  CardContent,
   FormControl,
-  Grid,
   InputAdornment,
   Paper,
-  TableCell,
   TextField,
   ToggleButton,
   ToggleButtonGroup,
+  Typography,
 } from "@mui/material";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import InputLabel from "@mui/material/InputLabel";
@@ -37,84 +38,83 @@ const DistanceConverter = () => {
   );
 
   return (
-    <>
-      {" "}
-      <Box
-        sx={{
-          display: "flex",
-          mb: "2rem",
-        }}
-      >
-        <Grid container spacing={2}>
-          <Grid item xs={12} md={12} lg={9}>
-            <Paper variant="outlined" sx={{ padding: 2 }}>
-              <FormControl>
-                <TextField
-                  id="outlined-number"
-                  label="Number"
-                  type="number"
-                  value={value}
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        {getDistanceAdornment(initialUnit)}
-                      </InputAdornment>
-                    ),
-                  }}
-                  onChange={(e) => setValue(Number(e.target.value))}
-                />
-              </FormControl>
+    <Box
+      sx={{
+        display: "flex",
+        mb: "2rem",
+      }}
+    >
+      <Paper variant="outlined" sx={{ padding: 2 }}>
+        <Typography variant="h6" gutterBottom component="div">
+          Value to Convert
+        </Typography>
+        <FormControl sx={{ mr: "1rem" }}>
+          <TextField
+            id="outlined-number"
+            label="Number"
+            type="number"
+            value={value}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  {getDistanceAdornment(initialUnit)}
+                </InputAdornment>
+              ),
+            }}
+            onChange={(e) => setValue(Number(e.target.value))}
+          />
+        </FormControl>
 
-              <FormControl>
-                <ToggleButtonGroup
-                  color="primary"
-                  value={initialUnit}
-                  exclusive
-                  onChange={handleChange}
-                >
+        <FormControl>
+          <ToggleButtonGroup
+            color="primary"
+            value={initialUnit}
+            exclusive
+            onChange={handleChange}
+          >
+            {Object.keys(DistanceUnit).map((key) => (
+              <ToggleButton value={key as Currency}>{key}</ToggleButton>
+            ))}
+          </ToggleButtonGroup>
+        </FormControl>
+        <Paper sx={{ mt: "1rem" }} elevation={3}>
+          <Card>
+            <CardContent>
+              <Typography variant="h5" color="text.secondary" gutterBottom>
+                Converted Values
+              </Typography>
+              <Typography>
+                <div>
                   {Object.keys(DistanceUnit).map((key) => (
-                    <ToggleButton value={key as Currency}>{key}</ToggleButton>
+                    <div style={{ display: "flex", alignItems: "center" }}>
+                      <FormControl fullWidth sx={{ mb: "1rem" }}>
+                        <InputLabel htmlFor={`outlined-converted-${key}`}>
+                          {key}
+                        </InputLabel>
+                        <OutlinedInput
+                          id={`outlined-converted-${key}`}
+                          label={key}
+                          type="number"
+                          value={convertedDistanceValue(key as DistanceUnit)}
+                          disabled
+                          readOnly
+                          endAdornment={
+                            <InputAdornment position="end">
+                              {getDistanceAdornment(key as DistanceUnit)}
+                            </InputAdornment>
+                          }
+                          onChange={(e) => setValue(Number(e.target.value))}
+                        />
+                      </FormControl>
+                    </div>
                   ))}
-                </ToggleButtonGroup>
-              </FormControl>
-            </Paper>
-
-            <Paper elevation={3}>
-              <div>
-                {Object.keys(DistanceUnit).map((key) => (
-                  <div>
-                    <TableCell>
-                      <div style={{ display: "flex", alignItems: "center" }}>
-                        <FormControl>
-                          <InputLabel htmlFor={`outlined-converted-${key}`}>
-                            {key}
-                          </InputLabel>
-                          <OutlinedInput
-                            id={`outlined-converted-${key}`}
-                            label={key}
-                            type="number"
-                            value={convertedDistanceValue(key as DistanceUnit)}
-                            disabled
-                            readOnly
-                            endAdornment={
-                              <InputAdornment position="end">
-                                {getDistanceAdornment(key as DistanceUnit)}
-                              </InputAdornment>
-                            }
-                            onChange={(e) => setValue(Number(e.target.value))}
-                          />
-                        </FormControl>
-                      </div>
-                    </TableCell>
-                  </div>
-                ))}
-              </div>
-            </Paper>
-          </Grid>
-          <Grid item xs={12} md={12} lg={3}></Grid>
-        </Grid>
-      </Box>
-    </>
+                </div>
+              </Typography>
+            </CardContent>
+          </Card>
+        </Paper>
+      </Paper>
+    </Box>
   );
 };
 

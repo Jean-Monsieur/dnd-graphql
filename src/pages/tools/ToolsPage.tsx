@@ -44,7 +44,7 @@ const ToolsPage: FunctionComponent = () => {
 
   return (
     <PageContainer>
-      <Box>
+      <Box sx={{ width: "100%" }}>
         <Tabs
           value={value}
           onChange={handleChange}
