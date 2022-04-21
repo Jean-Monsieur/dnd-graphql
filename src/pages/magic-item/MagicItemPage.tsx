@@ -1,12 +1,13 @@
-import { FunctionComponent } from 'react';
-import { PageContainer } from '../../components/page';
-import { useHistory, useParams } from 'react-router-dom';
+import { FunctionComponent } from "react";
+import { PageContainer } from "../../components/page";
+import { useHistory, useParams } from "react-router-dom";
 import {
   Card,
   CardContent,
   Typography,
   CardActions,
   Button,
+  Skeleton,
 } from "@mui/material";
 import {
   FilterFindOneMagicItemInput,
@@ -25,7 +26,19 @@ const MagicItemPage: FunctionComponent = () => {
   });
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div style={{ width: "100%", height: "100%" }}>
+        <Skeleton variant="text" width="100%" />
+        <Skeleton variant="rectangular" width={"100%"} sx={{ my: "1rem" }} />
+        <Skeleton variant="rectangular" width={"100%"} sx={{ my: "1rem" }} />
+        <Skeleton
+          variant="rectangular"
+          height={"50%"}
+          width={"100%"}
+          sx={{ my: "1rem" }}
+        />
+      </div>
+    );
   }
 
   if (error || !data) {

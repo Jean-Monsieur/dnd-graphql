@@ -1,10 +1,11 @@
-import SpellPage from './SpellPage';
-import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
-import { FunctionComponent, useState } from 'react';
-import { PageContainer } from '../../components/page';
-import { useGetSpellsQuery } from '../../generated/graphql';
-import { useHistory, useLocation } from 'react-router-dom';
-
+import SpellPage from "./SpellPage";
+import { GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
+import { FunctionComponent } from "react";
+import { PageContainer } from "../../components/page";
+import { useGetSpellsQuery } from "../../generated/graphql";
+import { useHistory, useLocation } from "react-router-dom";
+import { MuiTable } from "../../components/table";
+import { Skeleton } from "@mui/material";
 
 const SpellsPage: FunctionComponent = () => {
   const { data, error, loading } = useGetSpellsQuery();
@@ -13,10 +14,20 @@ const SpellsPage: FunctionComponent = () => {
 
   const history = useHistory();
 
-  const [pageSize, setPageSize] = useState(15);
-
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div style={{ width: "100%", height: "100%" }}>
+        <Skeleton variant="text" width="100%" />
+        <Skeleton variant="rectangular" width={"100%"} sx={{ my: "1rem" }} />
+        <Skeleton variant="rectangular" width={"100%"} sx={{ my: "1rem" }} />
+        <Skeleton
+          variant="rectangular"
+          height={"50%"}
+          width={"100%"}
+          sx={{ my: "1rem" }}
+        />
+      </div>
+    );
   }
 
   if (error || !data) {
@@ -57,16 +68,10 @@ const SpellsPage: FunctionComponent = () => {
       <PageContainer>
         <div style={{ display: "flex" }}>
           <div style={{ flexGrow: 1 }}>
-            <DataGrid
-              rowsPerPageOptions={[5, 15, 25, 50, 100, 200]}
-              autoHeight
-              rows={data.spells.map((m) => ({ ...m, id: m.index }))}
+            <MuiTable
+              autoHeight={true}
               columns={columns}
-              pagination
-              pageSize={pageSize}
-              onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
-              disableSelectionOnClick
-              isRowSelectable={() => false}
+              rows={data.spells.map((m) => ({ ...m, id: m.index }))}
               onRowDoubleClick={({ id }) => history.push(`/spells/${id}`)}
             />
           </div>

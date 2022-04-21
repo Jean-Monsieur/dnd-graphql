@@ -1,21 +1,32 @@
 import { CurrencyIcon } from "../../components/currency-icon";
 import { GqlCurrencies } from "../../types/gqlCurrency";
-import { DataGrid, GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
+import { GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
 import { EquipmentCost, useGetEquipmentsQuery } from "../../generated/graphql";
-import { FunctionComponent, useState } from "react";
-import { Typography } from "@mui/material";
+import { FunctionComponent } from "react";
+import { Skeleton, Typography } from "@mui/material";
 import { useHistory } from "react-router-dom";
 import { convertgQLCurrency } from "../../utils/convertGqlCurrency";
+import { MuiTable } from "../../components/table";
 
 const EquipmentPage: FunctionComponent = () => {
   const { data, error, loading } = useGetEquipmentsQuery();
 
   const history = useHistory();
 
-  const [pageSize, setPageSize] = useState(100);
-
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div style={{ width: "100%", height: "100%" }}>
+        <Skeleton variant="text" width="100%" />
+        <Skeleton variant="rectangular" width={"100%"} sx={{ my: "1rem" }} />
+        <Skeleton variant="rectangular" width={"100%"} sx={{ my: "1rem" }} />
+        <Skeleton
+          variant="rectangular"
+          height={"50%"}
+          width={"100%"}
+          sx={{ my: "1rem" }}
+        />
+      </div>
+    );
   }
 
   if (error || !data) {
@@ -63,15 +74,11 @@ const EquipmentPage: FunctionComponent = () => {
   return (
     <div style={{ display: "flex" }}>
       <div style={{ flexGrow: 1 }}>
-        <DataGrid
-          rowsPerPageOptions={[5, 15, 25, 50, 100, 200]}
-          autoHeight
-          rows={data.equipments.map((m) => ({ ...m, id: m.index }))}
+        <MuiTable
+          autoHeight={true}
           columns={columns}
-          pagination
-          pageSize={pageSize}
+          rows={data.equipments.map((m) => ({ ...m, id: m.index }))}
           onRowDoubleClick={({ id }) => history.push(`/equipment/${id}`)}
-          onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
         />
       </div>
     </div>

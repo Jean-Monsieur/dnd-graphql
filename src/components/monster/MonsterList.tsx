@@ -1,19 +1,16 @@
-import * as React from 'react';
-import BarChartIcon from '@mui/icons-material/BarChart';
-import CastleIcon from '@mui/icons-material/Castle';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import ShieldIcon from '@mui/icons-material/Shield';
-import { GetMonstersListQuery, MonsterSpeed } from '../../generated/graphql';
-import { useState } from 'react';
-import './styles.css';
+import * as React from "react";
+import BarChartIcon from "@mui/icons-material/BarChart";
+import CastleIcon from "@mui/icons-material/Castle";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import ShieldIcon from "@mui/icons-material/Shield";
+import { GetMonstersListQuery, MonsterSpeed } from "../../generated/graphql";
+import "./styles.css";
 import {
-  DataGrid,
   GridColDef,
   GridColumnHeaderParams,
   GridRenderCellParams,
 } from "@mui/x-data-grid";
-
-
+import { MuiTable } from "../table";
 
 interface Props {
   data: GetMonstersListQuery;
@@ -50,6 +47,7 @@ const MonsterList: React.FC<Props> = ({ data }) => {
       flex: 0.3,
       resizable: false,
       headerName: "Hit Dice",
+
       renderHeader: (params: GridColumnHeaderParams) => (
         <>
           <FavoriteIcon sx={{ mr: "1rem" }} />
@@ -138,20 +136,14 @@ const MonsterList: React.FC<Props> = ({ data }) => {
     },
   ];
 
-  const [pageSize, setPageSize] = useState(15);
-
   return (
     <div style={{ display: "flex" }}>
       <div style={{ flexGrow: 1 }}>
-        <DataGrid
-          rowsPerPageOptions={[5, 15, 25, 50, 100, 200]}
-          autoHeight
-          rows={data.monsters.map((m) => ({ ...m, id: m.url }))}
+        <MuiTable
+          autoHeight={true}
           columns={columns}
-          pageSize={pageSize}
-          pagination
-          onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
-          checkboxSelection
+          rows={data.monsters.map((m) => ({ ...m, id: m.url }))}
+          onRowDoubleClick={({ id }) => console.log(id)}
         />
       </div>
     </div>
