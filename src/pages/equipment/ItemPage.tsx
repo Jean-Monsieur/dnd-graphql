@@ -11,6 +11,20 @@ import {
   Button,
 } from "@mui/material";
 import { convertgQLCurrency } from "../../utils/convertGqlCurrency";
+import { DistanceUnitDisplay } from "../../components/converted-units";
+import {
+  mdiDiceD20,
+  mdiDiceD10,
+  mdiDiceD12,
+  mdiDiceD6,
+  mdiDiceD4,
+  mdiDiceD8,
+} from "@mdi/js";
+import MoneyIcon from "@mui/icons-material/Money";
+import LooksTwoIcon from "@mui/icons-material/LooksTwo";
+import Looks3Icon from "@mui/icons-material/Looks3";
+import LooksOneIcon from "@mui/icons-material/LooksOne";
+import Icon from "@mdi/react";
 const ItemPage: FunctionComponent = () => {
   const { id } = useParams<{ id: string }>();
   const history = useHistory();
@@ -31,6 +45,43 @@ const ItemPage: FunctionComponent = () => {
     return <div>ERROR</div>;
   }
 
+  const getDamageDieIcon = (die: string) => {
+    const x = die.toUpperCase();
+
+    if (x.includes("D100")) {
+      return <MoneyIcon />;
+    } else if (x.includes("D12")) {
+      return (
+        <Icon path={mdiDiceD12} size={1} horizontal vertical rotate={180} />
+      );
+    } else if (x.includes("D10")) {
+      return (
+        <Icon path={mdiDiceD10} size={1} horizontal vertical rotate={180} />
+      );
+    } else if (x.includes("D1")) {
+      return <LooksOneIcon />;
+    } else if (x.includes("D20")) {
+      return (
+        <Icon path={mdiDiceD20} size={1} horizontal vertical rotate={180} />
+      );
+    } else if (x.includes("D2")) {
+      return <LooksTwoIcon />;
+    } else if (x.includes("D8")) {
+      return (
+        <Icon path={mdiDiceD8} size={1} horizontal vertical rotate={180} />
+      );
+    } else if (x.includes("D6")) {
+      return (
+        <Icon path={mdiDiceD6} size={1} horizontal vertical rotate={180} />
+      );
+    } else if (x.includes("D4")) {
+      return (
+        <Icon path={mdiDiceD4} size={1} horizontal vertical rotate={180} />
+      );
+    } else if (x.includes("D3")) {
+      return <Looks3Icon />;
+    }
+  };
   return (
     <div>
       <Card>
@@ -48,7 +99,7 @@ const ItemPage: FunctionComponent = () => {
               color="text.secondary"
               gutterBottom
             >
-              Cost {data.equipment?.cost?.quantity}{" "}
+              Cost: {data.equipment?.cost?.quantity}{" "}
               <CurrencyIcon
                 currency={convertgQLCurrency(
                   data.equipment?.cost?.unit as GqlCurrencies
@@ -62,7 +113,7 @@ const ItemPage: FunctionComponent = () => {
               color="text.secondary"
               gutterBottom
             >
-              Weight {data.equipment?.weight} lbs
+              Weight: {data.equipment?.weight} lbs
             </Typography>
           )}
           {data.equipment?.range && (
@@ -71,8 +122,20 @@ const ItemPage: FunctionComponent = () => {
               color="text.secondary"
               gutterBottom
             >
-              <div>Range: Normal:{data.equipment?.range?.normal ?? "NA"}ft</div>
-              <div>Long:{data.equipment?.range?.long ?? "NA"}</div>
+              <div>
+                Range: (Normal){" "}
+                <DistanceUnitDisplay
+                  initialValue={
+                    data.equipment?.range?.normal?.toString() ?? "NA"
+                  }
+                />
+              </div>
+              <div>
+                Long:{" "}
+                <DistanceUnitDisplay
+                  initialValue={data.equipment?.range?.long?.toString() ?? "NA"}
+                />
+              </div>
             </Typography>
           )}
           {data.equipment?.armor_class?.base && (
@@ -81,7 +144,8 @@ const ItemPage: FunctionComponent = () => {
               color="text.secondary"
               gutterBottom
             >
-              Armor {data.equipment?.armor_class?.base}{" "}
+              Armor: {data.equipment?.armor_class?.base}
+              {", "}
               {data.equipment?.armor_category}
             </Typography>
           )}
@@ -92,7 +156,9 @@ const ItemPage: FunctionComponent = () => {
               color="text.secondary"
               gutterBottom
             >
-              Damage {data.equipment?.damage?.damage_dice}{" "}
+              Damage:{" "}
+              {getDamageDieIcon(data.equipment?.damage?.damage_dice ?? "12d3")}{" "}
+              {data.equipment?.damage?.damage_dice}{" "}
               {data.equipment?.damage?.damage_type?.name}
             </Typography>
           )}
@@ -120,9 +186,9 @@ const ItemPage: FunctionComponent = () => {
               color="text.secondary"
               gutterBottom
             >
-              Catgory Range{" "}
-              {data.equipment?.contents.map((c) => (
-                <div>
+              Contents{" "}
+              {data.equipment?.contents.map((c, index) => (
+                <div key={index}>
                   {c?.item?.name} {c?.quantity}
                 </div>
               ))}
@@ -132,8 +198,8 @@ const ItemPage: FunctionComponent = () => {
             variant="body2"
             sx={{ mb: 1.5, textJustify: "left", marginTop: "4em" }}
           >
-            {data.equipment?.desc?.map((d) => (
-              <>{d}</>
+            {data.equipment?.desc?.map((d, index) => (
+              <div key={index}>{d}</div>
             ))}
           </Typography>
         </CardContent>

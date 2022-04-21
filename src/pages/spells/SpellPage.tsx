@@ -1,8 +1,8 @@
-import ReactMarkdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
-import { FunctionComponent } from 'react';
-import { PageContainer } from '../../components/page';
-import { useHistory, useParams } from 'react-router-dom';
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import { FunctionComponent } from "react";
+import { PageContainer } from "../../components/page";
+import { useHistory, useParams } from "react-router-dom";
 import {
   Card,
   CardContent,
@@ -14,6 +14,8 @@ import {
   FilterFindOneSpellInput,
   useGetSpellQuery,
 } from "../../generated/graphql";
+
+import { DistanceUnitDisplay } from "../../components/converted-units";
 
 const SpellPage: FunctionComponent = () => {
   const { id } = useParams<{ id: string }>();
@@ -61,22 +63,18 @@ const SpellPage: FunctionComponent = () => {
               color="text.secondary"
               gutterBottom
             >
-              Range: {data.spell?.range}
+              Range:{" "}
+              <DistanceUnitDisplay initialValue={data.spell?.range ?? ""} />
             </Typography>
             <Typography
               sx={{ fontSize: 14 }}
               color="text.secondary"
               gutterBottom
             >
-              Area of Effect :{data.spell?.area_of_effect?.type}{" "}
-              {data.spell?.area_of_effect?.size}
-            </Typography>
-            <Typography
-              sx={{ fontSize: 14 }}
-              color="text.secondary"
-              gutterBottom
-            >
-              Range: {data.spell?.range}
+              Area of Effect : {data.spell?.area_of_effect?.type}{" "}
+              <DistanceUnitDisplay
+                initialValue={data.spell?.area_of_effect?.size.toString() ?? ""}
+              />
             </Typography>
             <Typography sx={{ mb: 1.5 }} variant="body2">
               Classes:{" "}
