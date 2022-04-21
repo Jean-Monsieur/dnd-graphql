@@ -63,9 +63,9 @@ const CurrencyConverter: FunctionComponent = () => {
                 endAdornment: (
                   <InputAdornment position="end">
                     <Select
+                      size="small"
                       labelId="demo-simple-select-label"
                       id="demo-simple-select"
-                      label="Initial Currency"
                       value={initialCurrency}
                       onChange={handleChange2}
                     >
@@ -97,7 +97,10 @@ const CurrencyConverter: FunctionComponent = () => {
                 <Typography>
                   <div>
                     {Object.keys(Currency).map((key) => (
-                      <div style={{ display: "flex", alignItems: "center" }}>
+                      <div
+                        key={key}
+                        style={{ display: "flex", alignItems: "center" }}
+                      >
                         <FormControl fullWidth sx={{ mb: "1rem" }}>
                           <InputLabel htmlFor={`outlined-converted-${key}`}>
                             {key}
