@@ -2,6 +2,7 @@ import MonsterList from "./MonsterList";
 import React from "react";
 import { useGetMonstersListQuery } from "../../generated/graphql";
 import { Skeleton } from "@mui/material";
+import ErrorPage from "../error-page/ErrorPage";
 
 const MonsterTableContainer = () => {
   const { data, error, loading } = useGetMonstersListQuery();
@@ -23,7 +24,7 @@ const MonsterTableContainer = () => {
   }
 
   if (error || !data) {
-    return <div>ERROR</div>;
+    return <ErrorPage errorCode={500} />;
   }
 
   return <MonsterList data={data} />;

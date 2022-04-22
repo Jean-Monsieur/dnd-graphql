@@ -26,6 +26,7 @@ import LooksTwoIcon from "@mui/icons-material/LooksTwo";
 import Looks3Icon from "@mui/icons-material/Looks3";
 import LooksOneIcon from "@mui/icons-material/LooksOne";
 import Icon from "@mdi/react";
+import ErrorPage from "../../components/error-page/ErrorPage";
 const ItemPage: FunctionComponent = () => {
   const { id } = useParams<{ id: string }>();
   const history = useHistory();
@@ -55,7 +56,7 @@ const ItemPage: FunctionComponent = () => {
   }
 
   if (error || !data) {
-    return <div>ERROR</div>;
+    return <ErrorPage errorCode={500} />;
   }
 
   const getDamageDieIcon = (die: string) => {
@@ -95,6 +96,11 @@ const ItemPage: FunctionComponent = () => {
       return <Looks3Icon />;
     }
   };
+
+  if (data.equipment === null) {
+    return <ErrorPage errorCode={500} />;
+  }
+
   return (
     <div>
       <Card>

@@ -7,6 +7,7 @@ import { Skeleton, Typography } from "@mui/material";
 import { useHistory } from "react-router-dom";
 import { convertgQLCurrency } from "../../utils/convertGqlCurrency";
 import { MuiTable } from "../../components/table";
+import ErrorPage from "../../components/error-page/ErrorPage";
 
 const EquipmentPage: FunctionComponent = () => {
   const { data, error, loading } = useGetEquipmentsQuery();
@@ -30,7 +31,7 @@ const EquipmentPage: FunctionComponent = () => {
   }
 
   if (error || !data) {
-    return <div>ERROR</div>;
+    return <ErrorPage errorCode={500} />;
   }
 
   const columns: GridColDef[] = [

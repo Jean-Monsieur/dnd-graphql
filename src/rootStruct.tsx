@@ -1,5 +1,5 @@
 export enum PathIcons {
-  HOME = "/home",
+  HOME = "/",
   MONSTERS = "/monsters",
   EQUIPMENT = "/equipment",
   MAGIC = "/magic",
@@ -10,7 +10,7 @@ export enum PathIcons {
 }
 
 export enum PATHS {
-  HOME = "/home",
+  HOME = "/",
   MONSTERS = "/monsters",
   EQUIPMENT = "/equipment",
   MAGIC = "/magic",
