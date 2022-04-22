@@ -1,6 +1,6 @@
-import { getPathIcon } from '../../theme/getPathIcon';
-import { Link } from 'react-router-dom';
-import { rootStruct } from '../../rootStruct';
+import { getPathIcon } from "../../theme/getPathIcon";
+import { Link } from "react-router-dom";
+import { rootStruct } from "../../rootStruct";
 import {
   Box,
   Drawer,
@@ -19,6 +19,10 @@ type AppDrawerProps = {
 
 const AppDrawer = ({ onToggle, onItemClick, ...props }: AppDrawerProps) => {
   const style = {
+    // color: "white",
+    // a: {
+    //   color: "red",
+    // },
     "&:hover": {
       color: "inherit",
       textDecoration: "none",
@@ -37,7 +41,7 @@ const AppDrawer = ({ onToggle, onItemClick, ...props }: AppDrawerProps) => {
     <>
       <Drawer anchor={"left"} {...props}>
         <Toolbar />
-        <Box sx={{ width: 250, height: "100% " }} role="presentation">
+        <Box sx={{ height: "100% " }} role="presentation">
           <List>
             {rootStruct.map(({ id, name, iconName, path }) => (
               <ListItem
@@ -48,7 +52,7 @@ const AppDrawer = ({ onToggle, onItemClick, ...props }: AppDrawerProps) => {
                 onClick={onItemClick}
               >
                 <ListItemIcon>{getPathIcon(iconName)}</ListItemIcon>
-                <ListItemText color="white" primary={name} />
+                <ListItemText primary={name} />
               </ListItem>
             ))}
           </List>

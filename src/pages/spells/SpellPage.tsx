@@ -17,6 +17,7 @@ import {
 } from "../../generated/graphql";
 
 import { DistanceUnitDisplay } from "../../components/converted-units";
+import ErrorPage from "../../components/error-page/ErrorPage";
 
 const SpellPage: FunctionComponent = () => {
   const { id } = useParams<{ id: string }>();
@@ -45,8 +46,8 @@ const SpellPage: FunctionComponent = () => {
     );
   }
 
-  if (error || !data) {
-    return <div>ERROR</div>;
+  if (error || !data || data.spell == null) {
+    return <ErrorPage errorCode={500} />;
   }
 
   return (

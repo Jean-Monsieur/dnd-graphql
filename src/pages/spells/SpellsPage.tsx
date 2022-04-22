@@ -6,6 +6,7 @@ import { useGetSpellsQuery } from "../../generated/graphql";
 import { useHistory, useLocation } from "react-router-dom";
 import { MuiTable } from "../../components/table";
 import { Skeleton } from "@mui/material";
+import ErrorPage from "../../components/error-page/ErrorPage";
 
 const SpellsPage: FunctionComponent = () => {
   const { data, error, loading } = useGetSpellsQuery();
@@ -31,7 +32,7 @@ const SpellsPage: FunctionComponent = () => {
   }
 
   if (error || !data) {
-    return <div>ERROR</div>;
+    return <ErrorPage errorCode={500} />;
   }
 
   const columns: GridColDef[] = [

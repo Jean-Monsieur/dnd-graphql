@@ -5,6 +5,7 @@ import { useGetMagicalItemsQuery } from "../../generated/graphql";
 import { useHistory } from "react-router-dom";
 import { MuiTable } from "../../components/table";
 import { Skeleton } from "@mui/material";
+import ErrorPage from "../../components/error-page/ErrorPage";
 
 const MagicItemsTable: FunctionComponent = () => {
   const { data, error, loading } = useGetMagicalItemsQuery();
@@ -27,7 +28,7 @@ const MagicItemsTable: FunctionComponent = () => {
   }
 
   if (error || !data) {
-    return <div>ERROR</div>;
+    return <ErrorPage errorCode={500} />;
   }
 
   const columns: GridColDef[] = [

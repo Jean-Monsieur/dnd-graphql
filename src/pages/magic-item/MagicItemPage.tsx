@@ -13,6 +13,7 @@ import {
   FilterFindOneMagicItemInput,
   useGetMagicalItemQuery,
 } from "../../generated/graphql";
+import ErrorPage from "../../components/error-page/ErrorPage";
 
 const MagicItemPage: FunctionComponent = () => {
   const { id } = useParams<{ id: string }>();
@@ -42,9 +43,12 @@ const MagicItemPage: FunctionComponent = () => {
   }
 
   if (error || !data) {
-    return <div>ERROR</div>;
+    return <ErrorPage errorCode={500} />;
   }
 
+  if (data.magicItem === null) {
+    return <ErrorPage errorCode={500} />;
+  }
   return (
     <PageContainer>
       <div style={{ display: "flex" }}>
