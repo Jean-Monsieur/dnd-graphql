@@ -18,3 +18,4 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 https://www.dnd5eapi.co/graphql
 
 
+[![pages-build-deployment](https://github.com/Jean-Monsieur/dnd-graphql/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/Jean-Monsieur/dnd-graphql/actions/workflows/pages/pages-build-deployment)
