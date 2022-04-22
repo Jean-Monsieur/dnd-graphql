@@ -1,10 +1,9 @@
-import convertWeightUnit from '../../utils/convertWeightUnit';
-import getWeightAdornment from '../../utils/getWeightAdornment';
-import InputLabel from '@mui/material/InputLabel';
-import OutlinedInput from '@mui/material/OutlinedInput';
-import React, { FunctionComponent, useMemo, useState } from 'react';
-import { convertDistanceUnits, getDistanceAdornment } from '../../utils';
-import { Currency, DistanceUnit, WeightUnit } from '../../types';
+import convertWeightUnit from "../../utils/convertWeightUnit";
+import getWeightAdornment from "../../utils/getWeightAdornment";
+import InputLabel from "@mui/material/InputLabel";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import React, { FunctionComponent, useMemo, useState } from "react";
+import { WeightUnit } from "../../types";
 import {
   Box,
   Card,
@@ -17,8 +16,8 @@ import {
   ToggleButtonGroup,
   Typography,
 } from "@mui/material";
-type WeightConverterProps = {};
-const WeightConverter: FunctionComponent<WeightConverterProps> = ({}) => {
+
+const WeightConverter: FunctionComponent = () => {
   const [value, setValue] = useState(0);
 
   const [initialUnit, setInitialUnit] = useState<WeightUnit>(WeightUnit.LBS);
