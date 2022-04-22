@@ -1,8 +1,16 @@
-import { CurrencyIcon } from "../../components/currency-icon";
-import { GqlCurrencies } from "../../types";
-import { FunctionComponent } from "react";
-import { useGetEquipmentQuery } from "../../generated/graphql";
-import { useHistory, useParams } from "react-router-dom";
+import convertWeightUnit from '../../utils/convertWeightUnit';
+import Icon from '@mdi/react';
+import Looks3Icon from '@mui/icons-material/Looks3';
+import LooksOneIcon from '@mui/icons-material/LooksOne';
+import LooksTwoIcon from '@mui/icons-material/LooksTwo';
+import MoneyIcon from '@mui/icons-material/Money';
+import { convertgQLCurrency } from '../../utils/convertGqlCurrency';
+import { CurrencyIcon } from '../../components/currency-icon';
+import { DistanceUnitDisplay } from '../../components/converted-units';
+import { FunctionComponent } from 'react';
+import { GqlCurrencies, WeightUnit } from '../../types';
+import { useGetEquipmentQuery } from '../../generated/graphql';
+import { useHistory, useParams } from 'react-router-dom';
 import {
   Card,
   CardContent,
@@ -11,8 +19,6 @@ import {
   Button,
   Skeleton,
 } from "@mui/material";
-import { convertgQLCurrency } from "../../utils/convertGqlCurrency";
-import { DistanceUnitDisplay } from "../../components/converted-units";
 import {
   mdiDiceD20,
   mdiDiceD10,
@@ -21,12 +27,9 @@ import {
   mdiDiceD4,
   mdiDiceD8,
 } from "@mdi/js";
-import MoneyIcon from "@mui/icons-material/Money";
-import LooksTwoIcon from "@mui/icons-material/LooksTwo";
-import Looks3Icon from "@mui/icons-material/Looks3";
-import LooksOneIcon from "@mui/icons-material/LooksOne";
-import Icon from "@mdi/react";
 import ErrorPage from "../../components/error-page/ErrorPage";
+
+
 const ItemPage: FunctionComponent = () => {
   const { id } = useParams<{ id: string }>();
   const history = useHistory();
@@ -97,9 +100,11 @@ const ItemPage: FunctionComponent = () => {
     }
   };
 
+
   if (data.equipment === null) {
     return <ErrorPage errorCode={500} />;
   }
+
 
   return (
     <div>
@@ -132,7 +137,13 @@ const ItemPage: FunctionComponent = () => {
               color="text.secondary"
               gutterBottom
             >
-              Weight: {data.equipment?.weight} lbs
+              Weight: {data.equipment?.weight} lbs{" "}
+              {convertWeightUnit(
+                data.equipment?.weight,
+                WeightUnit.LBS,
+                WeightUnit.KG
+              )}{" "}
+              Kg.
             </Typography>
           )}
           {data.equipment?.range && (

@@ -1,18 +1,31 @@
-import { CurrencyIcon } from "../../components/currency-icon";
-import { GqlCurrencies } from "../../types/gqlCurrency";
-import { GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
-import { EquipmentCost, useGetEquipmentsQuery } from "../../generated/graphql";
-import { FunctionComponent } from "react";
-import { Skeleton, Typography } from "@mui/material";
-import { useHistory } from "react-router-dom";
-import { convertgQLCurrency } from "../../utils/convertGqlCurrency";
-import { MuiTable } from "../../components/table";
+
+import convertWeightUnit from '../../utils/convertWeightUnit';
+import { convertgQLCurrency } from '../../utils/convertGqlCurrency';
+import { CurrencyIcon } from '../../components/currency-icon';
+import { EquipmentCost, useGetEquipmentsQuery } from '../../generated/graphql';
+import { FunctionComponent } from 'react';
+import { GqlCurrencies } from '../../types/gqlCurrency';
+import { GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
+import { MuiTable } from '../../components/table';
+import { Skeleton, Typography } from '@mui/material';
+import { useHistory } from 'react-router-dom';
+import { WeightUnit } from '../../types';
 import ErrorPage from "../../components/error-page/ErrorPage";
 
 const EquipmentPage: FunctionComponent = () => {
   const { data, error, loading } = useGetEquipmentsQuery();
 
   const history = useHistory();
+
+  const unitStyle = {
+    display: "flex",
+    alignItems: "center",
+    fontStyle: "italic",
+    fontSize: "small",
+    fontWeight: 100,
+    ml: ".5rem",
+    mr: "1rem",
+  };
 
   if (loading) {
     return (
@@ -38,17 +51,24 @@ const EquipmentPage: FunctionComponent = () => {
     {
       field: "name",
       flex: 1,
-      headerName: "name",
+      headerName: "Name",
     },
     {
       field: "weight",
       flex: 1,
       headerName: "Weight",
+      renderCell: (params) => (
+        <>
+          {params.value} <Typography sx={unitStyle}>Lbs.</Typography>
+          {convertWeightUnit(params.value, WeightUnit.LBS, WeightUnit.KG)}{" "}
+          <Typography sx={unitStyle}>Kg.</Typography>
+        </>
+      ),
     },
     {
       field: "cost",
       flex: 1,
-      headerName: "cost",
+      headerName: "Cost",
       renderCell: (params: GridRenderCellParams<EquipmentCost>) => (
         <>
           <span style={{ marginRight: "0.25rem" }}>
@@ -57,16 +77,7 @@ const EquipmentPage: FunctionComponent = () => {
           <CurrencyIcon
             currency={convertgQLCurrency(params.value.unit as GqlCurrencies)}
           />
-          <Typography
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              fontStyle: "italic",
-              fontWeight: 100,
-            }}
-          >
-            {params.value.unit}
-          </Typography>
+          <Typography sx={unitStyle}>{params.value.unit}</Typography>
         </>
       ),
     },

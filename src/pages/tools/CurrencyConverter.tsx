@@ -1,6 +1,8 @@
-import { CurrencyIcon } from "../../../components/currency-icon";
-import { FunctionComponent, useMemo, useState } from "react";
-import { Currency } from "../../../types";
+import OutlinedInput from '@mui/material/OutlinedInput';
+import { Currency } from '../../types';
+import { CurrencyIcon } from '../../components/currency-icon';
+import { FunctionComponent, useMemo, useState } from 'react';
+import { getConvertedCurrencyValue } from '../../utils';
 import {
   Box,
   Card,
@@ -16,8 +18,6 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { getConvertedCurrencyValue } from "../../../utils";
-import OutlinedInput from "@mui/material/OutlinedInput";
 
 const CurrencyConverter: FunctionComponent = () => {
   const [initialCurrency, setInitialCurrency] = useState<Currency>(

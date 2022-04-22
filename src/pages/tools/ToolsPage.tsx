@@ -1,13 +1,14 @@
-import CurrencyConverter from "./currency-converter/CurrencyConverter";
-import CurrencyExchangeIcon from "@mui/icons-material/CurrencyExchange";
-import React, { FunctionComponent } from "react";
-import Tab from "@mui/material/Tab";
-import Tabs from "@mui/material/Tabs";
-import { Box, Typography } from "@mui/material";
-import { PageContainer } from "../../components/page";
-import DistanceConverter from "./distance-converter/DistanceConverter";
-import SquareFootIcon from "@mui/icons-material/SquareFoot";
-import BalanceIcon from "@mui/icons-material/Balance";
+import BalanceIcon from '@mui/icons-material/Balance';
+import CurrencyConverter from './CurrencyConverter';
+import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
+import DistanceConverter from './DistanceConverter';
+import React, { FunctionComponent } from 'react';
+import SquareFootIcon from '@mui/icons-material/SquareFoot';
+import Tab from '@mui/material/Tab';
+import Tabs from '@mui/material/Tabs';
+import WeightConverter from './WeightConverter';
+import { Box, Typography } from '@mui/material';
+import { PageContainer } from '../../components/page';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -47,6 +48,7 @@ const ToolsPage: FunctionComponent = () => {
       <Box sx={{ width: "100%" }}>
         <Tabs
           value={value}
+          variant="fullWidth"
           onChange={handleChange}
           aria-label="icon label tabs example"
         >
@@ -61,7 +63,7 @@ const ToolsPage: FunctionComponent = () => {
           <DistanceConverter />
         </TabPanel>
         <TabPanel value={value} index={2}>
-          En construction
+          <WeightConverter />
         </TabPanel>
       </Box>
     </PageContainer>
