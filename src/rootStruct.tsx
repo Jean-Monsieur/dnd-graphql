@@ -18,6 +18,8 @@ export enum PATHS {
   MAGIC_ITEMS = "/magic-item",
   MAGIC_SCHOOL = "/magic-schools",
   TOOLS = "/tools",
+  ACCOUNT = "/account",
+  PROFILE = "/profile",
 }
 
 export enum PathCategory {

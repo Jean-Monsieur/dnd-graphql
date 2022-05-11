@@ -1,6 +1,7 @@
 import { Fade } from "@mui/material";
 import { Route, Switch } from "react-router-dom";
 import ErrorPage from "./components/error-page/ErrorPage";
+import AccountRouter from "./pages/account/AccountRouter";
 import { EquipmentPage } from "./pages/equipment";
 import { MagicItemsPage } from "./pages/magic-item";
 import Magic from "./pages/magic/Magic";
@@ -22,6 +23,7 @@ const Router = () => {
         <Route exact path={PATHS.HOME}>
           <>home</>
         </Route>
+        <Route path={PATHS.PROFILE} component={AccountRouter} />
 
         <Route path={`*`}>
           <ErrorPage errorCode={404} />
