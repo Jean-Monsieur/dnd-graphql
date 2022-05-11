@@ -1,9 +1,9 @@
-import Logout from '@mui/icons-material/Logout';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-import React from 'react';
-import Settings from '@mui/icons-material/Settings';
-import { useAuth0 } from '@auth0/auth0-react';
+import Logout from "@mui/icons-material/Logout";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import React from "react";
+import Settings from "@mui/icons-material/Settings";
+import { useAuth0 } from "@auth0/auth0-react";
 import {
   Avatar,
   Divider,
@@ -11,7 +11,7 @@ import {
   ListItemIcon,
   Tooltip,
 } from "@mui/material";
-
+import { Link } from "react-router-dom";
 
 type UserMenuProps = {
   onLogoutClicked: () => void;
@@ -53,7 +53,7 @@ const UserMenu = ({ onLogoutClicked }: UserMenuProps) => {
           "aria-labelledby": "basic-button",
         }}
       >
-        <MenuItem onClick={handleClose}>
+        <MenuItem onClick={handleClose} component={Link} to="/profile">
           <ListItemIcon>
             <Avatar sx={{ width: 32, height: 32 }} src={user?.picture} />
           </ListItemIcon>

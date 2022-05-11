@@ -80,8 +80,8 @@ const MonsterList: React.FC<Props> = ({ data }) => {
       renderHeader: () => <>{" Speed (🏃 Walk / ⛰️ Climb /🏊🏻Swim/ 🐤 Fly)"}</>,
       renderCell: (params: GridRenderCellParams<MonsterSpeed>) => (
         <>
-          {params.value.walk}/{params.value.climb}/{params.value.swim}/
-          {params.value.fly}
+          {params?.value?.walk}/{params?.value?.climb}/{params?.value?.swim}/
+          {params?.value?.fly}
         </>
       ),
     },

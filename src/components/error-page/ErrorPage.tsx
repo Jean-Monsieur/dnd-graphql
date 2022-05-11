@@ -1,5 +1,7 @@
 import { Button } from "@mui/material";
 import React from "react";
+import { useHistory } from "react-router-dom";
+import ArrowCircleLeftIcon from "@mui/icons-material/ArrowCircleLeft";
 
 import "./style.css";
 
@@ -14,6 +16,7 @@ const ErrorMessages = {
 };
 type ErrorPageProps = { errorCode?: 404 | 500 };
 const ErrorPage = ({ errorCode = 404 }: ErrorPageProps) => {
+  const history = useHistory();
   return (
     <div className="site">
       <div className="sketch">
@@ -24,7 +27,12 @@ const ErrorPage = ({ errorCode = 404 }: ErrorPageProps) => {
       <h1>
         {ErrorMessages[errorCode].code}:
         <small>{ErrorMessages[errorCode].message}</small>
-        <Button>bruh</Button>
+        <Button variant="outlined" onClick={() => history.goBack()}>
+          <>
+            <ArrowCircleLeftIcon sx={{ mr: "0.5rem" }} />
+            Leave This Place !
+          </>
+        </Button>
       </h1>
     </div>
   );
