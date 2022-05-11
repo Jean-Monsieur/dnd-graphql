@@ -17,9 +17,9 @@ ReactDOM.render(
   <Auth0Provider
     domain={Auth0.DOMAIN}
     clientId={Auth0.CLIENTID}
-    // redirectUri={"https://jeanmaster.quest/"}
+    redirectUri={"https://jeanmaster.quest/"}
     // redirectUri={"https://jean-monsieur.github.io/dnd-graphql/"}
-    redirectUri={window.location.origin}
+    // redirectUri={window.location.origin}
   >
     <BrowserRouter>
       <ApolloProvider client={client}>
