@@ -1,8 +1,10 @@
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
-import { FunctionComponent } from "react";
-import { PageContainer } from "../../components/page";
-import { useHistory, useParams } from "react-router-dom";
+import ErrorPage from '../../components/error-page/ErrorPage';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+import { DistanceUnitDisplay } from '../../components/converted-units';
+import { FunctionComponent } from 'react';
+import { PageContainer } from '../../components/page';
+import { useHistory, useParams } from 'react-router-dom';
 import {
   Card,
   CardContent,
@@ -11,25 +13,23 @@ import {
   Button,
   Skeleton,
 } from "@mui/material";
-import {
-  FilterFindOneSpellInput,
-  useGetSpellQuery,
-} from "../../generated/graphql";
 
-import { DistanceUnitDisplay } from "../../components/converted-units";
-import ErrorPage from "../../components/error-page/ErrorPage";
+
 
 const SpellPage: FunctionComponent = () => {
   const { id } = useParams<{ id: string }>();
   const history = useHistory();
 
-  const x: FilterFindOneSpellInput = {
+  const x = {
     index: id,
   };
-  const { data, error, loading } = useGetSpellQuery({
-    variables: { filter: x },
-  });
+  // const { data, error, loading } = useGetSpellQuery({
+  //   variables: { filter: x },
+  // });
 
+  const loading = !true;
+  const error =false;
+  const data: never[] = []
   if (loading) {
     return (
       <div style={{ width: "100%", height: "100%" }}>
@@ -46,9 +46,9 @@ const SpellPage: FunctionComponent = () => {
     );
   }
 
-  if (error || !data || data.spell == null) {
-    return <ErrorPage errorCode={500} />;
-  }
+  // if (error || !data || data.spell == null) {
+  //   return <ErrorPage errorCode={500} />;
+  // }
 
   return (
     <PageContainer>
@@ -56,21 +56,24 @@ const SpellPage: FunctionComponent = () => {
         <Card>
           <CardContent>
             <Typography variant="h5" component="div">
-              {data.spell?.name}
+              bruh
             </Typography>
             <Typography
               sx={{ fontSize: 14 }}
               color="text.secondary"
               gutterBottom
             >
-              {data.spell?.school?.name} Lvl {data.spell?.level}
+              bruh
+              {/* {data.spell?.school?.name} Lvl {data.spell?.level}
+               */}
             </Typography>
             <Typography
               sx={{ fontSize: 14 }}
               color="text.secondary"
               gutterBottom
             >
-              {data.spell?.components} - ({data.spell?.material})
+              bruh
+              {/* {data.spell?.components} - ({data.spell?.material}) */}
             </Typography>
             <Typography
               sx={{ fontSize: 14 }}
@@ -78,29 +81,29 @@ const SpellPage: FunctionComponent = () => {
               gutterBottom
             >
               Range:{" "}
-              <DistanceUnitDisplay initialValue={data.spell?.range ?? ""} />
+              {/* <DistanceUnitDisplay initialValue={data.spell?.range ?? ""} /> */}
             </Typography>
             <Typography
               sx={{ fontSize: 14 }}
               color="text.secondary"
               gutterBottom
             >
-              Area of Effect : {data.spell?.area_of_effect?.type}{" "}
-              <DistanceUnitDisplay
+              {/* Area of Effect : {data.spell?.area_of_effect?.type}{" "} */}
+              {/* <DistanceUnitDisplay
                 initialValue={data.spell?.area_of_effect?.size.toString() ?? ""}
-              />
+              /> */}
             </Typography>
             <Typography sx={{ mb: 1.5 }} variant="body2">
               Classes:{" "}
-              {data.spell?.classes?.map((c, index) => (
+              {/* {data.spell?.classes?.map((c, index) => (
                 <>
                   {c?.name}
                   {index + 1 !== data.spell?.classes?.length ? ", " : ""}
                 </>
-              ))}
+              ))} */}
             </Typography>
             <Typography sx={{ mb: 1.5 }} variant="body2">
-              {data.spell?.desc !== null ? (
+              {/* {data.spell?.desc !== null ? (
                 <ReactMarkdown remarkPlugins={[remarkGfm]}>
                   {data.spell?.desc
                     ?.toString()
@@ -110,10 +113,10 @@ const SpellPage: FunctionComponent = () => {
                     .replaceAll(",#", " \n#")
                     .replaceAll(",", " \n") ?? ""}
                 </ReactMarkdown>
-              ) : null}
+              ) : null} */}
             </Typography>
             <Typography sx={{ mb: 1.5 }} variant="body2">
-              {data.spell?.higher_level}
+              {/* {data.spell?.higher_level} */}
             </Typography>
           </CardContent>
           <CardActions>

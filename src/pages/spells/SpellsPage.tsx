@@ -1,15 +1,19 @@
-import SpellPage from "./SpellPage";
-import { GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
-import { FunctionComponent } from "react";
-import { PageContainer } from "../../components/page";
-import { useGetSpellsQuery } from "../../generated/graphql";
-import { useHistory, useLocation } from "react-router-dom";
-import { MuiTable } from "../../components/table";
-import { Skeleton } from "@mui/material";
-import ErrorPage from "../../components/error-page/ErrorPage";
+import ErrorPage from '../../components/error-page/ErrorPage';
+import SpellPage from './SpellPage';
+import { FunctionComponent } from 'react';
+import { GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
+import { MuiTable } from '../../components/table';
+import { PageContainer } from '../../components/page';
+import { Skeleton } from '@mui/material';
+import { useHistory, useLocation } from 'react-router-dom';
+
 
 const SpellsPage: FunctionComponent = () => {
-  const { data, error, loading } = useGetSpellsQuery();
+
+  // const { data, error, loading } = useGetSpellsQuery();
+  const loading = false;
+  const data: readonly any[] = [];
+  const error = false;
 
   const location = useLocation();
 
@@ -72,7 +76,8 @@ const SpellsPage: FunctionComponent = () => {
             <MuiTable
               autoHeight={true}
               columns={columns}
-              rows={data.spells.map((m) => ({ ...m, id: m.index }))}
+              rows={data}
+              // rows={data.spells.map((m: { index: any; }) => ({ ...m, id: m.index }))}
               onRowDoubleClick={({ id }) => history.push(`/spells/${id}`)}
             />
           </div>
