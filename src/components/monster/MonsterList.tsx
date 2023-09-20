@@ -1,16 +1,16 @@
-import * as React from "react";
-import BarChartIcon from "@mui/icons-material/BarChart";
-import CastleIcon from "@mui/icons-material/Castle";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import ShieldIcon from "@mui/icons-material/Shield";
-import { GetMonstersListQuery, MonsterSpeed } from "../../generated/graphql";
-import "./styles.css";
+import * as React from 'react';
+import BarChartIcon from '@mui/icons-material/BarChart';
+import CastleIcon from '@mui/icons-material/Castle';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import ShieldIcon from '@mui/icons-material/Shield';
+import { GetMonstersListQuery, MonsterSpeed } from '../../generated/graphql';
+import { MuiTable } from '../table';
+import './styles.css';
 import {
   GridColDef,
   GridColumnHeaderParams,
   GridRenderCellParams,
 } from "@mui/x-data-grid";
-import { MuiTable } from "../table";
 
 interface Props {
   data: GetMonstersListQuery;
@@ -135,14 +135,13 @@ const MonsterList: React.FC<Props> = ({ data }) => {
       headerName: "Cha",
     },
   ];
-
   return (
     <div style={{ display: "flex" }}>
       <div style={{ flexGrow: 1 }}>
         <MuiTable
           autoHeight={true}
           columns={columns}
-          rows={data.monsters.map((m) => ({ ...m, id: m.url }))}
+          rows={data?.monsters?.map((m) => ({ ...m, id: m.name }))??[]}
           onRowDoubleClick={({ id }) => console.log(id)}
         />
       </div>

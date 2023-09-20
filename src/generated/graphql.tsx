@@ -13,7385 +13,953 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
-  /** The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf). */
-  JSON: any;
-  /** The string representation of JavaScript regexp. You may provide it with flags "/^abc.*\/i" or without flags like "^abc.*". More info about RegExp characters and flags: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions */
-  RegExpAsString: any;
+  /** Int or string */
+  ActionCount: any;
+  /** AreaOfEffectType ("SPHERE", "CUBE", "CYLINDER", "LINE", "CONE") or list of AreaOfEffectTypes */
+  AreaOfEffectTypeFilter: any;
+  /** Float, list of floats, or object with gte (>=), gt (>), lte (<=), and lt (<) properties for range of values */
+  FloatFilter: any;
+  /** Int, list of ints, or object with gte (>=), gt (>), lte (<=), and lt (<) properties for range of values */
+  IntFilter: any;
+  /** LanguageScript ("COMMON", "ELVISH", "DWARVISH", "INFERNAL", "DRACONIC", "CELESTIAL") or list of LanguageScripts */
+  LanguageScriptFilter: any;
+  /** MonsterSubtype ("ANY_RACE", "HUMAN", "DWARF", "ELF", "GOBLINOID", "MERFOLK", "SHAPECHANGER", "DEMON", "DEVIL", "ORC", "SAHUAGIN", "TITAN", "KOBOLD", "GNOLL", "GRIMLOCK", "LIZARDFOLK", "GNOME") or list of MonsterSubtypes */
+  MonsterSubtypeFilter: any;
+  /** MonsterTypes ("BEAST", "MONSTROSITY", "DRAGON", "HUMANOID", "UNDEAD", "FIEND", "CELESTIAL", "CONSTRUCT", "GIANT", "ELEMENTAL", "FEY", "ABERRATION", "OOZE", "SWARM", "PLANT") or list of MonsterTypes */
+  MonsterTypeFilter: any;
+  /** ProficiencyType ("WEAPONS", "ARTISANS_TOOLS", "SKILLS", "ARMOR", "MUSICAL_INSTRUMENTS", "SAVING_THROWS", "OTHER", "GAMING_SETS", "VEHICLES") or list of ProficiencyTypes */
+  ProficiencyTypeFilter: any;
+  /** Size ("TINY", "SMALL", "MEDIUM", "LARGE", "HUGE", "GARGANTUAN") or list of sizes */
+  SizeFilter: any;
+  /** SpellAttackType ("MELEE", "RANGED") or list of SpellAttackTypes */
+  SpellAttackTypeFilter: any;
+  /** String or list of strings */
+  StringFilter: any;
+};
+
+export type AbilityBonus = {
+  __typename?: 'AbilityBonus';
+  ability_score: AbilityScore;
+  bonus: Scalars['Int'];
+};
+
+export type AbilityBonusChoice = {
+  __typename?: 'AbilityBonusChoice';
+  choose: Scalars['Int'];
+  from: AbilityBonusOptionSet;
+  type: Scalars['String'];
+};
+
+export type AbilityBonusOption = {
+  __typename?: 'AbilityBonusOption';
+  ability_score: AbilityScore;
+  bonus: Scalars['Int'];
+  option_type: Scalars['String'];
+};
+
+export type AbilityBonusOptionSet = {
+  __typename?: 'AbilityBonusOptionSet';
+  option_set_type: Scalars['String'];
+  options: Array<AbilityBonusOption>;
 };
 
 export type AbilityScore = {
   __typename?: 'AbilityScore';
-  _id: Scalars['String'];
-  desc?: Maybe<Array<Maybe<Scalars['String']>>>;
-  full_name?: Maybe<Scalars['String']>;
-  index?: Maybe<Scalars['String']>;
-  name?: Maybe<Scalars['String']>;
+  desc: Array<Scalars['String']>;
+  full_name: Scalars['String'];
+  index: Scalars['String'];
+  name: Scalars['String'];
   skills: Array<Skill>;
-  url?: Maybe<Scalars['String']>;
 };
 
 
 export type AbilityScoreSkillsArgs = {
-  limit?: InputMaybe<Scalars['Int']>;
-  skip?: InputMaybe<Scalars['Int']>;
-  sort?: InputMaybe<SortFindManySkillInput>;
-};
-
-export type AbilityScoreSkills = {
-  __typename?: 'AbilityScoreSkills';
-  index?: Maybe<Scalars['String']>;
-  name?: Maybe<Scalars['String']>;
-  url?: Maybe<Scalars['String']>;
-};
-
-export type AbilityScoreSkillsInput = {
-  index?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
-  url?: InputMaybe<Scalars['String']>;
+  order_direction?: InputMaybe<OrderByDirection>;
+};
+
+export type AbilityScorePrerequisite = {
+  __typename?: 'AbilityScorePrerequisite';
+  ability_score: AbilityScore;
+  minimum_score: Scalars['Int'];
+};
+
+export type Action = {
+  __typename?: 'Action';
+  action_name: Scalars['String'];
+  count: Scalars['ActionCount'];
+  type: Scalars['String'];
+};
+
+export type ActionDamage = {
+  __typename?: 'ActionDamage';
+  choose?: Maybe<Scalars['Int']>;
+  damage_dice?: Maybe<Scalars['String']>;
+  damage_type?: Maybe<DamageType>;
+  dc?: Maybe<ActionDc>;
+  from?: Maybe<DamageOptionSet>;
+  type?: Maybe<Scalars['String']>;
+};
+
+export type ActionDc = {
+  __typename?: 'ActionDc';
+  success: DcSuccess;
+  type: AbilityScore;
+  value: Scalars['Int'];
+};
+
+export type ActionOption = {
+  __typename?: 'ActionOption';
+  action_name: Scalars['String'];
+  count: Scalars['ActionCount'];
+  option_type: Scalars['String'];
+  type?: Maybe<Scalars['String']>;
 };
 
 export type Alignment = {
   __typename?: 'Alignment';
-  _id: Scalars['String'];
-  abbreviation?: Maybe<Scalars['String']>;
-  desc?: Maybe<Scalars['String']>;
-  index?: Maybe<Scalars['String']>;
-  name?: Maybe<Scalars['String']>;
-  url?: Maybe<Scalars['String']>;
+  abbreviation: Scalars['String'];
+  desc: Scalars['String'];
+  index: Scalars['String'];
+  name: Scalars['String'];
+};
+
+export type Ammunition = IEquipment & IEquipmentBase & IGear & {
+  __typename?: 'Ammunition';
+  cost: Cost;
+  desc?: Maybe<Array<Scalars['String']>>;
+  equipment_category: EquipmentCategory;
+  gear_category: EquipmentCategory;
+  index: Scalars['String'];
+  name: Scalars['String'];
+  quantity: Scalars['Int'];
+  weight?: Maybe<Scalars['Float']>;
+};
+
+export type AreaOfEffect = {
+  __typename?: 'AreaOfEffect';
+  size: Scalars['Int'];
+  type: AreaOfEffectType;
+};
+
+export type AreaOfEffectFilter = {
+  size?: InputMaybe<Scalars['IntFilter']>;
+  type?: InputMaybe<Scalars['AreaOfEffectTypeFilter']>;
+};
+
+export enum AreaOfEffectType {
+  Cone = 'CONE',
+  Cube = 'CUBE',
+  Cylinder = 'CYLINDER',
+  Line = 'LINE',
+  Sphere = 'SPHERE'
+}
+
+export type Armor = IEquipment & IEquipmentBase & {
+  __typename?: 'Armor';
+  armor_category: EquipmentCategory;
+  armor_class: ArmorClass;
+  cost: Cost;
+  desc?: Maybe<Array<Scalars['String']>>;
+  equipment_category: EquipmentCategory;
+  index: Scalars['String'];
+  name: Scalars['String'];
+  stealth_disadvantage: Scalars['Boolean'];
+  str_minimum: Scalars['Int'];
+  weight?: Maybe<Scalars['Float']>;
+};
+
+export type ArmorClass = {
+  __typename?: 'ArmorClass';
+  base: Scalars['Int'];
+  dex_bonus: Scalars['Boolean'];
+  max_bonus?: Maybe<Scalars['Int']>;
+};
+
+export type Attack = {
+  __typename?: 'Attack';
+  damage?: Maybe<Array<Damage>>;
+  dc: ActionDc;
+  name: Scalars['String'];
 };
 
 export type Background = {
   __typename?: 'Background';
-  _id: Scalars['String'];
-  bonds?: Maybe<BackgroundPersonality_Traits>;
-  feature?: Maybe<BackgroundFeature>;
-  flaws?: Maybe<BackgroundPersonality_Traits>;
-  ideals?: Maybe<BackgroundIdeals>;
-  index?: Maybe<Scalars['String']>;
-  language_options?: Maybe<BackgroundLanguage_Options>;
-  name?: Maybe<Scalars['String']>;
-  personality_traits?: Maybe<BackgroundPersonality_Traits>;
-  starting_equipment?: Maybe<Array<Maybe<BackgroundStarting_Equipment>>>;
-  starting_equipment_options?: Maybe<Array<Maybe<BackgroundStarting_Equipment_Options>>>;
+  bonds: StringChoice;
+  feature: BackgroundFeature;
+  flaws: StringChoice;
+  ideals: IdealChoice;
+  index: Scalars['String'];
+  language_options: LanguageChoice;
+  name: Scalars['String'];
+  personality_traits: StringChoice;
+  starting_equipment: Array<Quantity>;
+  starting_equipment_options: Array<EquipmentCategoryChoice>;
   starting_proficiencies: Array<Proficiency>;
-  url?: Maybe<Scalars['String']>;
+};
+
+
+export type BackgroundStarting_EquipmentArgs = {
+  name?: InputMaybe<Scalars['String']>;
 };
 
 
 export type BackgroundStarting_ProficienciesArgs = {
-  limit?: InputMaybe<Scalars['Int']>;
-  skip?: InputMaybe<Scalars['Int']>;
-  sort?: InputMaybe<SortFindManyProficiencyInput>;
+  name?: InputMaybe<Scalars['String']>;
 };
 
 export type BackgroundFeature = {
   __typename?: 'BackgroundFeature';
-  desc?: Maybe<Array<Maybe<Scalars['String']>>>;
-  name?: Maybe<Scalars['String']>;
+  desc: Array<Scalars['String']>;
+  name: Scalars['String'];
 };
 
-export type BackgroundIdeals = {
-  __typename?: 'BackgroundIdeals';
-  choose?: Maybe<Scalars['Float']>;
-  from?: Maybe<Array<Maybe<BackgroundIdealsFrom>>>;
-  type?: Maybe<Scalars['String']>;
+export type BarbarianSpecific = {
+  __typename?: 'BarbarianSpecific';
+  brutal_critical_dice: Scalars['Int'];
+  rage_count: Scalars['Int'];
+  rage_damage_bonus: Scalars['Int'];
 };
 
-export type BackgroundIdealsFrom = {
-  __typename?: 'BackgroundIdealsFrom';
-  alignments?: Maybe<Array<Maybe<AbilityScoreSkills>>>;
-  desc?: Maybe<Scalars['String']>;
+export type BardSpecific = {
+  __typename?: 'BardSpecific';
+  bardic_inspiration_die: Scalars['Int'];
+  magical_secrets_max_5: Scalars['Int'];
+  magical_secrets_max_7: Scalars['Int'];
+  magical_secrets_max_9: Scalars['Int'];
+  song_of_rest_die: Scalars['Int'];
 };
 
-export type BackgroundLanguage_Options = {
-  __typename?: 'BackgroundLanguage_options';
-  choose?: Maybe<Scalars['Float']>;
-  from?: Maybe<Array<Maybe<AbilityScoreSkills>>>;
-  type?: Maybe<Scalars['String']>;
+export type BreathChoice = {
+  __typename?: 'BreathChoice';
+  choose: Scalars['Int'];
+  from: BreathOptionSet;
+  type: Scalars['String'];
 };
 
-export type BackgroundPersonality_Traits = {
-  __typename?: 'BackgroundPersonality_traits';
-  choose?: Maybe<Scalars['Float']>;
-  from?: Maybe<Array<Maybe<Scalars['String']>>>;
-  type?: Maybe<Scalars['String']>;
+export type BreathOption = {
+  __typename?: 'BreathOption';
+  damage?: Maybe<Array<Damage>>;
+  dc: ActionDc;
+  name: Scalars['String'];
+  option_type: Scalars['String'];
 };
 
-export type BackgroundStarting_Equipment = {
-  __typename?: 'BackgroundStarting_equipment';
-  equipment?: Maybe<AbilityScoreSkills>;
-  quantity?: Maybe<Scalars['Float']>;
+export type BreathOptionSet = {
+  __typename?: 'BreathOptionSet';
+  option_set_type: Scalars['String'];
+  options: Array<BreathOption>;
 };
 
-export type BackgroundStarting_Equipment_Options = {
-  __typename?: 'BackgroundStarting_equipment_options';
-  choose?: Maybe<Scalars['Float']>;
-  from?: Maybe<Array<Maybe<BackgroundStarting_Equipment_OptionsFrom>>>;
-  type?: Maybe<Scalars['String']>;
+export type BreathWeaponDamage = {
+  __typename?: 'BreathWeaponDamage';
+  damage_at_character_level: Array<DamageAtLevel>;
+  damage_type: DamageType;
 };
 
-export type BackgroundStarting_Equipment_OptionsFrom = {
-  __typename?: 'BackgroundStarting_equipment_optionsFrom';
-  equipment?: Maybe<AbilityScoreSkills>;
-  quantity?: Maybe<Scalars['Float']>;
+export type BreathWeaponDc = {
+  __typename?: 'BreathWeaponDc';
+  success: DcSuccess;
+  type: AbilityScore;
+};
+
+export type BreathWeaponTrait = {
+  __typename?: 'BreathWeaponTrait';
+  area_of_effect: AreaOfEffect;
+  damage: Array<BreathWeaponDamage>;
+  dc: BreathWeaponDc;
+  desc: Scalars['String'];
+  name: Scalars['String'];
+  usage: BreathWeaponUsage;
+};
+
+export type BreathWeaponUsage = {
+  __typename?: 'BreathWeaponUsage';
+  times: Scalars['Int'];
+  type: UsageType;
 };
 
 export type Class = {
   __typename?: 'Class';
-  _id: Scalars['String'];
   class_levels: Array<Level>;
-  hit_die?: Maybe<Scalars['Float']>;
-  index?: Maybe<Scalars['String']>;
-  multi_classing?: Maybe<ClassMulti_Classing>;
-  name?: Maybe<Scalars['String']>;
+  hit_die: Scalars['Int'];
+  index: Scalars['String'];
+  multi_classing: Multiclassing;
+  name: Scalars['String'];
   proficiencies: Array<Proficiency>;
-  proficiency_choices?: Maybe<Array<Maybe<ClassMulti_ClassingProficiency_Choices>>>;
-  saving_throws?: Maybe<Array<Maybe<AbilityScoreSkills>>>;
+  proficiency_choices: Array<ProficiencyChoice>;
+  saving_throws: Array<AbilityScore>;
   spellcasting?: Maybe<ClassSpellcasting>;
-  spells: Array<Spell>;
-  starting_equipment?: Maybe<Array<Maybe<ClassStarting_Equipment>>>;
-  starting_equipment_options?: Maybe<Array<Maybe<ClassStarting_Equipment_Options>>>;
-  subclasses?: Maybe<Array<Maybe<AbilityScoreSkills>>>;
-  url?: Maybe<Scalars['String']>;
-};
-
-
-export type ClassClass_LevelsArgs = {
-  limit?: InputMaybe<Scalars['Int']>;
-  skip?: InputMaybe<Scalars['Int']>;
-  sort?: InputMaybe<SortFindManyLevelInput>;
+  spells?: Maybe<Array<Spell>>;
+  starting_equipment: Array<Quantity>;
+  starting_equipment_options: Array<StartingEquipmentChoice>;
+  subclasses: Array<Subclass>;
 };
 
 
 export type ClassProficienciesArgs = {
-  limit?: InputMaybe<Scalars['Int']>;
-  skip?: InputMaybe<Scalars['Int']>;
-  sort?: InputMaybe<SortFindManyProficiencyInput>;
+  name?: InputMaybe<Scalars['String']>;
 };
 
 
 export type ClassSpellsArgs = {
-  limit?: InputMaybe<Scalars['Int']>;
+  area_of_effect?: InputMaybe<AreaOfEffectFilter>;
+  attack_type?: InputMaybe<Scalars['SpellAttackTypeFilter']>;
+  casting_time?: InputMaybe<Scalars['StringFilter']>;
+  concentration?: InputMaybe<Scalars['Boolean']>;
+  damage_type?: InputMaybe<Scalars['StringFilter']>;
+  dc_type?: InputMaybe<Scalars['StringFilter']>;
+  level?: InputMaybe<Scalars['IntFilter']>;
+  limit?: Scalars['Int'];
+  name?: InputMaybe<Scalars['String']>;
+  order?: InputMaybe<SpellOrder>;
+  range?: InputMaybe<Scalars['StringFilter']>;
+  ritual?: InputMaybe<Scalars['Boolean']>;
+  school?: InputMaybe<Scalars['StringFilter']>;
   skip?: InputMaybe<Scalars['Int']>;
-  sort?: InputMaybe<SortFindManySpellInput>;
+  subclass?: InputMaybe<Scalars['StringFilter']>;
 };
 
-export type ClassMulti_Classing = {
-  __typename?: 'ClassMulti_classing';
-  prerequisite_options?: Maybe<ClassMulti_ClassingPrerequisite_Options>;
-  prerequisites?: Maybe<Array<Maybe<ClassMulti_ClassingPrerequisites>>>;
-  proficiencies?: Maybe<Array<Maybe<AbilityScoreSkills>>>;
-  proficiency_choices?: Maybe<Array<Maybe<ClassMulti_ClassingProficiency_Choices>>>;
+
+export type ClassSubclassesArgs = {
+  name?: InputMaybe<Scalars['String']>;
 };
 
-export type ClassMulti_ClassingPrerequisite_Options = {
-  __typename?: 'ClassMulti_classingPrerequisite_options';
-  choose?: Maybe<Scalars['Float']>;
-  from?: Maybe<Array<Maybe<ClassMulti_ClassingPrerequisites>>>;
-  type?: Maybe<Scalars['String']>;
+export type ClassOrder = {
+  by: ClassOrderBy;
+  direction?: OrderByDirection;
+  then_by?: InputMaybe<ClassOrder>;
 };
 
-export type ClassMulti_ClassingPrerequisites = {
-  __typename?: 'ClassMulti_classingPrerequisites';
-  ability_score?: Maybe<AbilityScoreSkills>;
-  minimum_score?: Maybe<Scalars['Float']>;
-};
+export enum ClassOrderBy {
+  HitDie = 'HIT_DIE',
+  Name = 'NAME'
+}
 
-export type ClassMulti_ClassingProficiency_Choices = {
-  __typename?: 'ClassMulti_classingProficiency_choices';
-  choose?: Maybe<Scalars['Float']>;
-  from?: Maybe<Array<Maybe<AbilityScoreSkills>>>;
-  type?: Maybe<Scalars['String']>;
-};
+export type ClassSpecific = BarbarianSpecific | BardSpecific | ClericSpecific | DruidSpecific | FighterSpecific | MonkSpecific | PaladinSpecific | RangerSpecific | RogueSpecific | SorcererSpecific | WarlockSpecific | WizardSpecific;
 
 export type ClassSpellcasting = {
   __typename?: 'ClassSpellcasting';
-  info?: Maybe<Array<Maybe<ClassSpellcastingInfo>>>;
-  level?: Maybe<Scalars['Float']>;
-  spellcasting_ability?: Maybe<AbilityScoreSkills>;
+  info: Array<SpellcastingInfo>;
+  level: Scalars['Int'];
+  spellcasting_ability: AbilityScore;
 };
 
-export type ClassSpellcastingInfo = {
-  __typename?: 'ClassSpellcastingInfo';
-  desc?: Maybe<Array<Maybe<Scalars['String']>>>;
-  name?: Maybe<Scalars['String']>;
-};
-
-export type ClassStarting_Equipment = {
-  __typename?: 'ClassStarting_equipment';
-  equipment?: Maybe<AbilityScoreSkills>;
-  quantity?: Maybe<Scalars['Float']>;
-};
-
-export type ClassStarting_Equipment_Options = {
-  __typename?: 'ClassStarting_equipment_options';
-  choose?: Maybe<Scalars['Float']>;
-  from?: Maybe<Array<Maybe<ClassStarting_Equipment_OptionsFrom>>>;
-  type?: Maybe<Scalars['String']>;
-};
-
-export type ClassStarting_Equipment_OptionsFrom = {
-  __typename?: 'ClassStarting_equipment_optionsFrom';
-  equipment?: Maybe<AbilityScoreSkills>;
-  quantity?: Maybe<Scalars['Float']>;
+export type ClericSpecific = {
+  __typename?: 'ClericSpecific';
+  channel_divinity_charges: Scalars['Int'];
+  destroy_undead_cr: Scalars['Float'];
 };
 
 export type Condition = {
   __typename?: 'Condition';
-  _id: Scalars['String'];
-  desc?: Maybe<Array<Maybe<Scalars['String']>>>;
-  index?: Maybe<Scalars['String']>;
-  name?: Maybe<Scalars['String']>;
-  url?: Maybe<Scalars['String']>;
+  desc: Array<Scalars['String']>;
+  index: Scalars['String'];
+  name: Scalars['String'];
+};
+
+export type Cost = {
+  __typename?: 'Cost';
+  quantity: Scalars['Int'];
+  unit: Currency;
+};
+
+export type CountedReferenceOption = {
+  __typename?: 'CountedReferenceOption';
+  count: Scalars['Int'];
+  of: IEquipment;
+  option_type: Scalars['String'];
+  prerequisites?: Maybe<Array<ProficiencyPrerequisite>>;
+};
+
+export enum Currency {
+  Cp = 'CP',
+  Gp = 'GP',
+  Sp = 'SP'
+}
+
+export type Damage = {
+  __typename?: 'Damage';
+  damage_dice: Scalars['String'];
+  damage_type: DamageType;
+};
+
+export type DamageAtLevel = {
+  __typename?: 'DamageAtLevel';
+  damage: Scalars['String'];
+  level: Scalars['Int'];
+};
+
+export type DamageOption = {
+  __typename?: 'DamageOption';
+  damage_dice: Scalars['String'];
+  damage_type: DamageType;
+  notes?: Maybe<Scalars['String']>;
+  option_type: Scalars['String'];
+};
+
+export type DamageOptionSet = {
+  __typename?: 'DamageOptionSet';
+  option_set_type: Scalars['String'];
+  options: Array<DamageOption>;
 };
 
 export type DamageType = {
   __typename?: 'DamageType';
-  _id: Scalars['String'];
-  desc?: Maybe<Array<Maybe<Scalars['String']>>>;
-  index?: Maybe<Scalars['String']>;
-  name?: Maybe<Scalars['String']>;
-  url?: Maybe<Scalars['String']>;
+  desc: Array<Scalars['String']>;
+  index: Scalars['String'];
+  name: Scalars['String'];
 };
 
-export type Equipment = {
-  __typename?: 'Equipment';
-  _id: Scalars['String'];
-  armor_category?: Maybe<Scalars['String']>;
-  armor_class?: Maybe<EquipmentArmor_Class>;
-  capacity?: Maybe<Scalars['String']>;
-  category_range?: Maybe<Scalars['String']>;
-  contents?: Maybe<Array<Maybe<EquipmentContents>>>;
-  cost?: Maybe<EquipmentCost>;
-  damage?: Maybe<EquipmentDamage>;
-  desc?: Maybe<Array<Maybe<Scalars['String']>>>;
-  equipment_category?: Maybe<AbilityScoreSkills>;
-  gear_category?: Maybe<AbilityScoreSkills>;
-  index?: Maybe<Scalars['String']>;
-  name?: Maybe<Scalars['String']>;
-  properties: Array<WeaponProperty>;
-  quantity?: Maybe<Scalars['Float']>;
-  range?: Maybe<EquipmentRange>;
-  special?: Maybe<Array<Maybe<Scalars['String']>>>;
-  speed?: Maybe<EquipmentSpeed>;
-  stealth_disadvantage?: Maybe<Scalars['Boolean']>;
-  str_minimum?: Maybe<Scalars['Float']>;
-  throw_range?: Maybe<EquipmentThrow_Range>;
-  tool_category?: Maybe<Scalars['String']>;
-  two_handed_damage?: Maybe<EquipmentTwo_Handed_Damage>;
-  url?: Maybe<Scalars['String']>;
-  vehicle_category?: Maybe<Scalars['String']>;
-  weapon_category?: Maybe<Scalars['String']>;
-  weapon_range?: Maybe<Scalars['String']>;
-  weight?: Maybe<Scalars['Float']>;
+export enum DcSuccess {
+  Half = 'HALF',
+  None = 'NONE',
+  Other = 'OTHER'
+}
+
+export type DevotionSpecific = {
+  __typename?: 'DevotionSpecific';
+  aura_range: Scalars['Int'];
 };
 
-
-export type EquipmentPropertiesArgs = {
-  limit?: InputMaybe<Scalars['Int']>;
-  skip?: InputMaybe<Scalars['Int']>;
-  sort?: InputMaybe<SortFindManyWeaponPropertyInput>;
+export type Dice = {
+  __typename?: 'Dice';
+  dice_count: Scalars['Int'];
+  dice_value: Scalars['Int'];
 };
 
-export type EquipmentArmor_Class = {
-  __typename?: 'EquipmentArmor_class';
-  base?: Maybe<Scalars['Float']>;
-  dex_bonus?: Maybe<Scalars['Boolean']>;
-  max_bonus?: Maybe<Scalars['Float']>;
+export type DruidSpecific = {
+  __typename?: 'DruidSpecific';
+  wild_shape_fly: Scalars['Boolean'];
+  wild_shape_max_cr: Scalars['Float'];
+  wild_shape_swim: Scalars['Boolean'];
 };
 
 export type EquipmentCategory = {
   __typename?: 'EquipmentCategory';
-  _id: Scalars['String'];
-  equipment: Array<Equipment>;
-  index?: Maybe<Scalars['String']>;
-  name?: Maybe<Scalars['String']>;
-  url?: Maybe<Scalars['String']>;
+  equipment: Array<IEquipmentBase>;
+  index: Scalars['String'];
+  name: Scalars['String'];
 };
 
 
 export type EquipmentCategoryEquipmentArgs = {
-  limit?: InputMaybe<Scalars['Int']>;
+  limit?: Scalars['Int'];
+  name?: InputMaybe<Scalars['String']>;
+  order?: InputMaybe<EquipmentCategoryOrder>;
   skip?: InputMaybe<Scalars['Int']>;
-  sort?: InputMaybe<SortFindManyEquipmentInput>;
 };
 
-export type EquipmentContents = {
-  __typename?: 'EquipmentContents';
-  item?: Maybe<AbilityScoreSkills>;
-  quantity?: Maybe<Scalars['Float']>;
+export type EquipmentCategoryChoice = {
+  __typename?: 'EquipmentCategoryChoice';
+  choose: Scalars['Int'];
+  from: EquipmentCategoryOptionSet;
+  type: Scalars['String'];
 };
 
-export type EquipmentCost = {
-  __typename?: 'EquipmentCost';
-  quantity?: Maybe<Scalars['Float']>;
-  unit?: Maybe<Scalars['String']>;
+export type EquipmentCategoryChoiceOption = {
+  __typename?: 'EquipmentCategoryChoiceOption';
+  choice: EquipmentCategoryChoice;
+  option_type: Scalars['String'];
 };
 
-export type EquipmentDamage = {
-  __typename?: 'EquipmentDamage';
-  damage_dice?: Maybe<Scalars['String']>;
-  damage_type?: Maybe<AbilityScoreSkills>;
+export type EquipmentCategoryOptionSet = {
+  __typename?: 'EquipmentCategoryOptionSet';
+  equipment_category: EquipmentCategory;
+  option_set_type: Scalars['String'];
 };
 
-export type EquipmentRange = {
-  __typename?: 'EquipmentRange';
-  long?: Maybe<Scalars['Float']>;
-  normal?: Maybe<Scalars['Float']>;
+export type EquipmentCategoryOrder = {
+  by: EquipmentCategoryOrderBy;
+  direction?: OrderByDirection;
+  then_by?: InputMaybe<EquipmentCategoryOrder>;
 };
 
-export type EquipmentSpeed = {
-  __typename?: 'EquipmentSpeed';
-  quantity?: Maybe<Scalars['Float']>;
-  unit?: Maybe<Scalars['String']>;
+export enum EquipmentCategoryOrderBy {
+  Name = 'NAME',
+  Weight = 'WEIGHT'
+}
+
+export type EquipmentMultipleItem = CountedReferenceOption | EquipmentCategoryChoiceOption;
+
+export type EquipmentMultipleOption = {
+  __typename?: 'EquipmentMultipleOption';
+  items: Array<EquipmentMultipleItem>;
+  option_type: Scalars['String'];
 };
 
-export type EquipmentThrow_Range = {
-  __typename?: 'EquipmentThrow_range';
-  long?: Maybe<Scalars['Float']>;
-  normal?: Maybe<Scalars['Float']>;
+export type EquipmentOption = CountedReferenceOption | EquipmentCategoryChoiceOption | EquipmentMultipleOption;
+
+export type EquipmentOptionSet = {
+  __typename?: 'EquipmentOptionSet';
+  option_set_type: Scalars['String'];
+  options: Array<EquipmentOption>;
 };
 
-export type EquipmentTwo_Handed_Damage = {
-  __typename?: 'EquipmentTwo_handed_damage';
-  damage_dice?: Maybe<Scalars['String']>;
-  damage_type?: Maybe<AbilityScoreSkills>;
+export type EquipmentOrder = {
+  by: EquipmentOrderBy;
+  direction?: OrderByDirection;
+  then_by?: InputMaybe<EquipmentOrder>;
+};
+
+export enum EquipmentOrderBy {
+  EquipmentCategory = 'EQUIPMENT_CATEGORY',
+  Name = 'NAME',
+  Weight = 'WEIGHT'
+}
+
+export type ExpertiseChoice = {
+  __typename?: 'ExpertiseChoice';
+  choose: Scalars['Int'];
+  from: ExpertiseOptionSet;
+  type: Scalars['String'];
+};
+
+export type ExpertiseMultipleOption = {
+  __typename?: 'ExpertiseMultipleOption';
+  items: Array<ProficiencyOption>;
+  option_type: Scalars['String'];
+};
+
+export type ExpertiseOption = ExpertiseMultipleOption | ProficiencyChoiceOption | ProficiencyReferenceOption;
+
+export type ExpertiseOptionSet = {
+  __typename?: 'ExpertiseOptionSet';
+  option_set_type: Scalars['String'];
+  options: Array<ExpertiseOption>;
 };
 
 export type Feat = {
   __typename?: 'Feat';
-  _id: Scalars['String'];
-  desc?: Maybe<Array<Maybe<Scalars['String']>>>;
-  index?: Maybe<Scalars['String']>;
-  name?: Maybe<Scalars['String']>;
-  prerequisites?: Maybe<Array<Maybe<FeatPrerequisites>>>;
-  url?: Maybe<Scalars['String']>;
-};
-
-export type FeatPrerequisites = {
-  __typename?: 'FeatPrerequisites';
-  ability_score?: Maybe<AbilityScoreSkills>;
-  minimum_score?: Maybe<Scalars['Float']>;
+  desc: Array<Scalars['String']>;
+  index: Scalars['String'];
+  name: Scalars['String'];
+  prerequisites: Array<AbilityScorePrerequisite>;
 };
 
 export type Feature = {
   __typename?: 'Feature';
-  _id: Scalars['String'];
-  choice?: Maybe<FeatureChoice>;
-  class?: Maybe<Class>;
-  desc?: Maybe<Array<Maybe<Scalars['String']>>>;
-  feature_specific?: Maybe<FeatureFeature_Specific>;
-  index?: Maybe<Scalars['String']>;
-  level?: Maybe<Scalars['Float']>;
-  name?: Maybe<Scalars['String']>;
-  parent?: Maybe<AbilityScoreSkills>;
-  prerequisites?: Maybe<Array<Maybe<FeaturePrerequisites>>>;
+  class: Class;
+  desc: Array<Scalars['String']>;
+  feature_specific?: Maybe<FeatureSpecific>;
+  index: Scalars['String'];
+  level: Scalars['Int'];
+  name: Scalars['String'];
+  parent?: Maybe<Feature>;
+  prerequisites: Array<FeaturePrerequisite>;
   reference?: Maybe<Scalars['String']>;
   subclass?: Maybe<Subclass>;
-  url?: Maybe<Scalars['String']>;
-};
-
-
-export type FeatureClassArgs = {
-  skip?: InputMaybe<Scalars['Int']>;
-  sort?: InputMaybe<SortFindOneClassInput>;
-};
-
-
-export type FeatureSubclassArgs = {
-  skip?: InputMaybe<Scalars['Int']>;
-  sort?: InputMaybe<SortFindOneSubclassInput>;
 };
 
 export type FeatureChoice = {
   __typename?: 'FeatureChoice';
-  choose?: Maybe<Scalars['Float']>;
-  from?: Maybe<Array<Maybe<AbilityScoreSkills>>>;
-  type?: Maybe<Scalars['String']>;
+  choose: Scalars['Int'];
+  from: FeatureOptionSet;
+  type: Scalars['String'];
 };
 
-export type FeatureFeature_Specific = {
-  __typename?: 'FeatureFeature_specific';
-  expertise_options?: Maybe<FeatureChoice>;
+export type FeatureOption = {
+  __typename?: 'FeatureOption';
+  item: Feature;
+  option_type: Scalars['String'];
+};
+
+export type FeatureOptionSet = {
+  __typename?: 'FeatureOptionSet';
+  option_set_type: Scalars['String'];
+  options: Array<FeatureOption>;
+};
+
+export type FeatureOrder = {
+  by: FeatureOrderBy;
+  direction?: OrderByDirection;
+  then_by?: InputMaybe<FeatureOrder>;
+};
+
+export enum FeatureOrderBy {
+  Class = 'CLASS',
+  Level = 'LEVEL',
+  Name = 'NAME',
+  Subclass = 'SUBCLASS'
+}
+
+export type FeaturePrerequisite = {
+  __typename?: 'FeaturePrerequisite';
+  feature?: Maybe<Feature>;
+  level?: Maybe<Scalars['Int']>;
+  spell?: Maybe<Spell>;
+  type: Scalars['String'];
+};
+
+export type FeatureSpecific = {
+  __typename?: 'FeatureSpecific';
+  expertise_options?: Maybe<ExpertiseChoice>;
+  invocations?: Maybe<Array<Feature>>;
   subfeature_options?: Maybe<FeatureChoice>;
 };
 
-export type FeaturePrerequisites = {
-  __typename?: 'FeaturePrerequisites';
-  level?: Maybe<Scalars['Float']>;
-  type?: Maybe<Scalars['String']>;
-};
-
-export type FilterFindManyAbilityScoreDescOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManyAbilityScoreFull_NameOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManyAbilityScoreIndexOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManyAbilityScoreInput = {
-  AND?: InputMaybe<Array<FilterFindManyAbilityScoreInput>>;
-  OR?: InputMaybe<Array<FilterFindManyAbilityScoreInput>>;
-  _id?: InputMaybe<Scalars['String']>;
-  /** List of *indexed* fields that can be filtered via operators. */
-  _operators?: InputMaybe<FilterFindManyAbilityScoreOperatorsInput>;
-  desc?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  full_name?: InputMaybe<Scalars['String']>;
-  index?: InputMaybe<Scalars['String']>;
-  name?: InputMaybe<Scalars['String']>;
-  skills?: InputMaybe<Array<InputMaybe<FilterFindManyAbilityScoreSkillsInput>>>;
-  url?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindManyAbilityScoreNameOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-/** For performance reason this type contains only *indexed* fields. */
-export type FilterFindManyAbilityScoreOperatorsInput = {
-  _id?: InputMaybe<FilterFindManyAbilityScore_IdOperatorsInput>;
-  desc?: InputMaybe<FilterFindManyAbilityScoreDescOperatorsInput>;
-  full_name?: InputMaybe<FilterFindManyAbilityScoreFull_NameOperatorsInput>;
-  index?: InputMaybe<FilterFindManyAbilityScoreIndexOperatorsInput>;
-  name?: InputMaybe<FilterFindManyAbilityScoreNameOperatorsInput>;
-  url?: InputMaybe<FilterFindManyAbilityScoreUrlOperatorsInput>;
-};
-
-export type FilterFindManyAbilityScoreSkillsInput = {
-  index?: InputMaybe<Scalars['String']>;
-  name?: InputMaybe<Scalars['String']>;
-  url?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindManyAbilityScoreUrlOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManyAbilityScore_IdOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManyAlignmentAbbreviationOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManyAlignmentDescOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManyAlignmentIndexOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManyAlignmentInput = {
-  AND?: InputMaybe<Array<FilterFindManyAlignmentInput>>;
-  OR?: InputMaybe<Array<FilterFindManyAlignmentInput>>;
-  _id?: InputMaybe<Scalars['String']>;
-  /** List of *indexed* fields that can be filtered via operators. */
-  _operators?: InputMaybe<FilterFindManyAlignmentOperatorsInput>;
-  abbreviation?: InputMaybe<Scalars['String']>;
-  desc?: InputMaybe<Scalars['String']>;
-  index?: InputMaybe<Scalars['String']>;
-  name?: InputMaybe<Scalars['String']>;
-  url?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindManyAlignmentNameOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-/** For performance reason this type contains only *indexed* fields. */
-export type FilterFindManyAlignmentOperatorsInput = {
-  _id?: InputMaybe<FilterFindManyAlignment_IdOperatorsInput>;
-  abbreviation?: InputMaybe<FilterFindManyAlignmentAbbreviationOperatorsInput>;
-  desc?: InputMaybe<FilterFindManyAlignmentDescOperatorsInput>;
-  index?: InputMaybe<FilterFindManyAlignmentIndexOperatorsInput>;
-  name?: InputMaybe<FilterFindManyAlignmentNameOperatorsInput>;
-  url?: InputMaybe<FilterFindManyAlignmentUrlOperatorsInput>;
-};
-
-export type FilterFindManyAlignmentUrlOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManyAlignment_IdOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManyBackgroundFeatureInput = {
-  desc?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  name?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindManyBackgroundIdealsFromInput = {
-  alignments?: InputMaybe<Array<InputMaybe<FilterFindManyAbilityScoreSkillsInput>>>;
-  desc?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindManyBackgroundIdealsInput = {
-  choose?: InputMaybe<Scalars['Float']>;
-  from?: InputMaybe<Array<InputMaybe<FilterFindManyBackgroundIdealsFromInput>>>;
-  type?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindManyBackgroundIndexOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManyBackgroundInput = {
-  AND?: InputMaybe<Array<FilterFindManyBackgroundInput>>;
-  OR?: InputMaybe<Array<FilterFindManyBackgroundInput>>;
-  _id?: InputMaybe<Scalars['String']>;
-  /** List of *indexed* fields that can be filtered via operators. */
-  _operators?: InputMaybe<FilterFindManyBackgroundOperatorsInput>;
-  bonds?: InputMaybe<FilterFindManyBackgroundPersonality_TraitsInput>;
-  feature?: InputMaybe<FilterFindManyBackgroundFeatureInput>;
-  flaws?: InputMaybe<FilterFindManyBackgroundPersonality_TraitsInput>;
-  ideals?: InputMaybe<FilterFindManyBackgroundIdealsInput>;
-  index?: InputMaybe<Scalars['String']>;
-  language_options?: InputMaybe<FilterFindManyBackgroundLanguage_OptionsInput>;
-  name?: InputMaybe<Scalars['String']>;
-  personality_traits?: InputMaybe<FilterFindManyBackgroundPersonality_TraitsInput>;
-  starting_equipment?: InputMaybe<Array<InputMaybe<FilterFindManyBackgroundStarting_EquipmentInput>>>;
-  starting_equipment_options?: InputMaybe<Array<InputMaybe<FilterFindManyBackgroundStarting_Equipment_OptionsInput>>>;
-  starting_proficiencies?: InputMaybe<Array<InputMaybe<FilterFindManyAbilityScoreSkillsInput>>>;
-  url?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindManyBackgroundLanguage_OptionsInput = {
-  choose?: InputMaybe<Scalars['Float']>;
-  from?: InputMaybe<Array<InputMaybe<FilterFindManyAbilityScoreSkillsInput>>>;
-  type?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindManyBackgroundNameOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-/** For performance reason this type contains only *indexed* fields. */
-export type FilterFindManyBackgroundOperatorsInput = {
-  _id?: InputMaybe<FilterFindManyBackground_IdOperatorsInput>;
-  index?: InputMaybe<FilterFindManyBackgroundIndexOperatorsInput>;
-  name?: InputMaybe<FilterFindManyBackgroundNameOperatorsInput>;
-  url?: InputMaybe<FilterFindManyBackgroundUrlOperatorsInput>;
-};
-
-export type FilterFindManyBackgroundPersonality_TraitsInput = {
-  choose?: InputMaybe<Scalars['Float']>;
-  from?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  type?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindManyBackgroundStarting_EquipmentInput = {
-  equipment?: InputMaybe<FilterFindManyAbilityScoreSkillsInput>;
-  quantity?: InputMaybe<Scalars['Float']>;
-};
-
-export type FilterFindManyBackgroundStarting_Equipment_OptionsFromInput = {
-  equipment?: InputMaybe<FilterFindManyAbilityScoreSkillsInput>;
-  quantity?: InputMaybe<Scalars['Float']>;
-};
-
-export type FilterFindManyBackgroundStarting_Equipment_OptionsInput = {
-  choose?: InputMaybe<Scalars['Float']>;
-  from?: InputMaybe<Array<InputMaybe<FilterFindManyBackgroundStarting_Equipment_OptionsFromInput>>>;
-  type?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindManyBackgroundUrlOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManyBackground_IdOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManyClassClass_LevelsOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManyClassHit_DieOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['Float']>;
-  gte?: InputMaybe<Scalars['Float']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['Float']>>>;
-  lt?: InputMaybe<Scalars['Float']>;
-  lte?: InputMaybe<Scalars['Float']>;
-  ne?: InputMaybe<Scalars['Float']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['Float']>>>;
-};
-
-export type FilterFindManyClassIndexOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManyClassInput = {
-  AND?: InputMaybe<Array<FilterFindManyClassInput>>;
-  OR?: InputMaybe<Array<FilterFindManyClassInput>>;
-  _id?: InputMaybe<Scalars['String']>;
-  /** List of *indexed* fields that can be filtered via operators. */
-  _operators?: InputMaybe<FilterFindManyClassOperatorsInput>;
-  class_levels?: InputMaybe<Scalars['String']>;
-  hit_die?: InputMaybe<Scalars['Float']>;
-  index?: InputMaybe<Scalars['String']>;
-  multi_classing?: InputMaybe<FilterFindManyClassMulti_ClassingInput>;
-  name?: InputMaybe<Scalars['String']>;
-  proficiencies?: InputMaybe<Array<InputMaybe<FilterFindManyAbilityScoreSkillsInput>>>;
-  proficiency_choices?: InputMaybe<Array<InputMaybe<FilterFindManyClassMulti_ClassingProficiency_ChoicesInput>>>;
-  saving_throws?: InputMaybe<Array<InputMaybe<FilterFindManyAbilityScoreSkillsInput>>>;
-  spellcasting?: InputMaybe<FilterFindManyClassSpellcastingInput>;
-  spells?: InputMaybe<Scalars['String']>;
-  starting_equipment?: InputMaybe<Array<InputMaybe<FilterFindManyClassStarting_EquipmentInput>>>;
-  starting_equipment_options?: InputMaybe<Array<InputMaybe<FilterFindManyClassStarting_Equipment_OptionsInput>>>;
-  subclasses?: InputMaybe<Array<InputMaybe<FilterFindManyAbilityScoreSkillsInput>>>;
-  url?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindManyClassMulti_ClassingInput = {
-  prerequisite_options?: InputMaybe<FilterFindManyClassMulti_ClassingPrerequisite_OptionsInput>;
-  prerequisites?: InputMaybe<Array<InputMaybe<FilterFindManyClassMulti_ClassingPrerequisitesInput>>>;
-  proficiencies?: InputMaybe<Array<InputMaybe<FilterFindManyAbilityScoreSkillsInput>>>;
-  proficiency_choices?: InputMaybe<Array<InputMaybe<FilterFindManyClassMulti_ClassingProficiency_ChoicesInput>>>;
-};
-
-export type FilterFindManyClassMulti_ClassingPrerequisite_OptionsInput = {
-  choose?: InputMaybe<Scalars['Float']>;
-  from?: InputMaybe<Array<InputMaybe<FilterFindManyClassMulti_ClassingPrerequisitesInput>>>;
-  type?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindManyClassMulti_ClassingPrerequisitesInput = {
-  ability_score?: InputMaybe<AbilityScoreSkillsInput>;
-  minimum_score?: InputMaybe<Scalars['Float']>;
-};
-
-export type FilterFindManyClassMulti_ClassingProficiency_ChoicesInput = {
-  choose?: InputMaybe<Scalars['Float']>;
-  from?: InputMaybe<Array<InputMaybe<AbilityScoreSkillsInput>>>;
-  type?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindManyClassNameOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-/** For performance reason this type contains only *indexed* fields. */
-export type FilterFindManyClassOperatorsInput = {
-  _id?: InputMaybe<FilterFindManyClass_IdOperatorsInput>;
-  class_levels?: InputMaybe<FilterFindManyClassClass_LevelsOperatorsInput>;
-  hit_die?: InputMaybe<FilterFindManyClassHit_DieOperatorsInput>;
-  index?: InputMaybe<FilterFindManyClassIndexOperatorsInput>;
-  name?: InputMaybe<FilterFindManyClassNameOperatorsInput>;
-  spells?: InputMaybe<FilterFindManyClassSpellsOperatorsInput>;
-  url?: InputMaybe<FilterFindManyClassUrlOperatorsInput>;
-};
-
-export type FilterFindManyClassSpellcastingInfoInput = {
-  desc?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  name?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindManyClassSpellcastingInput = {
-  info?: InputMaybe<Array<InputMaybe<FilterFindManyClassSpellcastingInfoInput>>>;
-  level?: InputMaybe<Scalars['Float']>;
-  spellcasting_ability?: InputMaybe<FilterFindManyAbilityScoreSkillsInput>;
-};
-
-export type FilterFindManyClassSpellsOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManyClassStarting_EquipmentInput = {
-  equipment?: InputMaybe<FilterFindManyAbilityScoreSkillsInput>;
-  quantity?: InputMaybe<Scalars['Float']>;
-};
-
-export type FilterFindManyClassStarting_Equipment_OptionsFromInput = {
-  equipment?: InputMaybe<FilterFindManyAbilityScoreSkillsInput>;
-  quantity?: InputMaybe<Scalars['Float']>;
-};
-
-export type FilterFindManyClassStarting_Equipment_OptionsInput = {
-  choose?: InputMaybe<Scalars['Float']>;
-  from?: InputMaybe<Array<InputMaybe<FilterFindManyClassStarting_Equipment_OptionsFromInput>>>;
-  type?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindManyClassUrlOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManyClass_IdOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManyConditionDescOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManyConditionIndexOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManyConditionInput = {
-  AND?: InputMaybe<Array<FilterFindManyConditionInput>>;
-  OR?: InputMaybe<Array<FilterFindManyConditionInput>>;
-  _id?: InputMaybe<Scalars['String']>;
-  /** List of *indexed* fields that can be filtered via operators. */
-  _operators?: InputMaybe<FilterFindManyConditionOperatorsInput>;
-  desc?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  index?: InputMaybe<Scalars['String']>;
-  name?: InputMaybe<Scalars['String']>;
-  url?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindManyConditionNameOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-/** For performance reason this type contains only *indexed* fields. */
-export type FilterFindManyConditionOperatorsInput = {
-  _id?: InputMaybe<FilterFindManyCondition_IdOperatorsInput>;
-  desc?: InputMaybe<FilterFindManyConditionDescOperatorsInput>;
-  index?: InputMaybe<FilterFindManyConditionIndexOperatorsInput>;
-  name?: InputMaybe<FilterFindManyConditionNameOperatorsInput>;
-  url?: InputMaybe<FilterFindManyConditionUrlOperatorsInput>;
-};
-
-export type FilterFindManyConditionUrlOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManyCondition_IdOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManyDamageTypeDescOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManyDamageTypeIndexOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManyDamageTypeInput = {
-  AND?: InputMaybe<Array<FilterFindManyDamageTypeInput>>;
-  OR?: InputMaybe<Array<FilterFindManyDamageTypeInput>>;
-  _id?: InputMaybe<Scalars['String']>;
-  /** List of *indexed* fields that can be filtered via operators. */
-  _operators?: InputMaybe<FilterFindManyDamageTypeOperatorsInput>;
-  desc?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  index?: InputMaybe<Scalars['String']>;
-  name?: InputMaybe<Scalars['String']>;
-  url?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindManyDamageTypeNameOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-/** For performance reason this type contains only *indexed* fields. */
-export type FilterFindManyDamageTypeOperatorsInput = {
-  _id?: InputMaybe<FilterFindManyDamageType_IdOperatorsInput>;
-  desc?: InputMaybe<FilterFindManyDamageTypeDescOperatorsInput>;
-  index?: InputMaybe<FilterFindManyDamageTypeIndexOperatorsInput>;
-  name?: InputMaybe<FilterFindManyDamageTypeNameOperatorsInput>;
-  url?: InputMaybe<FilterFindManyDamageTypeUrlOperatorsInput>;
-};
-
-export type FilterFindManyDamageTypeUrlOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManyDamageType_IdOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManyEquipmentArmor_CategoryOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManyEquipmentArmor_ClassInput = {
-  base?: InputMaybe<Scalars['Float']>;
-  dex_bonus?: InputMaybe<Scalars['Boolean']>;
-  max_bonus?: InputMaybe<Scalars['Float']>;
-};
-
-export type FilterFindManyEquipmentCapacityOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManyEquipmentCategoryIndexOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManyEquipmentCategoryInput = {
-  AND?: InputMaybe<Array<FilterFindManyEquipmentCategoryInput>>;
-  OR?: InputMaybe<Array<FilterFindManyEquipmentCategoryInput>>;
-  _id?: InputMaybe<Scalars['String']>;
-  /** List of *indexed* fields that can be filtered via operators. */
-  _operators?: InputMaybe<FilterFindManyEquipmentCategoryOperatorsInput>;
-  equipment?: InputMaybe<Array<InputMaybe<FilterFindManyAbilityScoreSkillsInput>>>;
-  index?: InputMaybe<Scalars['String']>;
-  name?: InputMaybe<Scalars['String']>;
-  url?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindManyEquipmentCategoryNameOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-/** For performance reason this type contains only *indexed* fields. */
-export type FilterFindManyEquipmentCategoryOperatorsInput = {
-  _id?: InputMaybe<FilterFindManyEquipmentCategory_IdOperatorsInput>;
-  index?: InputMaybe<FilterFindManyEquipmentCategoryIndexOperatorsInput>;
-  name?: InputMaybe<FilterFindManyEquipmentCategoryNameOperatorsInput>;
-  url?: InputMaybe<FilterFindManyEquipmentCategoryUrlOperatorsInput>;
-};
-
-export type FilterFindManyEquipmentCategoryUrlOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManyEquipmentCategory_IdOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManyEquipmentCategory_RangeOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManyEquipmentContentsInput = {
-  item?: InputMaybe<FilterFindManyAbilityScoreSkillsInput>;
-  quantity?: InputMaybe<Scalars['Float']>;
-};
-
-export type FilterFindManyEquipmentCostInput = {
-  quantity?: InputMaybe<Scalars['Float']>;
-  unit?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindManyEquipmentDamageInput = {
-  damage_dice?: InputMaybe<Scalars['String']>;
-  damage_type?: InputMaybe<FilterFindManyAbilityScoreSkillsInput>;
-};
-
-export type FilterFindManyEquipmentDescOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManyEquipmentIndexOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManyEquipmentInput = {
-  AND?: InputMaybe<Array<FilterFindManyEquipmentInput>>;
-  OR?: InputMaybe<Array<FilterFindManyEquipmentInput>>;
-  _id?: InputMaybe<Scalars['String']>;
-  /** List of *indexed* fields that can be filtered via operators. */
-  _operators?: InputMaybe<FilterFindManyEquipmentOperatorsInput>;
-  armor_category?: InputMaybe<Scalars['String']>;
-  armor_class?: InputMaybe<FilterFindManyEquipmentArmor_ClassInput>;
-  capacity?: InputMaybe<Scalars['String']>;
-  category_range?: InputMaybe<Scalars['String']>;
-  contents?: InputMaybe<Array<InputMaybe<FilterFindManyEquipmentContentsInput>>>;
-  cost?: InputMaybe<FilterFindManyEquipmentCostInput>;
-  damage?: InputMaybe<FilterFindManyEquipmentDamageInput>;
-  desc?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  equipment_category?: InputMaybe<FilterFindManyAbilityScoreSkillsInput>;
-  gear_category?: InputMaybe<FilterFindManyAbilityScoreSkillsInput>;
-  index?: InputMaybe<Scalars['String']>;
-  name?: InputMaybe<Scalars['String']>;
-  properties?: InputMaybe<Array<InputMaybe<FilterFindManyAbilityScoreSkillsInput>>>;
-  quantity?: InputMaybe<Scalars['Float']>;
-  range?: InputMaybe<FilterFindManyEquipmentRangeInput>;
-  special?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  speed?: InputMaybe<FilterFindManyEquipmentSpeedInput>;
-  stealth_disadvantage?: InputMaybe<Scalars['Boolean']>;
-  str_minimum?: InputMaybe<Scalars['Float']>;
-  throw_range?: InputMaybe<FilterFindManyEquipmentThrow_RangeInput>;
-  tool_category?: InputMaybe<Scalars['String']>;
-  two_handed_damage?: InputMaybe<FilterFindManyEquipmentTwo_Handed_DamageInput>;
-  url?: InputMaybe<Scalars['String']>;
-  vehicle_category?: InputMaybe<Scalars['String']>;
-  weapon_category?: InputMaybe<Scalars['String']>;
-  weapon_range?: InputMaybe<Scalars['String']>;
-  weight?: InputMaybe<Scalars['Float']>;
-};
-
-export type FilterFindManyEquipmentNameOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-/** For performance reason this type contains only *indexed* fields. */
-export type FilterFindManyEquipmentOperatorsInput = {
-  _id?: InputMaybe<FilterFindManyEquipment_IdOperatorsInput>;
-  armor_category?: InputMaybe<FilterFindManyEquipmentArmor_CategoryOperatorsInput>;
-  capacity?: InputMaybe<FilterFindManyEquipmentCapacityOperatorsInput>;
-  category_range?: InputMaybe<FilterFindManyEquipmentCategory_RangeOperatorsInput>;
-  desc?: InputMaybe<FilterFindManyEquipmentDescOperatorsInput>;
-  index?: InputMaybe<FilterFindManyEquipmentIndexOperatorsInput>;
-  name?: InputMaybe<FilterFindManyEquipmentNameOperatorsInput>;
-  quantity?: InputMaybe<FilterFindManyEquipmentQuantityOperatorsInput>;
-  special?: InputMaybe<FilterFindManyEquipmentSpecialOperatorsInput>;
-  stealth_disadvantage?: InputMaybe<FilterFindManyEquipmentStealth_DisadvantageOperatorsInput>;
-  str_minimum?: InputMaybe<FilterFindManyEquipmentStr_MinimumOperatorsInput>;
-  tool_category?: InputMaybe<FilterFindManyEquipmentTool_CategoryOperatorsInput>;
-  url?: InputMaybe<FilterFindManyEquipmentUrlOperatorsInput>;
-  vehicle_category?: InputMaybe<FilterFindManyEquipmentVehicle_CategoryOperatorsInput>;
-  weapon_category?: InputMaybe<FilterFindManyEquipmentWeapon_CategoryOperatorsInput>;
-  weapon_range?: InputMaybe<FilterFindManyEquipmentWeapon_RangeOperatorsInput>;
-  weight?: InputMaybe<FilterFindManyEquipmentWeightOperatorsInput>;
-};
-
-export type FilterFindManyEquipmentQuantityOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['Float']>;
-  gte?: InputMaybe<Scalars['Float']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['Float']>>>;
-  lt?: InputMaybe<Scalars['Float']>;
-  lte?: InputMaybe<Scalars['Float']>;
-  ne?: InputMaybe<Scalars['Float']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['Float']>>>;
-};
-
-export type FilterFindManyEquipmentRangeInput = {
-  long?: InputMaybe<Scalars['Float']>;
-  normal?: InputMaybe<Scalars['Float']>;
-};
-
-export type FilterFindManyEquipmentSpecialOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManyEquipmentSpeedInput = {
-  quantity?: InputMaybe<Scalars['Float']>;
-  unit?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindManyEquipmentStealth_DisadvantageOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['Boolean']>;
-  gte?: InputMaybe<Scalars['Boolean']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['Boolean']>>>;
-  lt?: InputMaybe<Scalars['Boolean']>;
-  lte?: InputMaybe<Scalars['Boolean']>;
-  ne?: InputMaybe<Scalars['Boolean']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['Boolean']>>>;
-};
-
-export type FilterFindManyEquipmentStr_MinimumOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['Float']>;
-  gte?: InputMaybe<Scalars['Float']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['Float']>>>;
-  lt?: InputMaybe<Scalars['Float']>;
-  lte?: InputMaybe<Scalars['Float']>;
-  ne?: InputMaybe<Scalars['Float']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['Float']>>>;
-};
-
-export type FilterFindManyEquipmentThrow_RangeInput = {
-  long?: InputMaybe<Scalars['Float']>;
-  normal?: InputMaybe<Scalars['Float']>;
-};
-
-export type FilterFindManyEquipmentTool_CategoryOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManyEquipmentTwo_Handed_DamageInput = {
-  damage_dice?: InputMaybe<Scalars['String']>;
-  damage_type?: InputMaybe<FilterFindManyAbilityScoreSkillsInput>;
-};
-
-export type FilterFindManyEquipmentUrlOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManyEquipmentVehicle_CategoryOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManyEquipmentWeapon_CategoryOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManyEquipmentWeapon_RangeOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManyEquipmentWeightOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['Float']>;
-  gte?: InputMaybe<Scalars['Float']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['Float']>>>;
-  lt?: InputMaybe<Scalars['Float']>;
-  lte?: InputMaybe<Scalars['Float']>;
-  ne?: InputMaybe<Scalars['Float']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['Float']>>>;
-};
-
-export type FilterFindManyEquipment_IdOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManyFeatDescOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManyFeatIndexOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManyFeatInput = {
-  AND?: InputMaybe<Array<FilterFindManyFeatInput>>;
-  OR?: InputMaybe<Array<FilterFindManyFeatInput>>;
-  _id?: InputMaybe<Scalars['String']>;
-  /** List of *indexed* fields that can be filtered via operators. */
-  _operators?: InputMaybe<FilterFindManyFeatOperatorsInput>;
-  desc?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  index?: InputMaybe<Scalars['String']>;
-  name?: InputMaybe<Scalars['String']>;
-  prerequisites?: InputMaybe<Array<InputMaybe<FilterFindManyFeatPrerequisitesInput>>>;
-  url?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindManyFeatNameOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-/** For performance reason this type contains only *indexed* fields. */
-export type FilterFindManyFeatOperatorsInput = {
-  _id?: InputMaybe<FilterFindManyFeat_IdOperatorsInput>;
-  desc?: InputMaybe<FilterFindManyFeatDescOperatorsInput>;
-  index?: InputMaybe<FilterFindManyFeatIndexOperatorsInput>;
-  name?: InputMaybe<FilterFindManyFeatNameOperatorsInput>;
-  url?: InputMaybe<FilterFindManyFeatUrlOperatorsInput>;
-};
-
-export type FilterFindManyFeatPrerequisitesInput = {
-  ability_score?: InputMaybe<FilterFindManyAbilityScoreSkillsInput>;
-  minimum_score?: InputMaybe<Scalars['Float']>;
-};
-
-export type FilterFindManyFeatUrlOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManyFeat_IdOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManyFeatureChoiceInput = {
-  choose?: InputMaybe<Scalars['Float']>;
-  from?: InputMaybe<Array<InputMaybe<AbilityScoreSkillsInput>>>;
-  type?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindManyFeatureDescOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManyFeatureFeature_SpecificInput = {
-  expertise_options?: InputMaybe<FilterFindManyFeatureChoiceInput>;
-  subfeature_options?: InputMaybe<FilterFindManyFeatureChoiceInput>;
-};
-
-export type FilterFindManyFeatureIndexOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManyFeatureInput = {
-  AND?: InputMaybe<Array<FilterFindManyFeatureInput>>;
-  OR?: InputMaybe<Array<FilterFindManyFeatureInput>>;
-  _id?: InputMaybe<Scalars['String']>;
-  /** List of *indexed* fields that can be filtered via operators. */
-  _operators?: InputMaybe<FilterFindManyFeatureOperatorsInput>;
-  choice?: InputMaybe<FilterFindManyFeatureChoiceInput>;
-  class?: InputMaybe<FilterFindManyAbilityScoreSkillsInput>;
-  desc?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  feature_specific?: InputMaybe<FilterFindManyFeatureFeature_SpecificInput>;
-  index?: InputMaybe<Scalars['String']>;
-  level?: InputMaybe<Scalars['Float']>;
-  name?: InputMaybe<Scalars['String']>;
-  parent?: InputMaybe<FilterFindManyAbilityScoreSkillsInput>;
-  prerequisites?: InputMaybe<Array<InputMaybe<FilterFindManyFeaturePrerequisitesInput>>>;
-  reference?: InputMaybe<Scalars['String']>;
-  subclass?: InputMaybe<FilterFindManyAbilityScoreSkillsInput>;
-  url?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindManyFeatureLevelOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['Float']>;
-  gte?: InputMaybe<Scalars['Float']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['Float']>>>;
-  lt?: InputMaybe<Scalars['Float']>;
-  lte?: InputMaybe<Scalars['Float']>;
-  ne?: InputMaybe<Scalars['Float']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['Float']>>>;
-};
-
-export type FilterFindManyFeatureNameOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-/** For performance reason this type contains only *indexed* fields. */
-export type FilterFindManyFeatureOperatorsInput = {
-  _id?: InputMaybe<FilterFindManyFeature_IdOperatorsInput>;
-  desc?: InputMaybe<FilterFindManyFeatureDescOperatorsInput>;
-  index?: InputMaybe<FilterFindManyFeatureIndexOperatorsInput>;
-  level?: InputMaybe<FilterFindManyFeatureLevelOperatorsInput>;
-  name?: InputMaybe<FilterFindManyFeatureNameOperatorsInput>;
-  reference?: InputMaybe<FilterFindManyFeatureReferenceOperatorsInput>;
-  url?: InputMaybe<FilterFindManyFeatureUrlOperatorsInput>;
-};
-
-export type FilterFindManyFeaturePrerequisitesInput = {
-  level?: InputMaybe<Scalars['Float']>;
-  type?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindManyFeatureReferenceOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManyFeatureUrlOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManyFeature_IdOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManyLanguageDescOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManyLanguageIndexOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManyLanguageInput = {
-  AND?: InputMaybe<Array<FilterFindManyLanguageInput>>;
-  OR?: InputMaybe<Array<FilterFindManyLanguageInput>>;
-  _id?: InputMaybe<Scalars['String']>;
-  /** List of *indexed* fields that can be filtered via operators. */
-  _operators?: InputMaybe<FilterFindManyLanguageOperatorsInput>;
-  desc?: InputMaybe<Scalars['String']>;
-  index?: InputMaybe<Scalars['String']>;
-  name?: InputMaybe<Scalars['String']>;
-  script?: InputMaybe<Scalars['String']>;
-  type?: InputMaybe<Scalars['String']>;
-  typical_speakers?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  url?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindManyLanguageNameOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-/** For performance reason this type contains only *indexed* fields. */
-export type FilterFindManyLanguageOperatorsInput = {
-  _id?: InputMaybe<FilterFindManyLanguage_IdOperatorsInput>;
-  desc?: InputMaybe<FilterFindManyLanguageDescOperatorsInput>;
-  index?: InputMaybe<FilterFindManyLanguageIndexOperatorsInput>;
-  name?: InputMaybe<FilterFindManyLanguageNameOperatorsInput>;
-  script?: InputMaybe<FilterFindManyLanguageScriptOperatorsInput>;
-  type?: InputMaybe<FilterFindManyLanguageTypeOperatorsInput>;
-  typical_speakers?: InputMaybe<FilterFindManyLanguageTypical_SpeakersOperatorsInput>;
-  url?: InputMaybe<FilterFindManyLanguageUrlOperatorsInput>;
-};
-
-export type FilterFindManyLanguageScriptOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManyLanguageTypeOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManyLanguageTypical_SpeakersOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManyLanguageUrlOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManyLanguage_IdOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManyLevelAbility_Score_BonusesOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['Float']>;
-  gte?: InputMaybe<Scalars['Float']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['Float']>>>;
-  lt?: InputMaybe<Scalars['Float']>;
-  lte?: InputMaybe<Scalars['Float']>;
-  ne?: InputMaybe<Scalars['Float']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['Float']>>>;
-};
-
-export type FilterFindManyLevelClass_SpecificCreating_Spell_SlotsInput = {
-  sorcery_point_cost?: InputMaybe<Scalars['Float']>;
-  spell_slot_level?: InputMaybe<Scalars['Float']>;
-};
-
-export type FilterFindManyLevelClass_SpecificInput = {
-  action_surges?: InputMaybe<Scalars['Float']>;
-  arcane_recovery_levels?: InputMaybe<Scalars['Float']>;
-  aura_range?: InputMaybe<Scalars['Float']>;
-  bardic_inspiration_die?: InputMaybe<Scalars['Float']>;
-  brutal_critical_dice?: InputMaybe<Scalars['Float']>;
-  channel_divinity_charges?: InputMaybe<Scalars['Float']>;
-  creating_spell_slots?: InputMaybe<Array<InputMaybe<FilterFindManyLevelClass_SpecificCreating_Spell_SlotsInput>>>;
-  destroy_undead_cr?: InputMaybe<Scalars['Float']>;
-  extra_attacks?: InputMaybe<Scalars['Float']>;
-  favored_enemies?: InputMaybe<Scalars['Float']>;
-  favored_terrain?: InputMaybe<Scalars['Float']>;
-  indomitable_uses?: InputMaybe<Scalars['Float']>;
-  invocations_known?: InputMaybe<Scalars['Float']>;
-  ki_points?: InputMaybe<Scalars['Float']>;
-  magical_secrets_max_5?: InputMaybe<Scalars['Float']>;
-  magical_secrets_max_7?: InputMaybe<Scalars['Float']>;
-  magical_secrets_max_9?: InputMaybe<Scalars['Float']>;
-  martial_arts?: InputMaybe<FilterFindManyLevelClass_SpecificMartial_ArtsInput>;
-  metamagic_known?: InputMaybe<Scalars['Float']>;
-  mystic_arcanum_level_6?: InputMaybe<Scalars['Float']>;
-  mystic_arcanum_level_7?: InputMaybe<Scalars['Float']>;
-  mystic_arcanum_level_8?: InputMaybe<Scalars['Float']>;
-  mystic_arcanum_level_9?: InputMaybe<Scalars['Float']>;
-  rage_count?: InputMaybe<Scalars['Float']>;
-  rage_damage_bonus?: InputMaybe<Scalars['Float']>;
-  sneak_attack?: InputMaybe<FilterFindManyLevelClass_SpecificSneak_AttackInput>;
-  song_of_rest_die?: InputMaybe<Scalars['Float']>;
-  sorcery_points?: InputMaybe<Scalars['Float']>;
-  unarmored_movement?: InputMaybe<Scalars['Float']>;
-  wild_shape_fly?: InputMaybe<Scalars['Boolean']>;
-  wild_shape_max_cr?: InputMaybe<Scalars['Float']>;
-  wild_shape_swim?: InputMaybe<Scalars['Boolean']>;
-};
-
-export type FilterFindManyLevelClass_SpecificMartial_ArtsInput = {
-  dice_count?: InputMaybe<Scalars['Float']>;
-  dice_value?: InputMaybe<Scalars['Float']>;
-};
-
-export type FilterFindManyLevelClass_SpecificSneak_AttackInput = {
-  dice_count?: InputMaybe<Scalars['Float']>;
-  dice_value?: InputMaybe<Scalars['Float']>;
-};
-
-export type FilterFindManyLevelIndexOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManyLevelInput = {
-  AND?: InputMaybe<Array<FilterFindManyLevelInput>>;
-  OR?: InputMaybe<Array<FilterFindManyLevelInput>>;
-  _id?: InputMaybe<Scalars['String']>;
-  /** List of *indexed* fields that can be filtered via operators. */
-  _operators?: InputMaybe<FilterFindManyLevelOperatorsInput>;
-  ability_score_bonuses?: InputMaybe<Scalars['Float']>;
-  class?: InputMaybe<FilterFindManyAbilityScoreSkillsInput>;
-  class_specific?: InputMaybe<FilterFindManyLevelClass_SpecificInput>;
-  features?: InputMaybe<Array<InputMaybe<FilterFindManyAbilityScoreSkillsInput>>>;
-  index?: InputMaybe<Scalars['String']>;
-  level?: InputMaybe<Scalars['Float']>;
-  prof_bonus?: InputMaybe<Scalars['Float']>;
-  spellcasting?: InputMaybe<FilterFindManyLevelSpellcastingInput>;
-  subclass?: InputMaybe<FilterFindManyAbilityScoreSkillsInput>;
-  subclass_specific?: InputMaybe<FilterFindManyLevelSubclass_SpecificInput>;
-  url?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindManyLevelLevelOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['Float']>;
-  gte?: InputMaybe<Scalars['Float']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['Float']>>>;
-  lt?: InputMaybe<Scalars['Float']>;
-  lte?: InputMaybe<Scalars['Float']>;
-  ne?: InputMaybe<Scalars['Float']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['Float']>>>;
-};
-
-/** For performance reason this type contains only *indexed* fields. */
-export type FilterFindManyLevelOperatorsInput = {
-  _id?: InputMaybe<FilterFindManyLevel_IdOperatorsInput>;
-  ability_score_bonuses?: InputMaybe<FilterFindManyLevelAbility_Score_BonusesOperatorsInput>;
-  index?: InputMaybe<FilterFindManyLevelIndexOperatorsInput>;
-  level?: InputMaybe<FilterFindManyLevelLevelOperatorsInput>;
-  prof_bonus?: InputMaybe<FilterFindManyLevelProf_BonusOperatorsInput>;
-  url?: InputMaybe<FilterFindManyLevelUrlOperatorsInput>;
-};
-
-export type FilterFindManyLevelProf_BonusOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['Float']>;
-  gte?: InputMaybe<Scalars['Float']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['Float']>>>;
-  lt?: InputMaybe<Scalars['Float']>;
-  lte?: InputMaybe<Scalars['Float']>;
-  ne?: InputMaybe<Scalars['Float']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['Float']>>>;
-};
-
-export type FilterFindManyLevelSpellcastingInput = {
-  cantrips_known?: InputMaybe<Scalars['Float']>;
-  spell_slots_level_1?: InputMaybe<Scalars['Float']>;
-  spell_slots_level_2?: InputMaybe<Scalars['Float']>;
-  spell_slots_level_3?: InputMaybe<Scalars['Float']>;
-  spell_slots_level_4?: InputMaybe<Scalars['Float']>;
-  spell_slots_level_5?: InputMaybe<Scalars['Float']>;
-  spell_slots_level_6?: InputMaybe<Scalars['Float']>;
-  spell_slots_level_7?: InputMaybe<Scalars['Float']>;
-  spell_slots_level_8?: InputMaybe<Scalars['Float']>;
-  spell_slots_level_9?: InputMaybe<Scalars['Float']>;
-  spells_known?: InputMaybe<Scalars['Float']>;
-};
-
-export type FilterFindManyLevelSubclass_SpecificInput = {
-  additional_magical_secrets_max_lvl?: InputMaybe<Scalars['Float']>;
-  aura_range?: InputMaybe<Scalars['Float']>;
-};
-
-export type FilterFindManyLevelUrlOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManyLevel_IdOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManyMagicItemDescOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManyMagicItemIndexOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManyMagicItemInput = {
-  AND?: InputMaybe<Array<FilterFindManyMagicItemInput>>;
-  OR?: InputMaybe<Array<FilterFindManyMagicItemInput>>;
-  _id?: InputMaybe<Scalars['String']>;
-  /** List of *indexed* fields that can be filtered via operators. */
-  _operators?: InputMaybe<FilterFindManyMagicItemOperatorsInput>;
-  desc?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  equipment_category?: InputMaybe<FilterFindManyAbilityScoreSkillsInput>;
-  index?: InputMaybe<Scalars['String']>;
-  name?: InputMaybe<Scalars['String']>;
-  url?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindManyMagicItemNameOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-/** For performance reason this type contains only *indexed* fields. */
-export type FilterFindManyMagicItemOperatorsInput = {
-  _id?: InputMaybe<FilterFindManyMagicItem_IdOperatorsInput>;
-  desc?: InputMaybe<FilterFindManyMagicItemDescOperatorsInput>;
-  index?: InputMaybe<FilterFindManyMagicItemIndexOperatorsInput>;
-  name?: InputMaybe<FilterFindManyMagicItemNameOperatorsInput>;
-  url?: InputMaybe<FilterFindManyMagicItemUrlOperatorsInput>;
-};
-
-export type FilterFindManyMagicItemUrlOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManyMagicItem_IdOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManyMagicSchoolDescOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManyMagicSchoolIndexOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManyMagicSchoolInput = {
-  AND?: InputMaybe<Array<FilterFindManyMagicSchoolInput>>;
-  OR?: InputMaybe<Array<FilterFindManyMagicSchoolInput>>;
-  _id?: InputMaybe<Scalars['String']>;
-  /** List of *indexed* fields that can be filtered via operators. */
-  _operators?: InputMaybe<FilterFindManyMagicSchoolOperatorsInput>;
-  desc?: InputMaybe<Scalars['String']>;
-  index?: InputMaybe<Scalars['String']>;
-  name?: InputMaybe<Scalars['String']>;
-  url?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindManyMagicSchoolNameOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-/** For performance reason this type contains only *indexed* fields. */
-export type FilterFindManyMagicSchoolOperatorsInput = {
-  _id?: InputMaybe<FilterFindManyMagicSchool_IdOperatorsInput>;
-  desc?: InputMaybe<FilterFindManyMagicSchoolDescOperatorsInput>;
-  index?: InputMaybe<FilterFindManyMagicSchoolIndexOperatorsInput>;
-  name?: InputMaybe<FilterFindManyMagicSchoolNameOperatorsInput>;
-  url?: InputMaybe<FilterFindManyMagicSchoolUrlOperatorsInput>;
-};
-
-export type FilterFindManyMagicSchoolUrlOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManyMagicSchool_IdOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManyMonsterActionsAttack_OptionsFromInput = {
-  damage?: InputMaybe<Array<InputMaybe<MonsterActionsDamageInput>>>;
-  dc?: InputMaybe<MonsterActionsDcInput>;
-  name?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindManyMonsterActionsAttack_OptionsInput = {
-  choose?: InputMaybe<Scalars['Float']>;
-  from?: InputMaybe<Array<InputMaybe<FilterFindManyMonsterActionsAttack_OptionsFromInput>>>;
-  type?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindManyMonsterActionsDamageInput = {
-  damage_dice?: InputMaybe<Scalars['String']>;
-  damage_type?: InputMaybe<AbilityScoreSkillsInput>;
-};
-
-export type FilterFindManyMonsterActionsDcInput = {
-  dc_type?: InputMaybe<AbilityScoreSkillsInput>;
-  dc_value?: InputMaybe<Scalars['Float']>;
-  success_type?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindManyMonsterActionsInput = {
-  attack_bonus?: InputMaybe<Scalars['Float']>;
-  attack_options?: InputMaybe<FilterFindManyMonsterActionsAttack_OptionsInput>;
-  attacks?: InputMaybe<Array<InputMaybe<FilterFindManyMonsterActionsAttack_OptionsFromInput>>>;
-  damage?: InputMaybe<Array<InputMaybe<FilterFindManyMonsterActionsDamageInput>>>;
-  dc?: InputMaybe<FilterFindManyMonsterActionsDcInput>;
-  desc?: InputMaybe<Scalars['String']>;
-  name?: InputMaybe<Scalars['String']>;
-  options?: InputMaybe<FilterFindManyMonsterActionsOptionsInput>;
-  usage?: InputMaybe<FilterFindManyMonsterActionsUsageInput>;
-};
-
-export type FilterFindManyMonsterActionsOptionsFromInput = {
-  count?: InputMaybe<Scalars['JSON']>;
-  name?: InputMaybe<Scalars['String']>;
-  type?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindManyMonsterActionsOptionsInput = {
-  choose?: InputMaybe<Scalars['Float']>;
-  from?: InputMaybe<Array<InputMaybe<FilterFindManyMonsterActionsOptionsFromInput>>>;
-};
-
-export type FilterFindManyMonsterActionsUsageInput = {
-  dice?: InputMaybe<Scalars['String']>;
-  min_value?: InputMaybe<Scalars['Float']>;
-  type?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindManyMonsterAlignmentOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManyMonsterArmor_ClassOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['Float']>;
-  gte?: InputMaybe<Scalars['Float']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['Float']>>>;
-  lt?: InputMaybe<Scalars['Float']>;
-  lte?: InputMaybe<Scalars['Float']>;
-  ne?: InputMaybe<Scalars['Float']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['Float']>>>;
-};
-
-export type FilterFindManyMonsterChallenge_RatingOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['Float']>;
-  gte?: InputMaybe<Scalars['Float']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['Float']>>>;
-  lt?: InputMaybe<Scalars['Float']>;
-  lte?: InputMaybe<Scalars['Float']>;
-  ne?: InputMaybe<Scalars['Float']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['Float']>>>;
-};
-
-export type FilterFindManyMonsterCharismaOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['Float']>;
-  gte?: InputMaybe<Scalars['Float']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['Float']>>>;
-  lt?: InputMaybe<Scalars['Float']>;
-  lte?: InputMaybe<Scalars['Float']>;
-  ne?: InputMaybe<Scalars['Float']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['Float']>>>;
-};
-
-export type FilterFindManyMonsterConstitutionOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['Float']>;
-  gte?: InputMaybe<Scalars['Float']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['Float']>>>;
-  lt?: InputMaybe<Scalars['Float']>;
-  lte?: InputMaybe<Scalars['Float']>;
-  ne?: InputMaybe<Scalars['Float']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['Float']>>>;
-};
-
-export type FilterFindManyMonsterDamage_ImmunitiesOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManyMonsterDamage_ResistancesOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManyMonsterDamage_VulnerabilitiesOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManyMonsterDexterityOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['Float']>;
-  gte?: InputMaybe<Scalars['Float']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['Float']>>>;
-  lt?: InputMaybe<Scalars['Float']>;
-  lte?: InputMaybe<Scalars['Float']>;
-  ne?: InputMaybe<Scalars['Float']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['Float']>>>;
-};
-
-export type FilterFindManyMonsterHit_DiceOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManyMonsterHit_PointsOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['Float']>;
-  gte?: InputMaybe<Scalars['Float']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['Float']>>>;
-  lt?: InputMaybe<Scalars['Float']>;
-  lte?: InputMaybe<Scalars['Float']>;
-  ne?: InputMaybe<Scalars['Float']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['Float']>>>;
-};
-
-export type FilterFindManyMonsterIndexOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManyMonsterInput = {
-  AND?: InputMaybe<Array<FilterFindManyMonsterInput>>;
-  OR?: InputMaybe<Array<FilterFindManyMonsterInput>>;
-  _id?: InputMaybe<Scalars['String']>;
-  /** List of *indexed* fields that can be filtered via operators. */
-  _operators?: InputMaybe<FilterFindManyMonsterOperatorsInput>;
-  actions?: InputMaybe<Array<InputMaybe<FilterFindManyMonsterActionsInput>>>;
-  alignment?: InputMaybe<Scalars['String']>;
-  armor_class?: InputMaybe<Scalars['Float']>;
-  challenge_rating?: InputMaybe<Scalars['Float']>;
-  charisma?: InputMaybe<Scalars['Float']>;
-  condition_immunities?: InputMaybe<Array<InputMaybe<FilterFindManyAbilityScoreSkillsInput>>>;
-  constitution?: InputMaybe<Scalars['Float']>;
-  damage_immunities?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  damage_resistances?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  damage_vulnerabilities?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  dexterity?: InputMaybe<Scalars['Float']>;
-  forms?: InputMaybe<Array<InputMaybe<FilterFindManyAbilityScoreSkillsInput>>>;
-  hit_dice?: InputMaybe<Scalars['String']>;
-  hit_points?: InputMaybe<Scalars['Float']>;
-  index?: InputMaybe<Scalars['String']>;
-  intelligence?: InputMaybe<Scalars['Float']>;
-  languages?: InputMaybe<Scalars['String']>;
-  legendary_actions?: InputMaybe<Array<InputMaybe<FilterFindManyMonsterLegendary_ActionsInput>>>;
-  name?: InputMaybe<Scalars['String']>;
-  proficiencies?: InputMaybe<Array<InputMaybe<FilterFindManyMonsterProficienciesInput>>>;
-  reactions?: InputMaybe<Array<InputMaybe<FilterFindManyMonsterReactionsInput>>>;
-  senses?: InputMaybe<FilterFindManyMonsterSensesInput>;
-  size?: InputMaybe<Scalars['String']>;
-  special_abilities?: InputMaybe<Array<InputMaybe<FilterFindManyMonsterSpecial_AbilitiesInput>>>;
-  speed?: InputMaybe<FilterFindManyMonsterSpeedInput>;
-  strength?: InputMaybe<Scalars['Float']>;
-  subtype?: InputMaybe<Scalars['String']>;
-  type?: InputMaybe<Scalars['String']>;
-  url?: InputMaybe<Scalars['String']>;
-  wisdom?: InputMaybe<Scalars['Float']>;
-  xp?: InputMaybe<Scalars['Float']>;
-};
-
-export type FilterFindManyMonsterIntelligenceOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['Float']>;
-  gte?: InputMaybe<Scalars['Float']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['Float']>>>;
-  lt?: InputMaybe<Scalars['Float']>;
-  lte?: InputMaybe<Scalars['Float']>;
-  ne?: InputMaybe<Scalars['Float']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['Float']>>>;
-};
-
-export type FilterFindManyMonsterLanguagesOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManyMonsterLegendary_ActionsInput = {
-  attack_bonus?: InputMaybe<Scalars['Float']>;
-  damage?: InputMaybe<Array<InputMaybe<FilterFindManyMonsterActionsDamageInput>>>;
-  dc?: InputMaybe<FilterFindManyMonsterActionsDcInput>;
-  desc?: InputMaybe<Scalars['String']>;
-  name?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindManyMonsterNameOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-/** For performance reason this type contains only *indexed* fields. */
-export type FilterFindManyMonsterOperatorsInput = {
-  _id?: InputMaybe<FilterFindManyMonster_IdOperatorsInput>;
-  alignment?: InputMaybe<FilterFindManyMonsterAlignmentOperatorsInput>;
-  armor_class?: InputMaybe<FilterFindManyMonsterArmor_ClassOperatorsInput>;
-  challenge_rating?: InputMaybe<FilterFindManyMonsterChallenge_RatingOperatorsInput>;
-  charisma?: InputMaybe<FilterFindManyMonsterCharismaOperatorsInput>;
-  constitution?: InputMaybe<FilterFindManyMonsterConstitutionOperatorsInput>;
-  damage_immunities?: InputMaybe<FilterFindManyMonsterDamage_ImmunitiesOperatorsInput>;
-  damage_resistances?: InputMaybe<FilterFindManyMonsterDamage_ResistancesOperatorsInput>;
-  damage_vulnerabilities?: InputMaybe<FilterFindManyMonsterDamage_VulnerabilitiesOperatorsInput>;
-  dexterity?: InputMaybe<FilterFindManyMonsterDexterityOperatorsInput>;
-  hit_dice?: InputMaybe<FilterFindManyMonsterHit_DiceOperatorsInput>;
-  hit_points?: InputMaybe<FilterFindManyMonsterHit_PointsOperatorsInput>;
-  index?: InputMaybe<FilterFindManyMonsterIndexOperatorsInput>;
-  intelligence?: InputMaybe<FilterFindManyMonsterIntelligenceOperatorsInput>;
-  languages?: InputMaybe<FilterFindManyMonsterLanguagesOperatorsInput>;
-  name?: InputMaybe<FilterFindManyMonsterNameOperatorsInput>;
-  size?: InputMaybe<FilterFindManyMonsterSizeOperatorsInput>;
-  strength?: InputMaybe<FilterFindManyMonsterStrengthOperatorsInput>;
-  subtype?: InputMaybe<FilterFindManyMonsterSubtypeOperatorsInput>;
-  type?: InputMaybe<FilterFindManyMonsterTypeOperatorsInput>;
-  url?: InputMaybe<FilterFindManyMonsterUrlOperatorsInput>;
-  wisdom?: InputMaybe<FilterFindManyMonsterWisdomOperatorsInput>;
-  xp?: InputMaybe<FilterFindManyMonsterXpOperatorsInput>;
-};
-
-export type FilterFindManyMonsterProficienciesInput = {
-  proficiency?: InputMaybe<FilterFindManyAbilityScoreSkillsInput>;
-  value?: InputMaybe<Scalars['Float']>;
-};
-
-export type FilterFindManyMonsterReactionsInput = {
-  dc?: InputMaybe<FilterFindManyMonsterActionsDcInput>;
-  desc?: InputMaybe<Scalars['String']>;
-  name?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindManyMonsterSensesInput = {
-  blindsight?: InputMaybe<Scalars['String']>;
-  darkvision?: InputMaybe<Scalars['String']>;
-  passive_perception?: InputMaybe<Scalars['Float']>;
-  tremorsense?: InputMaybe<Scalars['String']>;
-  truesight?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindManyMonsterSizeOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManyMonsterSpecial_AbilitiesInput = {
-  attack_bonus?: InputMaybe<Scalars['Float']>;
-  damage?: InputMaybe<Array<InputMaybe<FilterFindManyMonsterActionsDamageInput>>>;
-  dc?: InputMaybe<FilterFindManyMonsterActionsDcInput>;
-  desc?: InputMaybe<Scalars['String']>;
-  name?: InputMaybe<Scalars['String']>;
-  spellcasting?: InputMaybe<FilterFindManyMonsterSpecial_AbilitiesSpellcastingInput>;
-  usage?: InputMaybe<FilterFindManyMonsterSpecial_AbilitiesSpellcastingSpellsUsageInput>;
-};
-
-export type FilterFindManyMonsterSpecial_AbilitiesSpellcastingInput = {
-  ability?: InputMaybe<FilterFindManyAbilityScoreSkillsInput>;
-  components_required?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  dc?: InputMaybe<Scalars['Float']>;
-  level?: InputMaybe<Scalars['Float']>;
-  modifier?: InputMaybe<Scalars['Float']>;
-  school?: InputMaybe<Scalars['String']>;
-  slots?: InputMaybe<Scalars['JSON']>;
-  spells?: InputMaybe<Array<InputMaybe<FilterFindManyMonsterSpecial_AbilitiesSpellcastingSpellsInput>>>;
-};
-
-export type FilterFindManyMonsterSpecial_AbilitiesSpellcastingSpellsInput = {
-  level?: InputMaybe<Scalars['Float']>;
-  name?: InputMaybe<Scalars['String']>;
-  notes?: InputMaybe<Scalars['String']>;
-  url?: InputMaybe<Scalars['String']>;
-  usage?: InputMaybe<FilterFindManyMonsterSpecial_AbilitiesSpellcastingSpellsUsageInput>;
-};
-
-export type FilterFindManyMonsterSpecial_AbilitiesSpellcastingSpellsUsageInput = {
-  rest_types?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  times?: InputMaybe<Scalars['Float']>;
-  type?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindManyMonsterSpeedInput = {
-  burrow?: InputMaybe<Scalars['String']>;
-  climb?: InputMaybe<Scalars['String']>;
-  fly?: InputMaybe<Scalars['String']>;
-  hover?: InputMaybe<Scalars['Boolean']>;
-  swim?: InputMaybe<Scalars['String']>;
-  walk?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindManyMonsterStrengthOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['Float']>;
-  gte?: InputMaybe<Scalars['Float']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['Float']>>>;
-  lt?: InputMaybe<Scalars['Float']>;
-  lte?: InputMaybe<Scalars['Float']>;
-  ne?: InputMaybe<Scalars['Float']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['Float']>>>;
-};
-
-export type FilterFindManyMonsterSubtypeOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManyMonsterTypeOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManyMonsterUrlOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManyMonsterWisdomOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['Float']>;
-  gte?: InputMaybe<Scalars['Float']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['Float']>>>;
-  lt?: InputMaybe<Scalars['Float']>;
-  lte?: InputMaybe<Scalars['Float']>;
-  ne?: InputMaybe<Scalars['Float']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['Float']>>>;
-};
-
-export type FilterFindManyMonsterXpOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['Float']>;
-  gte?: InputMaybe<Scalars['Float']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['Float']>>>;
-  lt?: InputMaybe<Scalars['Float']>;
-  lte?: InputMaybe<Scalars['Float']>;
-  ne?: InputMaybe<Scalars['Float']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['Float']>>>;
-};
-
-export type FilterFindManyMonster_IdOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManyProficiencyIndexOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManyProficiencyInput = {
-  AND?: InputMaybe<Array<FilterFindManyProficiencyInput>>;
-  OR?: InputMaybe<Array<FilterFindManyProficiencyInput>>;
-  _id?: InputMaybe<Scalars['String']>;
-  /** List of *indexed* fields that can be filtered via operators. */
-  _operators?: InputMaybe<FilterFindManyProficiencyOperatorsInput>;
-  classes?: InputMaybe<Array<InputMaybe<FilterFindManyAbilityScoreSkillsInput>>>;
-  index?: InputMaybe<Scalars['String']>;
-  name?: InputMaybe<Scalars['String']>;
-  races?: InputMaybe<Array<InputMaybe<FilterFindManyAbilityScoreSkillsInput>>>;
-  reference?: InputMaybe<FilterFindManyProficiencyReferenceInput>;
-  type?: InputMaybe<Scalars['String']>;
-  url?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindManyProficiencyNameOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-/** For performance reason this type contains only *indexed* fields. */
-export type FilterFindManyProficiencyOperatorsInput = {
-  _id?: InputMaybe<FilterFindManyProficiency_IdOperatorsInput>;
-  index?: InputMaybe<FilterFindManyProficiencyIndexOperatorsInput>;
-  name?: InputMaybe<FilterFindManyProficiencyNameOperatorsInput>;
-  type?: InputMaybe<FilterFindManyProficiencyTypeOperatorsInput>;
-  url?: InputMaybe<FilterFindManyProficiencyUrlOperatorsInput>;
-};
-
-export type FilterFindManyProficiencyReferenceInput = {
-  index?: InputMaybe<Scalars['String']>;
-  name?: InputMaybe<Scalars['String']>;
-  type?: InputMaybe<Scalars['String']>;
-  url?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindManyProficiencyTypeOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManyProficiencyUrlOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManyProficiency_IdOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManyRaceAbility_Bonus_OptionsFromInput = {
-  ability_score?: InputMaybe<FilterFindManyAbilityScoreSkillsInput>;
-  bonus?: InputMaybe<Scalars['Float']>;
-};
-
-export type FilterFindManyRaceAbility_Bonus_OptionsInput = {
-  choose?: InputMaybe<Scalars['Float']>;
-  from?: InputMaybe<Array<InputMaybe<FilterFindManyRaceAbility_Bonus_OptionsFromInput>>>;
-  type?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindManyRaceAbility_BonusesInput = {
-  ability_score?: InputMaybe<FilterFindManyAbilityScoreSkillsInput>;
-  bonus?: InputMaybe<Scalars['Float']>;
-};
-
-export type FilterFindManyRaceAgeOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManyRaceAlignmentOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManyRaceIndexOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManyRaceInput = {
-  AND?: InputMaybe<Array<FilterFindManyRaceInput>>;
-  OR?: InputMaybe<Array<FilterFindManyRaceInput>>;
-  _id?: InputMaybe<Scalars['String']>;
-  /** List of *indexed* fields that can be filtered via operators. */
-  _operators?: InputMaybe<FilterFindManyRaceOperatorsInput>;
-  ability_bonus_options?: InputMaybe<FilterFindManyRaceAbility_Bonus_OptionsInput>;
-  ability_bonuses?: InputMaybe<Array<InputMaybe<FilterFindManyRaceAbility_BonusesInput>>>;
-  age?: InputMaybe<Scalars['String']>;
-  alignment?: InputMaybe<Scalars['String']>;
-  index?: InputMaybe<Scalars['String']>;
-  language_desc?: InputMaybe<Scalars['String']>;
-  language_options?: InputMaybe<FilterFindManyRaceLanguage_OptionsInput>;
-  languages?: InputMaybe<Array<InputMaybe<FilterFindManyAbilityScoreSkillsInput>>>;
-  name?: InputMaybe<Scalars['String']>;
-  size?: InputMaybe<Scalars['String']>;
-  size_description?: InputMaybe<Scalars['String']>;
-  speed?: InputMaybe<Scalars['Float']>;
-  starting_proficiencies?: InputMaybe<Array<InputMaybe<FilterFindManyAbilityScoreSkillsInput>>>;
-  starting_proficiency_options?: InputMaybe<FilterFindManyRaceStarting_Proficiency_OptionsInput>;
-  subraces?: InputMaybe<Array<InputMaybe<FilterFindManyAbilityScoreSkillsInput>>>;
-  traits?: InputMaybe<Array<InputMaybe<FilterFindManyAbilityScoreSkillsInput>>>;
-  url?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindManyRaceLanguage_DescOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManyRaceLanguage_OptionsInput = {
-  choose?: InputMaybe<Scalars['Float']>;
-  from?: InputMaybe<Array<InputMaybe<FilterFindManyAbilityScoreSkillsInput>>>;
-  type?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindManyRaceNameOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-/** For performance reason this type contains only *indexed* fields. */
-export type FilterFindManyRaceOperatorsInput = {
-  _id?: InputMaybe<FilterFindManyRace_IdOperatorsInput>;
-  age?: InputMaybe<FilterFindManyRaceAgeOperatorsInput>;
-  alignment?: InputMaybe<FilterFindManyRaceAlignmentOperatorsInput>;
-  index?: InputMaybe<FilterFindManyRaceIndexOperatorsInput>;
-  language_desc?: InputMaybe<FilterFindManyRaceLanguage_DescOperatorsInput>;
-  name?: InputMaybe<FilterFindManyRaceNameOperatorsInput>;
-  size?: InputMaybe<FilterFindManyRaceSizeOperatorsInput>;
-  size_description?: InputMaybe<FilterFindManyRaceSize_DescriptionOperatorsInput>;
-  speed?: InputMaybe<FilterFindManyRaceSpeedOperatorsInput>;
-  url?: InputMaybe<FilterFindManyRaceUrlOperatorsInput>;
-};
-
-export type FilterFindManyRaceSizeOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManyRaceSize_DescriptionOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManyRaceSpeedOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['Float']>;
-  gte?: InputMaybe<Scalars['Float']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['Float']>>>;
-  lt?: InputMaybe<Scalars['Float']>;
-  lte?: InputMaybe<Scalars['Float']>;
-  ne?: InputMaybe<Scalars['Float']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['Float']>>>;
-};
-
-export type FilterFindManyRaceStarting_Proficiency_OptionsInput = {
-  choose?: InputMaybe<Scalars['Float']>;
-  from?: InputMaybe<Array<InputMaybe<FilterFindManyAbilityScoreSkillsInput>>>;
-  type?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindManyRaceUrlOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManyRace_IdOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManyRuleDescOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManyRuleIndexOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManyRuleInput = {
-  AND?: InputMaybe<Array<FilterFindManyRuleInput>>;
-  OR?: InputMaybe<Array<FilterFindManyRuleInput>>;
-  _id?: InputMaybe<Scalars['String']>;
-  /** List of *indexed* fields that can be filtered via operators. */
-  _operators?: InputMaybe<FilterFindManyRuleOperatorsInput>;
-  desc?: InputMaybe<Scalars['String']>;
-  index?: InputMaybe<Scalars['String']>;
-  name?: InputMaybe<Scalars['String']>;
-  subsections?: InputMaybe<Array<InputMaybe<FilterFindManyAbilityScoreSkillsInput>>>;
-  url?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindManyRuleNameOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-/** For performance reason this type contains only *indexed* fields. */
-export type FilterFindManyRuleOperatorsInput = {
-  _id?: InputMaybe<FilterFindManyRule_IdOperatorsInput>;
-  desc?: InputMaybe<FilterFindManyRuleDescOperatorsInput>;
-  index?: InputMaybe<FilterFindManyRuleIndexOperatorsInput>;
-  name?: InputMaybe<FilterFindManyRuleNameOperatorsInput>;
-  url?: InputMaybe<FilterFindManyRuleUrlOperatorsInput>;
-};
-
-export type FilterFindManyRuleSectionDescOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManyRuleSectionIndexOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManyRuleSectionInput = {
-  AND?: InputMaybe<Array<FilterFindManyRuleSectionInput>>;
-  OR?: InputMaybe<Array<FilterFindManyRuleSectionInput>>;
-  _id?: InputMaybe<Scalars['String']>;
-  /** List of *indexed* fields that can be filtered via operators. */
-  _operators?: InputMaybe<FilterFindManyRuleSectionOperatorsInput>;
-  desc?: InputMaybe<Scalars['String']>;
-  index?: InputMaybe<Scalars['String']>;
-  name?: InputMaybe<Scalars['String']>;
-  url?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindManyRuleSectionNameOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-/** For performance reason this type contains only *indexed* fields. */
-export type FilterFindManyRuleSectionOperatorsInput = {
-  _id?: InputMaybe<FilterFindManyRuleSection_IdOperatorsInput>;
-  desc?: InputMaybe<FilterFindManyRuleSectionDescOperatorsInput>;
-  index?: InputMaybe<FilterFindManyRuleSectionIndexOperatorsInput>;
-  name?: InputMaybe<FilterFindManyRuleSectionNameOperatorsInput>;
-  url?: InputMaybe<FilterFindManyRuleSectionUrlOperatorsInput>;
-};
-
-export type FilterFindManyRuleSectionUrlOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManyRuleSection_IdOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManyRuleUrlOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManyRule_IdOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManySkillDescOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManySkillIndexOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManySkillInput = {
-  AND?: InputMaybe<Array<FilterFindManySkillInput>>;
-  OR?: InputMaybe<Array<FilterFindManySkillInput>>;
-  _id?: InputMaybe<Scalars['String']>;
-  /** List of *indexed* fields that can be filtered via operators. */
-  _operators?: InputMaybe<FilterFindManySkillOperatorsInput>;
-  ability_score?: InputMaybe<FilterFindManyAbilityScoreSkillsInput>;
-  desc?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  index?: InputMaybe<Scalars['String']>;
-  name?: InputMaybe<Scalars['String']>;
-  url?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindManySkillNameOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-/** For performance reason this type contains only *indexed* fields. */
-export type FilterFindManySkillOperatorsInput = {
-  _id?: InputMaybe<FilterFindManySkill_IdOperatorsInput>;
-  desc?: InputMaybe<FilterFindManySkillDescOperatorsInput>;
-  index?: InputMaybe<FilterFindManySkillIndexOperatorsInput>;
-  name?: InputMaybe<FilterFindManySkillNameOperatorsInput>;
-  url?: InputMaybe<FilterFindManySkillUrlOperatorsInput>;
-};
-
-export type FilterFindManySkillUrlOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManySkill_IdOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManySpellArea_Of_EffectInput = {
-  size?: InputMaybe<Scalars['Float']>;
-  type?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindManySpellAttack_TypeOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManySpellCasting_TimeOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManySpellComponentsOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManySpellConcentrationOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['Boolean']>;
-  gte?: InputMaybe<Scalars['Boolean']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['Boolean']>>>;
-  lt?: InputMaybe<Scalars['Boolean']>;
-  lte?: InputMaybe<Scalars['Boolean']>;
-  ne?: InputMaybe<Scalars['Boolean']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['Boolean']>>>;
-};
-
-export type FilterFindManySpellDamageInput = {
-  damage_at_character_level?: InputMaybe<Scalars['JSON']>;
-  damage_at_slot_level?: InputMaybe<Scalars['JSON']>;
-  damage_type?: InputMaybe<FilterFindManyAbilityScoreSkillsInput>;
-};
-
-export type FilterFindManySpellDcInput = {
-  dc_success?: InputMaybe<Scalars['String']>;
-  dc_type?: InputMaybe<FilterFindManyAbilityScoreSkillsInput>;
-  desc?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindManySpellDescOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManySpellDurationOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManySpellHigher_LevelOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManySpellIndexOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManySpellInput = {
-  AND?: InputMaybe<Array<FilterFindManySpellInput>>;
-  OR?: InputMaybe<Array<FilterFindManySpellInput>>;
-  _id?: InputMaybe<FilterFindManySpell_IdInput>;
-  /** List of *indexed* fields that can be filtered via operators. */
-  _operators?: InputMaybe<FilterFindManySpellOperatorsInput>;
-  area_of_effect?: InputMaybe<FilterFindManySpellArea_Of_EffectInput>;
-  attack_type?: InputMaybe<Scalars['String']>;
-  casting_time?: InputMaybe<Scalars['String']>;
-  classes?: InputMaybe<Array<InputMaybe<FilterFindManyAbilityScoreSkillsInput>>>;
-  components?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  concentration?: InputMaybe<Scalars['Boolean']>;
-  damage?: InputMaybe<FilterFindManySpellDamageInput>;
-  dc?: InputMaybe<FilterFindManySpellDcInput>;
-  desc?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  duration?: InputMaybe<Scalars['String']>;
-  heal_at_slot_level?: InputMaybe<Scalars['JSON']>;
-  higher_level?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  index?: InputMaybe<Scalars['String']>;
-  level?: InputMaybe<Scalars['Float']>;
-  material?: InputMaybe<Scalars['String']>;
-  name?: InputMaybe<Scalars['String']>;
-  range?: InputMaybe<Scalars['String']>;
-  ritual?: InputMaybe<Scalars['Boolean']>;
-  school?: InputMaybe<FilterFindManyAbilityScoreSkillsInput>;
-  subclasses?: InputMaybe<Array<InputMaybe<FilterFindManyAbilityScoreSkillsInput>>>;
-  url?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindManySpellMaterialOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManySpellNameOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-/** For performance reason this type contains only *indexed* fields. */
-export type FilterFindManySpellOperatorsInput = {
-  _id?: InputMaybe<FilterFindManySpell_IdOperatorsInput>;
-  attack_type?: InputMaybe<FilterFindManySpellAttack_TypeOperatorsInput>;
-  casting_time?: InputMaybe<FilterFindManySpellCasting_TimeOperatorsInput>;
-  components?: InputMaybe<FilterFindManySpellComponentsOperatorsInput>;
-  concentration?: InputMaybe<FilterFindManySpellConcentrationOperatorsInput>;
-  desc?: InputMaybe<FilterFindManySpellDescOperatorsInput>;
-  duration?: InputMaybe<FilterFindManySpellDurationOperatorsInput>;
-  higher_level?: InputMaybe<FilterFindManySpellHigher_LevelOperatorsInput>;
-  index?: InputMaybe<FilterFindManySpellIndexOperatorsInput>;
-  material?: InputMaybe<FilterFindManySpellMaterialOperatorsInput>;
-  name?: InputMaybe<FilterFindManySpellNameOperatorsInput>;
-  range?: InputMaybe<FilterFindManySpellRangeOperatorsInput>;
-  ritual?: InputMaybe<FilterFindManySpellRitualOperatorsInput>;
-  url?: InputMaybe<FilterFindManySpellUrlOperatorsInput>;
-};
-
-export type FilterFindManySpellRangeOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManySpellRitualOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['Boolean']>;
-  gte?: InputMaybe<Scalars['Boolean']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['Boolean']>>>;
-  lt?: InputMaybe<Scalars['Boolean']>;
-  lte?: InputMaybe<Scalars['Boolean']>;
-  ne?: InputMaybe<Scalars['Boolean']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['Boolean']>>>;
-};
-
-export type FilterFindManySpellUrlOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManySpell_IdInput = {
-  select?: InputMaybe<Scalars['JSON']>;
-  type?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindManySpell_IdOperatorsInput = {
-  type?: InputMaybe<FilterFindManySpell_IdTypeOperatorsInput>;
-};
-
-export type FilterFindManySpell_IdTypeOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManySubclassDescOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManySubclassIndexOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManySubclassInput = {
-  AND?: InputMaybe<Array<FilterFindManySubclassInput>>;
-  OR?: InputMaybe<Array<FilterFindManySubclassInput>>;
-  _id?: InputMaybe<Scalars['String']>;
-  /** List of *indexed* fields that can be filtered via operators. */
-  _operators?: InputMaybe<FilterFindManySubclassOperatorsInput>;
-  class?: InputMaybe<FilterFindManyAbilityScoreSkillsInput>;
-  desc?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  index?: InputMaybe<Scalars['String']>;
-  name?: InputMaybe<Scalars['String']>;
-  spells?: InputMaybe<Array<InputMaybe<FilterFindManySubclassSpellsInput>>>;
-  subclass_flavor?: InputMaybe<Scalars['String']>;
-  subclass_levels?: InputMaybe<Scalars['String']>;
-  url?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindManySubclassNameOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-/** For performance reason this type contains only *indexed* fields. */
-export type FilterFindManySubclassOperatorsInput = {
-  _id?: InputMaybe<FilterFindManySubclass_IdOperatorsInput>;
-  desc?: InputMaybe<FilterFindManySubclassDescOperatorsInput>;
-  index?: InputMaybe<FilterFindManySubclassIndexOperatorsInput>;
-  name?: InputMaybe<FilterFindManySubclassNameOperatorsInput>;
-  subclass_flavor?: InputMaybe<FilterFindManySubclassSubclass_FlavorOperatorsInput>;
-  subclass_levels?: InputMaybe<FilterFindManySubclassSubclass_LevelsOperatorsInput>;
-  url?: InputMaybe<FilterFindManySubclassUrlOperatorsInput>;
-};
-
-export type FilterFindManySubclassSpellsInput = {
-  prerequisites?: InputMaybe<Array<InputMaybe<FilterFindManySubclassSpellsPrerequisitesInput>>>;
-  spell?: InputMaybe<FilterFindManyAbilityScoreSkillsInput>;
-};
-
-export type FilterFindManySubclassSpellsPrerequisitesInput = {
-  index?: InputMaybe<Scalars['String']>;
-  name?: InputMaybe<Scalars['String']>;
-  type?: InputMaybe<Scalars['String']>;
-  url?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindManySubclassSubclass_FlavorOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManySubclassSubclass_LevelsOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManySubclassUrlOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManySubclass_IdOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManySubraceAbility_BonusesInput = {
-  ability_score?: InputMaybe<FilterFindManyAbilityScoreSkillsInput>;
-  bonus?: InputMaybe<Scalars['Float']>;
-};
-
-export type FilterFindManySubraceDescOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManySubraceIndexOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManySubraceInput = {
-  AND?: InputMaybe<Array<FilterFindManySubraceInput>>;
-  OR?: InputMaybe<Array<FilterFindManySubraceInput>>;
-  _id?: InputMaybe<Scalars['String']>;
-  /** List of *indexed* fields that can be filtered via operators. */
-  _operators?: InputMaybe<FilterFindManySubraceOperatorsInput>;
-  ability_bonuses?: InputMaybe<Array<InputMaybe<FilterFindManySubraceAbility_BonusesInput>>>;
-  desc?: InputMaybe<Scalars['String']>;
-  index?: InputMaybe<Scalars['String']>;
-  language_options?: InputMaybe<FilterFindManySubraceLanguage_OptionsInput>;
-  name?: InputMaybe<Scalars['String']>;
-  race?: InputMaybe<FilterFindManyAbilityScoreSkillsInput>;
-  racial_traits?: InputMaybe<Array<InputMaybe<FilterFindManyAbilityScoreSkillsInput>>>;
-  starting_proficiencies?: InputMaybe<Array<InputMaybe<FilterFindManyAbilityScoreSkillsInput>>>;
-  url?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindManySubraceLanguage_OptionsInput = {
-  choose?: InputMaybe<Scalars['Float']>;
-  from?: InputMaybe<Array<InputMaybe<FilterFindManyAbilityScoreSkillsInput>>>;
-  type?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindManySubraceNameOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-/** For performance reason this type contains only *indexed* fields. */
-export type FilterFindManySubraceOperatorsInput = {
-  _id?: InputMaybe<FilterFindManySubrace_IdOperatorsInput>;
-  desc?: InputMaybe<FilterFindManySubraceDescOperatorsInput>;
-  index?: InputMaybe<FilterFindManySubraceIndexOperatorsInput>;
-  name?: InputMaybe<FilterFindManySubraceNameOperatorsInput>;
-  url?: InputMaybe<FilterFindManySubraceUrlOperatorsInput>;
-};
-
-export type FilterFindManySubraceUrlOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManySubrace_IdOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManyTraitDescOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManyTraitIndexOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManyTraitInput = {
-  AND?: InputMaybe<Array<FilterFindManyTraitInput>>;
-  OR?: InputMaybe<Array<FilterFindManyTraitInput>>;
-  _id?: InputMaybe<Scalars['String']>;
-  /** List of *indexed* fields that can be filtered via operators. */
-  _operators?: InputMaybe<FilterFindManyTraitOperatorsInput>;
-  desc?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  index?: InputMaybe<Scalars['String']>;
-  name?: InputMaybe<Scalars['String']>;
-  parent?: InputMaybe<FilterFindManyAbilityScoreSkillsInput>;
-  proficiencies?: InputMaybe<Array<InputMaybe<FilterFindManyTraitProficienciesInput>>>;
-  proficiency_choices?: InputMaybe<FilterFindManyTraitProficiency_ChoicesInput>;
-  races?: InputMaybe<Array<InputMaybe<FilterFindManyAbilityScoreSkillsInput>>>;
-  subraces?: InputMaybe<Array<InputMaybe<FilterFindManyAbilityScoreSkillsInput>>>;
-  trait_specific?: InputMaybe<FilterFindManyTraitTrait_SpecificInput>;
-  url?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindManyTraitNameOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-/** For performance reason this type contains only *indexed* fields. */
-export type FilterFindManyTraitOperatorsInput = {
-  _id?: InputMaybe<FilterFindManyTrait_IdOperatorsInput>;
-  desc?: InputMaybe<FilterFindManyTraitDescOperatorsInput>;
-  index?: InputMaybe<FilterFindManyTraitIndexOperatorsInput>;
-  name?: InputMaybe<FilterFindManyTraitNameOperatorsInput>;
-  url?: InputMaybe<FilterFindManyTraitUrlOperatorsInput>;
-};
-
-export type FilterFindManyTraitProficienciesInput = {
-  index?: InputMaybe<Scalars['String']>;
-  name?: InputMaybe<Scalars['String']>;
-  url?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindManyTraitProficiency_ChoicesInput = {
-  choose?: InputMaybe<Scalars['Float']>;
-  from?: InputMaybe<Array<InputMaybe<FilterFindManyAbilityScoreSkillsInput>>>;
-  type?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindManyTraitTrait_SpecificBreath_WeaponDamageInput = {
-  damage_at_character_level?: InputMaybe<Scalars['JSON']>;
-  damage_type?: InputMaybe<FilterFindManyAbilityScoreSkillsInput>;
-};
-
-export type FilterFindManyTraitTrait_SpecificBreath_WeaponDcInput = {
-  dc_type?: InputMaybe<FilterFindManyAbilityScoreSkillsInput>;
-  success_type?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindManyTraitTrait_SpecificBreath_WeaponInput = {
-  damage?: InputMaybe<Array<InputMaybe<FilterFindManyTraitTrait_SpecificBreath_WeaponDamageInput>>>;
-  dc?: InputMaybe<FilterFindManyTraitTrait_SpecificBreath_WeaponDcInput>;
-  desc?: InputMaybe<Scalars['String']>;
-  name?: InputMaybe<Scalars['String']>;
-  usage?: InputMaybe<FilterFindManyTraitTrait_SpecificBreath_WeaponUsageInput>;
-};
-
-export type FilterFindManyTraitTrait_SpecificBreath_WeaponUsageInput = {
-  times?: InputMaybe<Scalars['Float']>;
-  type?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindManyTraitTrait_SpecificInput = {
-  breath_weapon?: InputMaybe<FilterFindManyTraitTrait_SpecificBreath_WeaponInput>;
-  damage_type?: InputMaybe<FilterFindManyAbilityScoreSkillsInput>;
-  spell_options?: InputMaybe<FilterFindManyTraitTrait_SpecificSubtrait_OptionsInput>;
-  subtrait_options?: InputMaybe<FilterFindManyTraitTrait_SpecificSubtrait_OptionsInput>;
-};
-
-export type FilterFindManyTraitTrait_SpecificSubtrait_OptionsInput = {
-  choose?: InputMaybe<Scalars['Float']>;
-  from?: InputMaybe<Array<InputMaybe<AbilityScoreSkillsInput>>>;
-  type?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindManyTraitUrlOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManyTrait_IdOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManyWeaponPropertyDescOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManyWeaponPropertyIndexOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManyWeaponPropertyInput = {
-  AND?: InputMaybe<Array<FilterFindManyWeaponPropertyInput>>;
-  OR?: InputMaybe<Array<FilterFindManyWeaponPropertyInput>>;
-  _id?: InputMaybe<Scalars['String']>;
-  /** List of *indexed* fields that can be filtered via operators. */
-  _operators?: InputMaybe<FilterFindManyWeaponPropertyOperatorsInput>;
-  desc?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  index?: InputMaybe<Scalars['String']>;
-  name?: InputMaybe<Scalars['String']>;
-  url?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindManyWeaponPropertyNameOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-/** For performance reason this type contains only *indexed* fields. */
-export type FilterFindManyWeaponPropertyOperatorsInput = {
-  _id?: InputMaybe<FilterFindManyWeaponProperty_IdOperatorsInput>;
-  desc?: InputMaybe<FilterFindManyWeaponPropertyDescOperatorsInput>;
-  index?: InputMaybe<FilterFindManyWeaponPropertyIndexOperatorsInput>;
-  name?: InputMaybe<FilterFindManyWeaponPropertyNameOperatorsInput>;
-  url?: InputMaybe<FilterFindManyWeaponPropertyUrlOperatorsInput>;
-};
-
-export type FilterFindManyWeaponPropertyUrlOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindManyWeaponProperty_IdOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneAbilityScoreDescOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneAbilityScoreFull_NameOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneAbilityScoreIndexOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneAbilityScoreInput = {
-  AND?: InputMaybe<Array<FilterFindOneAbilityScoreInput>>;
-  OR?: InputMaybe<Array<FilterFindOneAbilityScoreInput>>;
-  _id?: InputMaybe<Scalars['String']>;
-  /** List of *indexed* fields that can be filtered via operators. */
-  _operators?: InputMaybe<FilterFindOneAbilityScoreOperatorsInput>;
-  desc?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  full_name?: InputMaybe<Scalars['String']>;
-  index?: InputMaybe<Scalars['String']>;
-  name?: InputMaybe<Scalars['String']>;
-  skills?: InputMaybe<Array<InputMaybe<FilterFindOneAbilityScoreSkillsInput>>>;
-  url?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindOneAbilityScoreNameOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-/** For performance reason this type contains only *indexed* fields. */
-export type FilterFindOneAbilityScoreOperatorsInput = {
-  _id?: InputMaybe<FilterFindOneAbilityScore_IdOperatorsInput>;
-  desc?: InputMaybe<FilterFindOneAbilityScoreDescOperatorsInput>;
-  full_name?: InputMaybe<FilterFindOneAbilityScoreFull_NameOperatorsInput>;
-  index?: InputMaybe<FilterFindOneAbilityScoreIndexOperatorsInput>;
-  name?: InputMaybe<FilterFindOneAbilityScoreNameOperatorsInput>;
-  url?: InputMaybe<FilterFindOneAbilityScoreUrlOperatorsInput>;
-};
-
-export type FilterFindOneAbilityScoreSkillsInput = {
-  index?: InputMaybe<Scalars['String']>;
-  name?: InputMaybe<Scalars['String']>;
-  url?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindOneAbilityScoreUrlOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneAbilityScore_IdOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneAlignmentAbbreviationOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneAlignmentDescOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneAlignmentIndexOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneAlignmentInput = {
-  AND?: InputMaybe<Array<FilterFindOneAlignmentInput>>;
-  OR?: InputMaybe<Array<FilterFindOneAlignmentInput>>;
-  _id?: InputMaybe<Scalars['String']>;
-  /** List of *indexed* fields that can be filtered via operators. */
-  _operators?: InputMaybe<FilterFindOneAlignmentOperatorsInput>;
-  abbreviation?: InputMaybe<Scalars['String']>;
-  desc?: InputMaybe<Scalars['String']>;
-  index?: InputMaybe<Scalars['String']>;
-  name?: InputMaybe<Scalars['String']>;
-  url?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindOneAlignmentNameOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-/** For performance reason this type contains only *indexed* fields. */
-export type FilterFindOneAlignmentOperatorsInput = {
-  _id?: InputMaybe<FilterFindOneAlignment_IdOperatorsInput>;
-  abbreviation?: InputMaybe<FilterFindOneAlignmentAbbreviationOperatorsInput>;
-  desc?: InputMaybe<FilterFindOneAlignmentDescOperatorsInput>;
-  index?: InputMaybe<FilterFindOneAlignmentIndexOperatorsInput>;
-  name?: InputMaybe<FilterFindOneAlignmentNameOperatorsInput>;
-  url?: InputMaybe<FilterFindOneAlignmentUrlOperatorsInput>;
-};
-
-export type FilterFindOneAlignmentUrlOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneAlignment_IdOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneBackgroundFeatureInput = {
-  desc?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  name?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindOneBackgroundIdealsFromInput = {
-  alignments?: InputMaybe<Array<InputMaybe<FilterFindOneAbilityScoreSkillsInput>>>;
-  desc?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindOneBackgroundIdealsInput = {
-  choose?: InputMaybe<Scalars['Float']>;
-  from?: InputMaybe<Array<InputMaybe<FilterFindOneBackgroundIdealsFromInput>>>;
-  type?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindOneBackgroundIndexOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneBackgroundInput = {
-  AND?: InputMaybe<Array<FilterFindOneBackgroundInput>>;
-  OR?: InputMaybe<Array<FilterFindOneBackgroundInput>>;
-  _id?: InputMaybe<Scalars['String']>;
-  /** List of *indexed* fields that can be filtered via operators. */
-  _operators?: InputMaybe<FilterFindOneBackgroundOperatorsInput>;
-  bonds?: InputMaybe<FilterFindOneBackgroundPersonality_TraitsInput>;
-  feature?: InputMaybe<FilterFindOneBackgroundFeatureInput>;
-  flaws?: InputMaybe<FilterFindOneBackgroundPersonality_TraitsInput>;
-  ideals?: InputMaybe<FilterFindOneBackgroundIdealsInput>;
-  index?: InputMaybe<Scalars['String']>;
-  language_options?: InputMaybe<FilterFindOneBackgroundLanguage_OptionsInput>;
-  name?: InputMaybe<Scalars['String']>;
-  personality_traits?: InputMaybe<FilterFindOneBackgroundPersonality_TraitsInput>;
-  starting_equipment?: InputMaybe<Array<InputMaybe<FilterFindOneBackgroundStarting_EquipmentInput>>>;
-  starting_equipment_options?: InputMaybe<Array<InputMaybe<FilterFindOneBackgroundStarting_Equipment_OptionsInput>>>;
-  starting_proficiencies?: InputMaybe<Array<InputMaybe<FilterFindOneAbilityScoreSkillsInput>>>;
-  url?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindOneBackgroundLanguage_OptionsInput = {
-  choose?: InputMaybe<Scalars['Float']>;
-  from?: InputMaybe<Array<InputMaybe<FilterFindOneAbilityScoreSkillsInput>>>;
-  type?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindOneBackgroundNameOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-/** For performance reason this type contains only *indexed* fields. */
-export type FilterFindOneBackgroundOperatorsInput = {
-  _id?: InputMaybe<FilterFindOneBackground_IdOperatorsInput>;
-  index?: InputMaybe<FilterFindOneBackgroundIndexOperatorsInput>;
-  name?: InputMaybe<FilterFindOneBackgroundNameOperatorsInput>;
-  url?: InputMaybe<FilterFindOneBackgroundUrlOperatorsInput>;
-};
-
-export type FilterFindOneBackgroundPersonality_TraitsInput = {
-  choose?: InputMaybe<Scalars['Float']>;
-  from?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  type?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindOneBackgroundStarting_EquipmentInput = {
-  equipment?: InputMaybe<FilterFindOneAbilityScoreSkillsInput>;
-  quantity?: InputMaybe<Scalars['Float']>;
-};
-
-export type FilterFindOneBackgroundStarting_Equipment_OptionsFromInput = {
-  equipment?: InputMaybe<FilterFindOneAbilityScoreSkillsInput>;
-  quantity?: InputMaybe<Scalars['Float']>;
-};
-
-export type FilterFindOneBackgroundStarting_Equipment_OptionsInput = {
-  choose?: InputMaybe<Scalars['Float']>;
-  from?: InputMaybe<Array<InputMaybe<FilterFindOneBackgroundStarting_Equipment_OptionsFromInput>>>;
-  type?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindOneBackgroundUrlOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneBackground_IdOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneClassClass_LevelsOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneClassHit_DieOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['Float']>;
-  gte?: InputMaybe<Scalars['Float']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['Float']>>>;
-  lt?: InputMaybe<Scalars['Float']>;
-  lte?: InputMaybe<Scalars['Float']>;
-  ne?: InputMaybe<Scalars['Float']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['Float']>>>;
-};
-
-export type FilterFindOneClassIndexOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneClassInput = {
-  AND?: InputMaybe<Array<FilterFindOneClassInput>>;
-  OR?: InputMaybe<Array<FilterFindOneClassInput>>;
-  _id?: InputMaybe<Scalars['String']>;
-  /** List of *indexed* fields that can be filtered via operators. */
-  _operators?: InputMaybe<FilterFindOneClassOperatorsInput>;
-  class_levels?: InputMaybe<Scalars['String']>;
-  hit_die?: InputMaybe<Scalars['Float']>;
-  index?: InputMaybe<Scalars['String']>;
-  multi_classing?: InputMaybe<FilterFindOneClassMulti_ClassingInput>;
-  name?: InputMaybe<Scalars['String']>;
-  proficiencies?: InputMaybe<Array<InputMaybe<FilterFindOneAbilityScoreSkillsInput>>>;
-  proficiency_choices?: InputMaybe<Array<InputMaybe<FilterFindOneClassMulti_ClassingProficiency_ChoicesInput>>>;
-  saving_throws?: InputMaybe<Array<InputMaybe<FilterFindOneAbilityScoreSkillsInput>>>;
-  spellcasting?: InputMaybe<FilterFindOneClassSpellcastingInput>;
-  spells?: InputMaybe<Scalars['String']>;
-  starting_equipment?: InputMaybe<Array<InputMaybe<FilterFindOneClassStarting_EquipmentInput>>>;
-  starting_equipment_options?: InputMaybe<Array<InputMaybe<FilterFindOneClassStarting_Equipment_OptionsInput>>>;
-  subclasses?: InputMaybe<Array<InputMaybe<FilterFindOneAbilityScoreSkillsInput>>>;
-  url?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindOneClassMulti_ClassingInput = {
-  prerequisite_options?: InputMaybe<FilterFindOneClassMulti_ClassingPrerequisite_OptionsInput>;
-  prerequisites?: InputMaybe<Array<InputMaybe<FilterFindOneClassMulti_ClassingPrerequisitesInput>>>;
-  proficiencies?: InputMaybe<Array<InputMaybe<FilterFindOneAbilityScoreSkillsInput>>>;
-  proficiency_choices?: InputMaybe<Array<InputMaybe<FilterFindOneClassMulti_ClassingProficiency_ChoicesInput>>>;
-};
-
-export type FilterFindOneClassMulti_ClassingPrerequisite_OptionsInput = {
-  choose?: InputMaybe<Scalars['Float']>;
-  from?: InputMaybe<Array<InputMaybe<FilterFindOneClassMulti_ClassingPrerequisitesInput>>>;
-  type?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindOneClassMulti_ClassingPrerequisitesInput = {
-  ability_score?: InputMaybe<AbilityScoreSkillsInput>;
-  minimum_score?: InputMaybe<Scalars['Float']>;
-};
-
-export type FilterFindOneClassMulti_ClassingProficiency_ChoicesInput = {
-  choose?: InputMaybe<Scalars['Float']>;
-  from?: InputMaybe<Array<InputMaybe<AbilityScoreSkillsInput>>>;
-  type?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindOneClassNameOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-/** For performance reason this type contains only *indexed* fields. */
-export type FilterFindOneClassOperatorsInput = {
-  _id?: InputMaybe<FilterFindOneClass_IdOperatorsInput>;
-  class_levels?: InputMaybe<FilterFindOneClassClass_LevelsOperatorsInput>;
-  hit_die?: InputMaybe<FilterFindOneClassHit_DieOperatorsInput>;
-  index?: InputMaybe<FilterFindOneClassIndexOperatorsInput>;
-  name?: InputMaybe<FilterFindOneClassNameOperatorsInput>;
-  spells?: InputMaybe<FilterFindOneClassSpellsOperatorsInput>;
-  url?: InputMaybe<FilterFindOneClassUrlOperatorsInput>;
-};
-
-export type FilterFindOneClassSpellcastingInfoInput = {
-  desc?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  name?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindOneClassSpellcastingInput = {
-  info?: InputMaybe<Array<InputMaybe<FilterFindOneClassSpellcastingInfoInput>>>;
-  level?: InputMaybe<Scalars['Float']>;
-  spellcasting_ability?: InputMaybe<FilterFindOneAbilityScoreSkillsInput>;
-};
-
-export type FilterFindOneClassSpellsOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneClassStarting_EquipmentInput = {
-  equipment?: InputMaybe<FilterFindOneAbilityScoreSkillsInput>;
-  quantity?: InputMaybe<Scalars['Float']>;
-};
-
-export type FilterFindOneClassStarting_Equipment_OptionsFromInput = {
-  equipment?: InputMaybe<FilterFindOneAbilityScoreSkillsInput>;
-  quantity?: InputMaybe<Scalars['Float']>;
-};
-
-export type FilterFindOneClassStarting_Equipment_OptionsInput = {
-  choose?: InputMaybe<Scalars['Float']>;
-  from?: InputMaybe<Array<InputMaybe<FilterFindOneClassStarting_Equipment_OptionsFromInput>>>;
-  type?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindOneClassUrlOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneClass_IdOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneConditionDescOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneConditionIndexOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneConditionInput = {
-  AND?: InputMaybe<Array<FilterFindOneConditionInput>>;
-  OR?: InputMaybe<Array<FilterFindOneConditionInput>>;
-  _id?: InputMaybe<Scalars['String']>;
-  /** List of *indexed* fields that can be filtered via operators. */
-  _operators?: InputMaybe<FilterFindOneConditionOperatorsInput>;
-  desc?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  index?: InputMaybe<Scalars['String']>;
-  name?: InputMaybe<Scalars['String']>;
-  url?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindOneConditionNameOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-/** For performance reason this type contains only *indexed* fields. */
-export type FilterFindOneConditionOperatorsInput = {
-  _id?: InputMaybe<FilterFindOneCondition_IdOperatorsInput>;
-  desc?: InputMaybe<FilterFindOneConditionDescOperatorsInput>;
-  index?: InputMaybe<FilterFindOneConditionIndexOperatorsInput>;
-  name?: InputMaybe<FilterFindOneConditionNameOperatorsInput>;
-  url?: InputMaybe<FilterFindOneConditionUrlOperatorsInput>;
-};
-
-export type FilterFindOneConditionUrlOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneCondition_IdOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneDamageTypeDescOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneDamageTypeIndexOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneDamageTypeInput = {
-  AND?: InputMaybe<Array<FilterFindOneDamageTypeInput>>;
-  OR?: InputMaybe<Array<FilterFindOneDamageTypeInput>>;
-  _id?: InputMaybe<Scalars['String']>;
-  /** List of *indexed* fields that can be filtered via operators. */
-  _operators?: InputMaybe<FilterFindOneDamageTypeOperatorsInput>;
-  desc?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  index?: InputMaybe<Scalars['String']>;
-  name?: InputMaybe<Scalars['String']>;
-  url?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindOneDamageTypeNameOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-/** For performance reason this type contains only *indexed* fields. */
-export type FilterFindOneDamageTypeOperatorsInput = {
-  _id?: InputMaybe<FilterFindOneDamageType_IdOperatorsInput>;
-  desc?: InputMaybe<FilterFindOneDamageTypeDescOperatorsInput>;
-  index?: InputMaybe<FilterFindOneDamageTypeIndexOperatorsInput>;
-  name?: InputMaybe<FilterFindOneDamageTypeNameOperatorsInput>;
-  url?: InputMaybe<FilterFindOneDamageTypeUrlOperatorsInput>;
-};
-
-export type FilterFindOneDamageTypeUrlOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneDamageType_IdOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneEquipmentArmor_CategoryOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneEquipmentArmor_ClassInput = {
-  base?: InputMaybe<Scalars['Float']>;
-  dex_bonus?: InputMaybe<Scalars['Boolean']>;
-  max_bonus?: InputMaybe<Scalars['Float']>;
-};
-
-export type FilterFindOneEquipmentCapacityOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneEquipmentCategoryIndexOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneEquipmentCategoryInput = {
-  AND?: InputMaybe<Array<FilterFindOneEquipmentCategoryInput>>;
-  OR?: InputMaybe<Array<FilterFindOneEquipmentCategoryInput>>;
-  _id?: InputMaybe<Scalars['String']>;
-  /** List of *indexed* fields that can be filtered via operators. */
-  _operators?: InputMaybe<FilterFindOneEquipmentCategoryOperatorsInput>;
-  equipment?: InputMaybe<Array<InputMaybe<FilterFindOneAbilityScoreSkillsInput>>>;
-  index?: InputMaybe<Scalars['String']>;
-  name?: InputMaybe<Scalars['String']>;
-  url?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindOneEquipmentCategoryNameOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-/** For performance reason this type contains only *indexed* fields. */
-export type FilterFindOneEquipmentCategoryOperatorsInput = {
-  _id?: InputMaybe<FilterFindOneEquipmentCategory_IdOperatorsInput>;
-  index?: InputMaybe<FilterFindOneEquipmentCategoryIndexOperatorsInput>;
-  name?: InputMaybe<FilterFindOneEquipmentCategoryNameOperatorsInput>;
-  url?: InputMaybe<FilterFindOneEquipmentCategoryUrlOperatorsInput>;
-};
-
-export type FilterFindOneEquipmentCategoryUrlOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneEquipmentCategory_IdOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneEquipmentCategory_RangeOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneEquipmentContentsInput = {
-  item?: InputMaybe<FilterFindOneAbilityScoreSkillsInput>;
-  quantity?: InputMaybe<Scalars['Float']>;
-};
-
-export type FilterFindOneEquipmentCostInput = {
-  quantity?: InputMaybe<Scalars['Float']>;
-  unit?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindOneEquipmentDamageInput = {
-  damage_dice?: InputMaybe<Scalars['String']>;
-  damage_type?: InputMaybe<FilterFindOneAbilityScoreSkillsInput>;
-};
-
-export type FilterFindOneEquipmentDescOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneEquipmentIndexOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneEquipmentInput = {
-  AND?: InputMaybe<Array<FilterFindOneEquipmentInput>>;
-  OR?: InputMaybe<Array<FilterFindOneEquipmentInput>>;
-  _id?: InputMaybe<Scalars['String']>;
-  /** List of *indexed* fields that can be filtered via operators. */
-  _operators?: InputMaybe<FilterFindOneEquipmentOperatorsInput>;
-  armor_category?: InputMaybe<Scalars['String']>;
-  armor_class?: InputMaybe<FilterFindOneEquipmentArmor_ClassInput>;
-  capacity?: InputMaybe<Scalars['String']>;
-  category_range?: InputMaybe<Scalars['String']>;
-  contents?: InputMaybe<Array<InputMaybe<FilterFindOneEquipmentContentsInput>>>;
-  cost?: InputMaybe<FilterFindOneEquipmentCostInput>;
-  damage?: InputMaybe<FilterFindOneEquipmentDamageInput>;
-  desc?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  equipment_category?: InputMaybe<FilterFindOneAbilityScoreSkillsInput>;
-  gear_category?: InputMaybe<FilterFindOneAbilityScoreSkillsInput>;
-  index?: InputMaybe<Scalars['String']>;
-  name?: InputMaybe<Scalars['String']>;
-  properties?: InputMaybe<Array<InputMaybe<FilterFindOneAbilityScoreSkillsInput>>>;
-  quantity?: InputMaybe<Scalars['Float']>;
-  range?: InputMaybe<FilterFindOneEquipmentRangeInput>;
-  special?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  speed?: InputMaybe<FilterFindOneEquipmentSpeedInput>;
-  stealth_disadvantage?: InputMaybe<Scalars['Boolean']>;
-  str_minimum?: InputMaybe<Scalars['Float']>;
-  throw_range?: InputMaybe<FilterFindOneEquipmentThrow_RangeInput>;
-  tool_category?: InputMaybe<Scalars['String']>;
-  two_handed_damage?: InputMaybe<FilterFindOneEquipmentTwo_Handed_DamageInput>;
-  url?: InputMaybe<Scalars['String']>;
-  vehicle_category?: InputMaybe<Scalars['String']>;
-  weapon_category?: InputMaybe<Scalars['String']>;
-  weapon_range?: InputMaybe<Scalars['String']>;
-  weight?: InputMaybe<Scalars['Float']>;
-};
-
-export type FilterFindOneEquipmentNameOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-/** For performance reason this type contains only *indexed* fields. */
-export type FilterFindOneEquipmentOperatorsInput = {
-  _id?: InputMaybe<FilterFindOneEquipment_IdOperatorsInput>;
-  armor_category?: InputMaybe<FilterFindOneEquipmentArmor_CategoryOperatorsInput>;
-  capacity?: InputMaybe<FilterFindOneEquipmentCapacityOperatorsInput>;
-  category_range?: InputMaybe<FilterFindOneEquipmentCategory_RangeOperatorsInput>;
-  desc?: InputMaybe<FilterFindOneEquipmentDescOperatorsInput>;
-  index?: InputMaybe<FilterFindOneEquipmentIndexOperatorsInput>;
-  name?: InputMaybe<FilterFindOneEquipmentNameOperatorsInput>;
-  quantity?: InputMaybe<FilterFindOneEquipmentQuantityOperatorsInput>;
-  special?: InputMaybe<FilterFindOneEquipmentSpecialOperatorsInput>;
-  stealth_disadvantage?: InputMaybe<FilterFindOneEquipmentStealth_DisadvantageOperatorsInput>;
-  str_minimum?: InputMaybe<FilterFindOneEquipmentStr_MinimumOperatorsInput>;
-  tool_category?: InputMaybe<FilterFindOneEquipmentTool_CategoryOperatorsInput>;
-  url?: InputMaybe<FilterFindOneEquipmentUrlOperatorsInput>;
-  vehicle_category?: InputMaybe<FilterFindOneEquipmentVehicle_CategoryOperatorsInput>;
-  weapon_category?: InputMaybe<FilterFindOneEquipmentWeapon_CategoryOperatorsInput>;
-  weapon_range?: InputMaybe<FilterFindOneEquipmentWeapon_RangeOperatorsInput>;
-  weight?: InputMaybe<FilterFindOneEquipmentWeightOperatorsInput>;
-};
-
-export type FilterFindOneEquipmentQuantityOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['Float']>;
-  gte?: InputMaybe<Scalars['Float']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['Float']>>>;
-  lt?: InputMaybe<Scalars['Float']>;
-  lte?: InputMaybe<Scalars['Float']>;
-  ne?: InputMaybe<Scalars['Float']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['Float']>>>;
-};
-
-export type FilterFindOneEquipmentRangeInput = {
-  long?: InputMaybe<Scalars['Float']>;
-  normal?: InputMaybe<Scalars['Float']>;
-};
-
-export type FilterFindOneEquipmentSpecialOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneEquipmentSpeedInput = {
-  quantity?: InputMaybe<Scalars['Float']>;
-  unit?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindOneEquipmentStealth_DisadvantageOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['Boolean']>;
-  gte?: InputMaybe<Scalars['Boolean']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['Boolean']>>>;
-  lt?: InputMaybe<Scalars['Boolean']>;
-  lte?: InputMaybe<Scalars['Boolean']>;
-  ne?: InputMaybe<Scalars['Boolean']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['Boolean']>>>;
-};
-
-export type FilterFindOneEquipmentStr_MinimumOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['Float']>;
-  gte?: InputMaybe<Scalars['Float']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['Float']>>>;
-  lt?: InputMaybe<Scalars['Float']>;
-  lte?: InputMaybe<Scalars['Float']>;
-  ne?: InputMaybe<Scalars['Float']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['Float']>>>;
-};
-
-export type FilterFindOneEquipmentThrow_RangeInput = {
-  long?: InputMaybe<Scalars['Float']>;
-  normal?: InputMaybe<Scalars['Float']>;
-};
-
-export type FilterFindOneEquipmentTool_CategoryOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneEquipmentTwo_Handed_DamageInput = {
-  damage_dice?: InputMaybe<Scalars['String']>;
-  damage_type?: InputMaybe<FilterFindOneAbilityScoreSkillsInput>;
-};
-
-export type FilterFindOneEquipmentUrlOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneEquipmentVehicle_CategoryOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneEquipmentWeapon_CategoryOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneEquipmentWeapon_RangeOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneEquipmentWeightOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['Float']>;
-  gte?: InputMaybe<Scalars['Float']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['Float']>>>;
-  lt?: InputMaybe<Scalars['Float']>;
-  lte?: InputMaybe<Scalars['Float']>;
-  ne?: InputMaybe<Scalars['Float']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['Float']>>>;
-};
-
-export type FilterFindOneEquipment_IdOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneFeatDescOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneFeatIndexOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneFeatInput = {
-  AND?: InputMaybe<Array<FilterFindOneFeatInput>>;
-  OR?: InputMaybe<Array<FilterFindOneFeatInput>>;
-  _id?: InputMaybe<Scalars['String']>;
-  /** List of *indexed* fields that can be filtered via operators. */
-  _operators?: InputMaybe<FilterFindOneFeatOperatorsInput>;
-  desc?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  index?: InputMaybe<Scalars['String']>;
-  name?: InputMaybe<Scalars['String']>;
-  prerequisites?: InputMaybe<Array<InputMaybe<FilterFindOneFeatPrerequisitesInput>>>;
-  url?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindOneFeatNameOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-/** For performance reason this type contains only *indexed* fields. */
-export type FilterFindOneFeatOperatorsInput = {
-  _id?: InputMaybe<FilterFindOneFeat_IdOperatorsInput>;
-  desc?: InputMaybe<FilterFindOneFeatDescOperatorsInput>;
-  index?: InputMaybe<FilterFindOneFeatIndexOperatorsInput>;
-  name?: InputMaybe<FilterFindOneFeatNameOperatorsInput>;
-  url?: InputMaybe<FilterFindOneFeatUrlOperatorsInput>;
-};
-
-export type FilterFindOneFeatPrerequisitesInput = {
-  ability_score?: InputMaybe<FilterFindOneAbilityScoreSkillsInput>;
-  minimum_score?: InputMaybe<Scalars['Float']>;
-};
-
-export type FilterFindOneFeatUrlOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneFeat_IdOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneFeatureChoiceInput = {
-  choose?: InputMaybe<Scalars['Float']>;
-  from?: InputMaybe<Array<InputMaybe<AbilityScoreSkillsInput>>>;
-  type?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindOneFeatureDescOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneFeatureFeature_SpecificInput = {
-  expertise_options?: InputMaybe<FilterFindOneFeatureChoiceInput>;
-  subfeature_options?: InputMaybe<FilterFindOneFeatureChoiceInput>;
-};
-
-export type FilterFindOneFeatureIndexOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneFeatureInput = {
-  AND?: InputMaybe<Array<FilterFindOneFeatureInput>>;
-  OR?: InputMaybe<Array<FilterFindOneFeatureInput>>;
-  _id?: InputMaybe<Scalars['String']>;
-  /** List of *indexed* fields that can be filtered via operators. */
-  _operators?: InputMaybe<FilterFindOneFeatureOperatorsInput>;
-  choice?: InputMaybe<FilterFindOneFeatureChoiceInput>;
-  class?: InputMaybe<FilterFindOneAbilityScoreSkillsInput>;
-  desc?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  feature_specific?: InputMaybe<FilterFindOneFeatureFeature_SpecificInput>;
-  index?: InputMaybe<Scalars['String']>;
-  level?: InputMaybe<Scalars['Float']>;
-  name?: InputMaybe<Scalars['String']>;
-  parent?: InputMaybe<FilterFindOneAbilityScoreSkillsInput>;
-  prerequisites?: InputMaybe<Array<InputMaybe<FilterFindOneFeaturePrerequisitesInput>>>;
-  reference?: InputMaybe<Scalars['String']>;
-  subclass?: InputMaybe<FilterFindOneAbilityScoreSkillsInput>;
-  url?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindOneFeatureLevelOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['Float']>;
-  gte?: InputMaybe<Scalars['Float']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['Float']>>>;
-  lt?: InputMaybe<Scalars['Float']>;
-  lte?: InputMaybe<Scalars['Float']>;
-  ne?: InputMaybe<Scalars['Float']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['Float']>>>;
-};
-
-export type FilterFindOneFeatureNameOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-/** For performance reason this type contains only *indexed* fields. */
-export type FilterFindOneFeatureOperatorsInput = {
-  _id?: InputMaybe<FilterFindOneFeature_IdOperatorsInput>;
-  desc?: InputMaybe<FilterFindOneFeatureDescOperatorsInput>;
-  index?: InputMaybe<FilterFindOneFeatureIndexOperatorsInput>;
-  level?: InputMaybe<FilterFindOneFeatureLevelOperatorsInput>;
-  name?: InputMaybe<FilterFindOneFeatureNameOperatorsInput>;
-  reference?: InputMaybe<FilterFindOneFeatureReferenceOperatorsInput>;
-  url?: InputMaybe<FilterFindOneFeatureUrlOperatorsInput>;
-};
-
-export type FilterFindOneFeaturePrerequisitesInput = {
-  level?: InputMaybe<Scalars['Float']>;
-  type?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindOneFeatureReferenceOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneFeatureUrlOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneFeature_IdOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneLanguageDescOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneLanguageIndexOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneLanguageInput = {
-  AND?: InputMaybe<Array<FilterFindOneLanguageInput>>;
-  OR?: InputMaybe<Array<FilterFindOneLanguageInput>>;
-  _id?: InputMaybe<Scalars['String']>;
-  /** List of *indexed* fields that can be filtered via operators. */
-  _operators?: InputMaybe<FilterFindOneLanguageOperatorsInput>;
-  desc?: InputMaybe<Scalars['String']>;
-  index?: InputMaybe<Scalars['String']>;
-  name?: InputMaybe<Scalars['String']>;
-  script?: InputMaybe<Scalars['String']>;
-  type?: InputMaybe<Scalars['String']>;
-  typical_speakers?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  url?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindOneLanguageNameOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-/** For performance reason this type contains only *indexed* fields. */
-export type FilterFindOneLanguageOperatorsInput = {
-  _id?: InputMaybe<FilterFindOneLanguage_IdOperatorsInput>;
-  desc?: InputMaybe<FilterFindOneLanguageDescOperatorsInput>;
-  index?: InputMaybe<FilterFindOneLanguageIndexOperatorsInput>;
-  name?: InputMaybe<FilterFindOneLanguageNameOperatorsInput>;
-  script?: InputMaybe<FilterFindOneLanguageScriptOperatorsInput>;
-  type?: InputMaybe<FilterFindOneLanguageTypeOperatorsInput>;
-  typical_speakers?: InputMaybe<FilterFindOneLanguageTypical_SpeakersOperatorsInput>;
-  url?: InputMaybe<FilterFindOneLanguageUrlOperatorsInput>;
-};
-
-export type FilterFindOneLanguageScriptOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneLanguageTypeOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneLanguageTypical_SpeakersOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneLanguageUrlOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneLanguage_IdOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneLevelAbility_Score_BonusesOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['Float']>;
-  gte?: InputMaybe<Scalars['Float']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['Float']>>>;
-  lt?: InputMaybe<Scalars['Float']>;
-  lte?: InputMaybe<Scalars['Float']>;
-  ne?: InputMaybe<Scalars['Float']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['Float']>>>;
-};
-
-export type FilterFindOneLevelClass_SpecificCreating_Spell_SlotsInput = {
-  sorcery_point_cost?: InputMaybe<Scalars['Float']>;
-  spell_slot_level?: InputMaybe<Scalars['Float']>;
-};
-
-export type FilterFindOneLevelClass_SpecificInput = {
-  action_surges?: InputMaybe<Scalars['Float']>;
-  arcane_recovery_levels?: InputMaybe<Scalars['Float']>;
-  aura_range?: InputMaybe<Scalars['Float']>;
-  bardic_inspiration_die?: InputMaybe<Scalars['Float']>;
-  brutal_critical_dice?: InputMaybe<Scalars['Float']>;
-  channel_divinity_charges?: InputMaybe<Scalars['Float']>;
-  creating_spell_slots?: InputMaybe<Array<InputMaybe<FilterFindOneLevelClass_SpecificCreating_Spell_SlotsInput>>>;
-  destroy_undead_cr?: InputMaybe<Scalars['Float']>;
-  extra_attacks?: InputMaybe<Scalars['Float']>;
-  favored_enemies?: InputMaybe<Scalars['Float']>;
-  favored_terrain?: InputMaybe<Scalars['Float']>;
-  indomitable_uses?: InputMaybe<Scalars['Float']>;
-  invocations_known?: InputMaybe<Scalars['Float']>;
-  ki_points?: InputMaybe<Scalars['Float']>;
-  magical_secrets_max_5?: InputMaybe<Scalars['Float']>;
-  magical_secrets_max_7?: InputMaybe<Scalars['Float']>;
-  magical_secrets_max_9?: InputMaybe<Scalars['Float']>;
-  martial_arts?: InputMaybe<FilterFindOneLevelClass_SpecificMartial_ArtsInput>;
-  metamagic_known?: InputMaybe<Scalars['Float']>;
-  mystic_arcanum_level_6?: InputMaybe<Scalars['Float']>;
-  mystic_arcanum_level_7?: InputMaybe<Scalars['Float']>;
-  mystic_arcanum_level_8?: InputMaybe<Scalars['Float']>;
-  mystic_arcanum_level_9?: InputMaybe<Scalars['Float']>;
-  rage_count?: InputMaybe<Scalars['Float']>;
-  rage_damage_bonus?: InputMaybe<Scalars['Float']>;
-  sneak_attack?: InputMaybe<FilterFindOneLevelClass_SpecificSneak_AttackInput>;
-  song_of_rest_die?: InputMaybe<Scalars['Float']>;
-  sorcery_points?: InputMaybe<Scalars['Float']>;
-  unarmored_movement?: InputMaybe<Scalars['Float']>;
-  wild_shape_fly?: InputMaybe<Scalars['Boolean']>;
-  wild_shape_max_cr?: InputMaybe<Scalars['Float']>;
-  wild_shape_swim?: InputMaybe<Scalars['Boolean']>;
-};
-
-export type FilterFindOneLevelClass_SpecificMartial_ArtsInput = {
-  dice_count?: InputMaybe<Scalars['Float']>;
-  dice_value?: InputMaybe<Scalars['Float']>;
-};
-
-export type FilterFindOneLevelClass_SpecificSneak_AttackInput = {
-  dice_count?: InputMaybe<Scalars['Float']>;
-  dice_value?: InputMaybe<Scalars['Float']>;
-};
-
-export type FilterFindOneLevelIndexOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneLevelInput = {
-  AND?: InputMaybe<Array<FilterFindOneLevelInput>>;
-  OR?: InputMaybe<Array<FilterFindOneLevelInput>>;
-  _id?: InputMaybe<Scalars['String']>;
-  /** List of *indexed* fields that can be filtered via operators. */
-  _operators?: InputMaybe<FilterFindOneLevelOperatorsInput>;
-  ability_score_bonuses?: InputMaybe<Scalars['Float']>;
-  class?: InputMaybe<FilterFindOneAbilityScoreSkillsInput>;
-  class_specific?: InputMaybe<FilterFindOneLevelClass_SpecificInput>;
-  features?: InputMaybe<Array<InputMaybe<FilterFindOneAbilityScoreSkillsInput>>>;
-  index?: InputMaybe<Scalars['String']>;
-  level?: InputMaybe<Scalars['Float']>;
-  prof_bonus?: InputMaybe<Scalars['Float']>;
-  spellcasting?: InputMaybe<FilterFindOneLevelSpellcastingInput>;
-  subclass?: InputMaybe<FilterFindOneAbilityScoreSkillsInput>;
-  subclass_specific?: InputMaybe<FilterFindOneLevelSubclass_SpecificInput>;
-  url?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindOneLevelLevelOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['Float']>;
-  gte?: InputMaybe<Scalars['Float']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['Float']>>>;
-  lt?: InputMaybe<Scalars['Float']>;
-  lte?: InputMaybe<Scalars['Float']>;
-  ne?: InputMaybe<Scalars['Float']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['Float']>>>;
-};
-
-/** For performance reason this type contains only *indexed* fields. */
-export type FilterFindOneLevelOperatorsInput = {
-  _id?: InputMaybe<FilterFindOneLevel_IdOperatorsInput>;
-  ability_score_bonuses?: InputMaybe<FilterFindOneLevelAbility_Score_BonusesOperatorsInput>;
-  index?: InputMaybe<FilterFindOneLevelIndexOperatorsInput>;
-  level?: InputMaybe<FilterFindOneLevelLevelOperatorsInput>;
-  prof_bonus?: InputMaybe<FilterFindOneLevelProf_BonusOperatorsInput>;
-  url?: InputMaybe<FilterFindOneLevelUrlOperatorsInput>;
-};
-
-export type FilterFindOneLevelProf_BonusOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['Float']>;
-  gte?: InputMaybe<Scalars['Float']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['Float']>>>;
-  lt?: InputMaybe<Scalars['Float']>;
-  lte?: InputMaybe<Scalars['Float']>;
-  ne?: InputMaybe<Scalars['Float']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['Float']>>>;
-};
-
-export type FilterFindOneLevelSpellcastingInput = {
-  cantrips_known?: InputMaybe<Scalars['Float']>;
-  spell_slots_level_1?: InputMaybe<Scalars['Float']>;
-  spell_slots_level_2?: InputMaybe<Scalars['Float']>;
-  spell_slots_level_3?: InputMaybe<Scalars['Float']>;
-  spell_slots_level_4?: InputMaybe<Scalars['Float']>;
-  spell_slots_level_5?: InputMaybe<Scalars['Float']>;
-  spell_slots_level_6?: InputMaybe<Scalars['Float']>;
-  spell_slots_level_7?: InputMaybe<Scalars['Float']>;
-  spell_slots_level_8?: InputMaybe<Scalars['Float']>;
-  spell_slots_level_9?: InputMaybe<Scalars['Float']>;
-  spells_known?: InputMaybe<Scalars['Float']>;
-};
-
-export type FilterFindOneLevelSubclass_SpecificInput = {
-  additional_magical_secrets_max_lvl?: InputMaybe<Scalars['Float']>;
-  aura_range?: InputMaybe<Scalars['Float']>;
-};
-
-export type FilterFindOneLevelUrlOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneLevel_IdOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneMagicItemDescOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneMagicItemIndexOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneMagicItemInput = {
-  AND?: InputMaybe<Array<FilterFindOneMagicItemInput>>;
-  OR?: InputMaybe<Array<FilterFindOneMagicItemInput>>;
-  _id?: InputMaybe<Scalars['String']>;
-  /** List of *indexed* fields that can be filtered via operators. */
-  _operators?: InputMaybe<FilterFindOneMagicItemOperatorsInput>;
-  desc?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  equipment_category?: InputMaybe<FilterFindOneAbilityScoreSkillsInput>;
-  index?: InputMaybe<Scalars['String']>;
-  name?: InputMaybe<Scalars['String']>;
-  url?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindOneMagicItemNameOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-/** For performance reason this type contains only *indexed* fields. */
-export type FilterFindOneMagicItemOperatorsInput = {
-  _id?: InputMaybe<FilterFindOneMagicItem_IdOperatorsInput>;
-  desc?: InputMaybe<FilterFindOneMagicItemDescOperatorsInput>;
-  index?: InputMaybe<FilterFindOneMagicItemIndexOperatorsInput>;
-  name?: InputMaybe<FilterFindOneMagicItemNameOperatorsInput>;
-  url?: InputMaybe<FilterFindOneMagicItemUrlOperatorsInput>;
-};
-
-export type FilterFindOneMagicItemUrlOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneMagicItem_IdOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneMagicSchoolDescOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneMagicSchoolIndexOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneMagicSchoolInput = {
-  AND?: InputMaybe<Array<FilterFindOneMagicSchoolInput>>;
-  OR?: InputMaybe<Array<FilterFindOneMagicSchoolInput>>;
-  _id?: InputMaybe<Scalars['String']>;
-  /** List of *indexed* fields that can be filtered via operators. */
-  _operators?: InputMaybe<FilterFindOneMagicSchoolOperatorsInput>;
-  desc?: InputMaybe<Scalars['String']>;
-  index?: InputMaybe<Scalars['String']>;
-  name?: InputMaybe<Scalars['String']>;
-  url?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindOneMagicSchoolNameOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-/** For performance reason this type contains only *indexed* fields. */
-export type FilterFindOneMagicSchoolOperatorsInput = {
-  _id?: InputMaybe<FilterFindOneMagicSchool_IdOperatorsInput>;
-  desc?: InputMaybe<FilterFindOneMagicSchoolDescOperatorsInput>;
-  index?: InputMaybe<FilterFindOneMagicSchoolIndexOperatorsInput>;
-  name?: InputMaybe<FilterFindOneMagicSchoolNameOperatorsInput>;
-  url?: InputMaybe<FilterFindOneMagicSchoolUrlOperatorsInput>;
-};
-
-export type FilterFindOneMagicSchoolUrlOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneMagicSchool_IdOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneMonsterActionsAttack_OptionsFromInput = {
-  damage?: InputMaybe<Array<InputMaybe<MonsterActionsDamageInput>>>;
-  dc?: InputMaybe<MonsterActionsDcInput>;
-  name?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindOneMonsterActionsAttack_OptionsInput = {
-  choose?: InputMaybe<Scalars['Float']>;
-  from?: InputMaybe<Array<InputMaybe<FilterFindOneMonsterActionsAttack_OptionsFromInput>>>;
-  type?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindOneMonsterActionsDamageInput = {
-  damage_dice?: InputMaybe<Scalars['String']>;
-  damage_type?: InputMaybe<AbilityScoreSkillsInput>;
-};
-
-export type FilterFindOneMonsterActionsDcInput = {
-  dc_type?: InputMaybe<AbilityScoreSkillsInput>;
-  dc_value?: InputMaybe<Scalars['Float']>;
-  success_type?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindOneMonsterActionsInput = {
-  attack_bonus?: InputMaybe<Scalars['Float']>;
-  attack_options?: InputMaybe<FilterFindOneMonsterActionsAttack_OptionsInput>;
-  attacks?: InputMaybe<Array<InputMaybe<FilterFindOneMonsterActionsAttack_OptionsFromInput>>>;
-  damage?: InputMaybe<Array<InputMaybe<FilterFindOneMonsterActionsDamageInput>>>;
-  dc?: InputMaybe<FilterFindOneMonsterActionsDcInput>;
-  desc?: InputMaybe<Scalars['String']>;
-  name?: InputMaybe<Scalars['String']>;
-  options?: InputMaybe<FilterFindOneMonsterActionsOptionsInput>;
-  usage?: InputMaybe<FilterFindOneMonsterActionsUsageInput>;
-};
-
-export type FilterFindOneMonsterActionsOptionsFromInput = {
-  count?: InputMaybe<Scalars['JSON']>;
-  name?: InputMaybe<Scalars['String']>;
-  type?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindOneMonsterActionsOptionsInput = {
-  choose?: InputMaybe<Scalars['Float']>;
-  from?: InputMaybe<Array<InputMaybe<FilterFindOneMonsterActionsOptionsFromInput>>>;
-};
-
-export type FilterFindOneMonsterActionsUsageInput = {
-  dice?: InputMaybe<Scalars['String']>;
-  min_value?: InputMaybe<Scalars['Float']>;
-  type?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindOneMonsterAlignmentOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneMonsterArmor_ClassOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['Float']>;
-  gte?: InputMaybe<Scalars['Float']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['Float']>>>;
-  lt?: InputMaybe<Scalars['Float']>;
-  lte?: InputMaybe<Scalars['Float']>;
-  ne?: InputMaybe<Scalars['Float']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['Float']>>>;
-};
-
-export type FilterFindOneMonsterChallenge_RatingOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['Float']>;
-  gte?: InputMaybe<Scalars['Float']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['Float']>>>;
-  lt?: InputMaybe<Scalars['Float']>;
-  lte?: InputMaybe<Scalars['Float']>;
-  ne?: InputMaybe<Scalars['Float']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['Float']>>>;
-};
-
-export type FilterFindOneMonsterCharismaOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['Float']>;
-  gte?: InputMaybe<Scalars['Float']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['Float']>>>;
-  lt?: InputMaybe<Scalars['Float']>;
-  lte?: InputMaybe<Scalars['Float']>;
-  ne?: InputMaybe<Scalars['Float']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['Float']>>>;
-};
-
-export type FilterFindOneMonsterConstitutionOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['Float']>;
-  gte?: InputMaybe<Scalars['Float']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['Float']>>>;
-  lt?: InputMaybe<Scalars['Float']>;
-  lte?: InputMaybe<Scalars['Float']>;
-  ne?: InputMaybe<Scalars['Float']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['Float']>>>;
-};
-
-export type FilterFindOneMonsterDamage_ImmunitiesOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneMonsterDamage_ResistancesOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneMonsterDamage_VulnerabilitiesOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneMonsterDexterityOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['Float']>;
-  gte?: InputMaybe<Scalars['Float']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['Float']>>>;
-  lt?: InputMaybe<Scalars['Float']>;
-  lte?: InputMaybe<Scalars['Float']>;
-  ne?: InputMaybe<Scalars['Float']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['Float']>>>;
-};
-
-export type FilterFindOneMonsterHit_DiceOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneMonsterHit_PointsOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['Float']>;
-  gte?: InputMaybe<Scalars['Float']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['Float']>>>;
-  lt?: InputMaybe<Scalars['Float']>;
-  lte?: InputMaybe<Scalars['Float']>;
-  ne?: InputMaybe<Scalars['Float']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['Float']>>>;
-};
-
-export type FilterFindOneMonsterIndexOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneMonsterInput = {
-  AND?: InputMaybe<Array<FilterFindOneMonsterInput>>;
-  OR?: InputMaybe<Array<FilterFindOneMonsterInput>>;
-  _id?: InputMaybe<Scalars['String']>;
-  /** List of *indexed* fields that can be filtered via operators. */
-  _operators?: InputMaybe<FilterFindOneMonsterOperatorsInput>;
-  actions?: InputMaybe<Array<InputMaybe<FilterFindOneMonsterActionsInput>>>;
-  alignment?: InputMaybe<Scalars['String']>;
-  armor_class?: InputMaybe<Scalars['Float']>;
-  challenge_rating?: InputMaybe<Scalars['Float']>;
-  charisma?: InputMaybe<Scalars['Float']>;
-  condition_immunities?: InputMaybe<Array<InputMaybe<FilterFindOneAbilityScoreSkillsInput>>>;
-  constitution?: InputMaybe<Scalars['Float']>;
-  damage_immunities?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  damage_resistances?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  damage_vulnerabilities?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  dexterity?: InputMaybe<Scalars['Float']>;
-  forms?: InputMaybe<Array<InputMaybe<FilterFindOneAbilityScoreSkillsInput>>>;
-  hit_dice?: InputMaybe<Scalars['String']>;
-  hit_points?: InputMaybe<Scalars['Float']>;
-  index?: InputMaybe<Scalars['String']>;
-  intelligence?: InputMaybe<Scalars['Float']>;
-  languages?: InputMaybe<Scalars['String']>;
-  legendary_actions?: InputMaybe<Array<InputMaybe<FilterFindOneMonsterLegendary_ActionsInput>>>;
-  name?: InputMaybe<Scalars['String']>;
-  proficiencies?: InputMaybe<Array<InputMaybe<FilterFindOneMonsterProficienciesInput>>>;
-  reactions?: InputMaybe<Array<InputMaybe<FilterFindOneMonsterReactionsInput>>>;
-  senses?: InputMaybe<FilterFindOneMonsterSensesInput>;
-  size?: InputMaybe<Scalars['String']>;
-  special_abilities?: InputMaybe<Array<InputMaybe<FilterFindOneMonsterSpecial_AbilitiesInput>>>;
-  speed?: InputMaybe<FilterFindOneMonsterSpeedInput>;
-  strength?: InputMaybe<Scalars['Float']>;
-  subtype?: InputMaybe<Scalars['String']>;
-  type?: InputMaybe<Scalars['String']>;
-  url?: InputMaybe<Scalars['String']>;
-  wisdom?: InputMaybe<Scalars['Float']>;
-  xp?: InputMaybe<Scalars['Float']>;
-};
-
-export type FilterFindOneMonsterIntelligenceOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['Float']>;
-  gte?: InputMaybe<Scalars['Float']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['Float']>>>;
-  lt?: InputMaybe<Scalars['Float']>;
-  lte?: InputMaybe<Scalars['Float']>;
-  ne?: InputMaybe<Scalars['Float']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['Float']>>>;
-};
-
-export type FilterFindOneMonsterLanguagesOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneMonsterLegendary_ActionsInput = {
-  attack_bonus?: InputMaybe<Scalars['Float']>;
-  damage?: InputMaybe<Array<InputMaybe<FilterFindOneMonsterActionsDamageInput>>>;
-  dc?: InputMaybe<FilterFindOneMonsterActionsDcInput>;
-  desc?: InputMaybe<Scalars['String']>;
-  name?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindOneMonsterNameOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-/** For performance reason this type contains only *indexed* fields. */
-export type FilterFindOneMonsterOperatorsInput = {
-  _id?: InputMaybe<FilterFindOneMonster_IdOperatorsInput>;
-  alignment?: InputMaybe<FilterFindOneMonsterAlignmentOperatorsInput>;
-  armor_class?: InputMaybe<FilterFindOneMonsterArmor_ClassOperatorsInput>;
-  challenge_rating?: InputMaybe<FilterFindOneMonsterChallenge_RatingOperatorsInput>;
-  charisma?: InputMaybe<FilterFindOneMonsterCharismaOperatorsInput>;
-  constitution?: InputMaybe<FilterFindOneMonsterConstitutionOperatorsInput>;
-  damage_immunities?: InputMaybe<FilterFindOneMonsterDamage_ImmunitiesOperatorsInput>;
-  damage_resistances?: InputMaybe<FilterFindOneMonsterDamage_ResistancesOperatorsInput>;
-  damage_vulnerabilities?: InputMaybe<FilterFindOneMonsterDamage_VulnerabilitiesOperatorsInput>;
-  dexterity?: InputMaybe<FilterFindOneMonsterDexterityOperatorsInput>;
-  hit_dice?: InputMaybe<FilterFindOneMonsterHit_DiceOperatorsInput>;
-  hit_points?: InputMaybe<FilterFindOneMonsterHit_PointsOperatorsInput>;
-  index?: InputMaybe<FilterFindOneMonsterIndexOperatorsInput>;
-  intelligence?: InputMaybe<FilterFindOneMonsterIntelligenceOperatorsInput>;
-  languages?: InputMaybe<FilterFindOneMonsterLanguagesOperatorsInput>;
-  name?: InputMaybe<FilterFindOneMonsterNameOperatorsInput>;
-  size?: InputMaybe<FilterFindOneMonsterSizeOperatorsInput>;
-  strength?: InputMaybe<FilterFindOneMonsterStrengthOperatorsInput>;
-  subtype?: InputMaybe<FilterFindOneMonsterSubtypeOperatorsInput>;
-  type?: InputMaybe<FilterFindOneMonsterTypeOperatorsInput>;
-  url?: InputMaybe<FilterFindOneMonsterUrlOperatorsInput>;
-  wisdom?: InputMaybe<FilterFindOneMonsterWisdomOperatorsInput>;
-  xp?: InputMaybe<FilterFindOneMonsterXpOperatorsInput>;
-};
-
-export type FilterFindOneMonsterProficienciesInput = {
-  proficiency?: InputMaybe<FilterFindOneAbilityScoreSkillsInput>;
-  value?: InputMaybe<Scalars['Float']>;
-};
-
-export type FilterFindOneMonsterReactionsInput = {
-  dc?: InputMaybe<FilterFindOneMonsterActionsDcInput>;
-  desc?: InputMaybe<Scalars['String']>;
-  name?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindOneMonsterSensesInput = {
-  blindsight?: InputMaybe<Scalars['String']>;
-  darkvision?: InputMaybe<Scalars['String']>;
-  passive_perception?: InputMaybe<Scalars['Float']>;
-  tremorsense?: InputMaybe<Scalars['String']>;
-  truesight?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindOneMonsterSizeOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneMonsterSpecial_AbilitiesInput = {
-  attack_bonus?: InputMaybe<Scalars['Float']>;
-  damage?: InputMaybe<Array<InputMaybe<FilterFindOneMonsterActionsDamageInput>>>;
-  dc?: InputMaybe<FilterFindOneMonsterActionsDcInput>;
-  desc?: InputMaybe<Scalars['String']>;
-  name?: InputMaybe<Scalars['String']>;
-  spellcasting?: InputMaybe<FilterFindOneMonsterSpecial_AbilitiesSpellcastingInput>;
-  usage?: InputMaybe<FilterFindOneMonsterSpecial_AbilitiesSpellcastingSpellsUsageInput>;
-};
-
-export type FilterFindOneMonsterSpecial_AbilitiesSpellcastingInput = {
-  ability?: InputMaybe<FilterFindOneAbilityScoreSkillsInput>;
-  components_required?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  dc?: InputMaybe<Scalars['Float']>;
-  level?: InputMaybe<Scalars['Float']>;
-  modifier?: InputMaybe<Scalars['Float']>;
-  school?: InputMaybe<Scalars['String']>;
-  slots?: InputMaybe<Scalars['JSON']>;
-  spells?: InputMaybe<Array<InputMaybe<FilterFindOneMonsterSpecial_AbilitiesSpellcastingSpellsInput>>>;
-};
-
-export type FilterFindOneMonsterSpecial_AbilitiesSpellcastingSpellsInput = {
-  level?: InputMaybe<Scalars['Float']>;
-  name?: InputMaybe<Scalars['String']>;
-  notes?: InputMaybe<Scalars['String']>;
-  url?: InputMaybe<Scalars['String']>;
-  usage?: InputMaybe<FilterFindOneMonsterSpecial_AbilitiesSpellcastingSpellsUsageInput>;
-};
-
-export type FilterFindOneMonsterSpecial_AbilitiesSpellcastingSpellsUsageInput = {
-  rest_types?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  times?: InputMaybe<Scalars['Float']>;
-  type?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindOneMonsterSpeedInput = {
-  burrow?: InputMaybe<Scalars['String']>;
-  climb?: InputMaybe<Scalars['String']>;
-  fly?: InputMaybe<Scalars['String']>;
-  hover?: InputMaybe<Scalars['Boolean']>;
-  swim?: InputMaybe<Scalars['String']>;
-  walk?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindOneMonsterStrengthOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['Float']>;
-  gte?: InputMaybe<Scalars['Float']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['Float']>>>;
-  lt?: InputMaybe<Scalars['Float']>;
-  lte?: InputMaybe<Scalars['Float']>;
-  ne?: InputMaybe<Scalars['Float']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['Float']>>>;
-};
-
-export type FilterFindOneMonsterSubtypeOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneMonsterTypeOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneMonsterUrlOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneMonsterWisdomOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['Float']>;
-  gte?: InputMaybe<Scalars['Float']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['Float']>>>;
-  lt?: InputMaybe<Scalars['Float']>;
-  lte?: InputMaybe<Scalars['Float']>;
-  ne?: InputMaybe<Scalars['Float']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['Float']>>>;
-};
-
-export type FilterFindOneMonsterXpOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['Float']>;
-  gte?: InputMaybe<Scalars['Float']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['Float']>>>;
-  lt?: InputMaybe<Scalars['Float']>;
-  lte?: InputMaybe<Scalars['Float']>;
-  ne?: InputMaybe<Scalars['Float']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['Float']>>>;
-};
-
-export type FilterFindOneMonster_IdOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneProficiencyIndexOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneProficiencyInput = {
-  AND?: InputMaybe<Array<FilterFindOneProficiencyInput>>;
-  OR?: InputMaybe<Array<FilterFindOneProficiencyInput>>;
-  _id?: InputMaybe<Scalars['String']>;
-  /** List of *indexed* fields that can be filtered via operators. */
-  _operators?: InputMaybe<FilterFindOneProficiencyOperatorsInput>;
-  classes?: InputMaybe<Array<InputMaybe<FilterFindOneAbilityScoreSkillsInput>>>;
-  index?: InputMaybe<Scalars['String']>;
-  name?: InputMaybe<Scalars['String']>;
-  races?: InputMaybe<Array<InputMaybe<FilterFindOneAbilityScoreSkillsInput>>>;
-  reference?: InputMaybe<FilterFindOneProficiencyReferenceInput>;
-  type?: InputMaybe<Scalars['String']>;
-  url?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindOneProficiencyNameOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-/** For performance reason this type contains only *indexed* fields. */
-export type FilterFindOneProficiencyOperatorsInput = {
-  _id?: InputMaybe<FilterFindOneProficiency_IdOperatorsInput>;
-  index?: InputMaybe<FilterFindOneProficiencyIndexOperatorsInput>;
-  name?: InputMaybe<FilterFindOneProficiencyNameOperatorsInput>;
-  type?: InputMaybe<FilterFindOneProficiencyTypeOperatorsInput>;
-  url?: InputMaybe<FilterFindOneProficiencyUrlOperatorsInput>;
-};
-
-export type FilterFindOneProficiencyReferenceInput = {
-  index?: InputMaybe<Scalars['String']>;
-  name?: InputMaybe<Scalars['String']>;
-  type?: InputMaybe<Scalars['String']>;
-  url?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindOneProficiencyTypeOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneProficiencyUrlOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneProficiency_IdOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneRaceAbility_Bonus_OptionsFromInput = {
-  ability_score?: InputMaybe<FilterFindOneAbilityScoreSkillsInput>;
-  bonus?: InputMaybe<Scalars['Float']>;
-};
-
-export type FilterFindOneRaceAbility_Bonus_OptionsInput = {
-  choose?: InputMaybe<Scalars['Float']>;
-  from?: InputMaybe<Array<InputMaybe<FilterFindOneRaceAbility_Bonus_OptionsFromInput>>>;
-  type?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindOneRaceAbility_BonusesInput = {
-  ability_score?: InputMaybe<FilterFindOneAbilityScoreSkillsInput>;
-  bonus?: InputMaybe<Scalars['Float']>;
-};
-
-export type FilterFindOneRaceAgeOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneRaceAlignmentOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneRaceIndexOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneRaceInput = {
-  AND?: InputMaybe<Array<FilterFindOneRaceInput>>;
-  OR?: InputMaybe<Array<FilterFindOneRaceInput>>;
-  _id?: InputMaybe<Scalars['String']>;
-  /** List of *indexed* fields that can be filtered via operators. */
-  _operators?: InputMaybe<FilterFindOneRaceOperatorsInput>;
-  ability_bonus_options?: InputMaybe<FilterFindOneRaceAbility_Bonus_OptionsInput>;
-  ability_bonuses?: InputMaybe<Array<InputMaybe<FilterFindOneRaceAbility_BonusesInput>>>;
-  age?: InputMaybe<Scalars['String']>;
-  alignment?: InputMaybe<Scalars['String']>;
-  index?: InputMaybe<Scalars['String']>;
-  language_desc?: InputMaybe<Scalars['String']>;
-  language_options?: InputMaybe<FilterFindOneRaceLanguage_OptionsInput>;
-  languages?: InputMaybe<Array<InputMaybe<FilterFindOneAbilityScoreSkillsInput>>>;
-  name?: InputMaybe<Scalars['String']>;
-  size?: InputMaybe<Scalars['String']>;
-  size_description?: InputMaybe<Scalars['String']>;
-  speed?: InputMaybe<Scalars['Float']>;
-  starting_proficiencies?: InputMaybe<Array<InputMaybe<FilterFindOneAbilityScoreSkillsInput>>>;
-  starting_proficiency_options?: InputMaybe<FilterFindOneRaceStarting_Proficiency_OptionsInput>;
-  subraces?: InputMaybe<Array<InputMaybe<FilterFindOneAbilityScoreSkillsInput>>>;
-  traits?: InputMaybe<Array<InputMaybe<FilterFindOneAbilityScoreSkillsInput>>>;
-  url?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindOneRaceLanguage_DescOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneRaceLanguage_OptionsInput = {
-  choose?: InputMaybe<Scalars['Float']>;
-  from?: InputMaybe<Array<InputMaybe<FilterFindOneAbilityScoreSkillsInput>>>;
-  type?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindOneRaceNameOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-/** For performance reason this type contains only *indexed* fields. */
-export type FilterFindOneRaceOperatorsInput = {
-  _id?: InputMaybe<FilterFindOneRace_IdOperatorsInput>;
-  age?: InputMaybe<FilterFindOneRaceAgeOperatorsInput>;
-  alignment?: InputMaybe<FilterFindOneRaceAlignmentOperatorsInput>;
-  index?: InputMaybe<FilterFindOneRaceIndexOperatorsInput>;
-  language_desc?: InputMaybe<FilterFindOneRaceLanguage_DescOperatorsInput>;
-  name?: InputMaybe<FilterFindOneRaceNameOperatorsInput>;
-  size?: InputMaybe<FilterFindOneRaceSizeOperatorsInput>;
-  size_description?: InputMaybe<FilterFindOneRaceSize_DescriptionOperatorsInput>;
-  speed?: InputMaybe<FilterFindOneRaceSpeedOperatorsInput>;
-  url?: InputMaybe<FilterFindOneRaceUrlOperatorsInput>;
-};
-
-export type FilterFindOneRaceSizeOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneRaceSize_DescriptionOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneRaceSpeedOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['Float']>;
-  gte?: InputMaybe<Scalars['Float']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['Float']>>>;
-  lt?: InputMaybe<Scalars['Float']>;
-  lte?: InputMaybe<Scalars['Float']>;
-  ne?: InputMaybe<Scalars['Float']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['Float']>>>;
-};
-
-export type FilterFindOneRaceStarting_Proficiency_OptionsInput = {
-  choose?: InputMaybe<Scalars['Float']>;
-  from?: InputMaybe<Array<InputMaybe<FilterFindOneAbilityScoreSkillsInput>>>;
-  type?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindOneRaceUrlOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneRace_IdOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneRuleDescOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneRuleIndexOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneRuleInput = {
-  AND?: InputMaybe<Array<FilterFindOneRuleInput>>;
-  OR?: InputMaybe<Array<FilterFindOneRuleInput>>;
-  _id?: InputMaybe<Scalars['String']>;
-  /** List of *indexed* fields that can be filtered via operators. */
-  _operators?: InputMaybe<FilterFindOneRuleOperatorsInput>;
-  desc?: InputMaybe<Scalars['String']>;
-  index?: InputMaybe<Scalars['String']>;
-  name?: InputMaybe<Scalars['String']>;
-  subsections?: InputMaybe<Array<InputMaybe<FilterFindOneAbilityScoreSkillsInput>>>;
-  url?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindOneRuleNameOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-/** For performance reason this type contains only *indexed* fields. */
-export type FilterFindOneRuleOperatorsInput = {
-  _id?: InputMaybe<FilterFindOneRule_IdOperatorsInput>;
-  desc?: InputMaybe<FilterFindOneRuleDescOperatorsInput>;
-  index?: InputMaybe<FilterFindOneRuleIndexOperatorsInput>;
-  name?: InputMaybe<FilterFindOneRuleNameOperatorsInput>;
-  url?: InputMaybe<FilterFindOneRuleUrlOperatorsInput>;
-};
-
-export type FilterFindOneRuleSectionDescOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneRuleSectionIndexOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneRuleSectionInput = {
-  AND?: InputMaybe<Array<FilterFindOneRuleSectionInput>>;
-  OR?: InputMaybe<Array<FilterFindOneRuleSectionInput>>;
-  _id?: InputMaybe<Scalars['String']>;
-  /** List of *indexed* fields that can be filtered via operators. */
-  _operators?: InputMaybe<FilterFindOneRuleSectionOperatorsInput>;
-  desc?: InputMaybe<Scalars['String']>;
-  index?: InputMaybe<Scalars['String']>;
-  name?: InputMaybe<Scalars['String']>;
-  url?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindOneRuleSectionNameOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-/** For performance reason this type contains only *indexed* fields. */
-export type FilterFindOneRuleSectionOperatorsInput = {
-  _id?: InputMaybe<FilterFindOneRuleSection_IdOperatorsInput>;
-  desc?: InputMaybe<FilterFindOneRuleSectionDescOperatorsInput>;
-  index?: InputMaybe<FilterFindOneRuleSectionIndexOperatorsInput>;
-  name?: InputMaybe<FilterFindOneRuleSectionNameOperatorsInput>;
-  url?: InputMaybe<FilterFindOneRuleSectionUrlOperatorsInput>;
-};
-
-export type FilterFindOneRuleSectionUrlOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneRuleSection_IdOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneRuleUrlOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneRule_IdOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneSkillDescOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneSkillIndexOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneSkillInput = {
-  AND?: InputMaybe<Array<FilterFindOneSkillInput>>;
-  OR?: InputMaybe<Array<FilterFindOneSkillInput>>;
-  _id?: InputMaybe<Scalars['String']>;
-  /** List of *indexed* fields that can be filtered via operators. */
-  _operators?: InputMaybe<FilterFindOneSkillOperatorsInput>;
-  ability_score?: InputMaybe<FilterFindOneAbilityScoreSkillsInput>;
-  desc?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  index?: InputMaybe<Scalars['String']>;
-  name?: InputMaybe<Scalars['String']>;
-  url?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindOneSkillNameOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-/** For performance reason this type contains only *indexed* fields. */
-export type FilterFindOneSkillOperatorsInput = {
-  _id?: InputMaybe<FilterFindOneSkill_IdOperatorsInput>;
-  desc?: InputMaybe<FilterFindOneSkillDescOperatorsInput>;
-  index?: InputMaybe<FilterFindOneSkillIndexOperatorsInput>;
-  name?: InputMaybe<FilterFindOneSkillNameOperatorsInput>;
-  url?: InputMaybe<FilterFindOneSkillUrlOperatorsInput>;
-};
-
-export type FilterFindOneSkillUrlOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneSkill_IdOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneSpellArea_Of_EffectInput = {
-  size?: InputMaybe<Scalars['Float']>;
-  type?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindOneSpellAttack_TypeOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneSpellCasting_TimeOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneSpellComponentsOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneSpellConcentrationOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['Boolean']>;
-  gte?: InputMaybe<Scalars['Boolean']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['Boolean']>>>;
-  lt?: InputMaybe<Scalars['Boolean']>;
-  lte?: InputMaybe<Scalars['Boolean']>;
-  ne?: InputMaybe<Scalars['Boolean']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['Boolean']>>>;
-};
-
-export type FilterFindOneSpellDamageInput = {
-  damage_at_character_level?: InputMaybe<Scalars['JSON']>;
-  damage_at_slot_level?: InputMaybe<Scalars['JSON']>;
-  damage_type?: InputMaybe<FilterFindOneAbilityScoreSkillsInput>;
-};
-
-export type FilterFindOneSpellDcInput = {
-  dc_success?: InputMaybe<Scalars['String']>;
-  dc_type?: InputMaybe<FilterFindOneAbilityScoreSkillsInput>;
-  desc?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindOneSpellDescOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneSpellDurationOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneSpellHigher_LevelOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneSpellIndexOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneSpellInput = {
-  AND?: InputMaybe<Array<FilterFindOneSpellInput>>;
-  OR?: InputMaybe<Array<FilterFindOneSpellInput>>;
-  _id?: InputMaybe<FilterFindOneSpell_IdInput>;
-  /** List of *indexed* fields that can be filtered via operators. */
-  _operators?: InputMaybe<FilterFindOneSpellOperatorsInput>;
-  area_of_effect?: InputMaybe<FilterFindOneSpellArea_Of_EffectInput>;
-  attack_type?: InputMaybe<Scalars['String']>;
-  casting_time?: InputMaybe<Scalars['String']>;
-  classes?: InputMaybe<Array<InputMaybe<FilterFindOneAbilityScoreSkillsInput>>>;
-  components?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  concentration?: InputMaybe<Scalars['Boolean']>;
-  damage?: InputMaybe<FilterFindOneSpellDamageInput>;
-  dc?: InputMaybe<FilterFindOneSpellDcInput>;
-  desc?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  duration?: InputMaybe<Scalars['String']>;
-  heal_at_slot_level?: InputMaybe<Scalars['JSON']>;
-  higher_level?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  index?: InputMaybe<Scalars['String']>;
-  level?: InputMaybe<Scalars['Float']>;
-  material?: InputMaybe<Scalars['String']>;
-  name?: InputMaybe<Scalars['String']>;
-  range?: InputMaybe<Scalars['String']>;
-  ritual?: InputMaybe<Scalars['Boolean']>;
-  school?: InputMaybe<FilterFindOneAbilityScoreSkillsInput>;
-  subclasses?: InputMaybe<Array<InputMaybe<FilterFindOneAbilityScoreSkillsInput>>>;
-  url?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindOneSpellMaterialOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneSpellNameOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-/** For performance reason this type contains only *indexed* fields. */
-export type FilterFindOneSpellOperatorsInput = {
-  _id?: InputMaybe<FilterFindOneSpell_IdOperatorsInput>;
-  attack_type?: InputMaybe<FilterFindOneSpellAttack_TypeOperatorsInput>;
-  casting_time?: InputMaybe<FilterFindOneSpellCasting_TimeOperatorsInput>;
-  components?: InputMaybe<FilterFindOneSpellComponentsOperatorsInput>;
-  concentration?: InputMaybe<FilterFindOneSpellConcentrationOperatorsInput>;
-  desc?: InputMaybe<FilterFindOneSpellDescOperatorsInput>;
-  duration?: InputMaybe<FilterFindOneSpellDurationOperatorsInput>;
-  higher_level?: InputMaybe<FilterFindOneSpellHigher_LevelOperatorsInput>;
-  index?: InputMaybe<FilterFindOneSpellIndexOperatorsInput>;
-  material?: InputMaybe<FilterFindOneSpellMaterialOperatorsInput>;
-  name?: InputMaybe<FilterFindOneSpellNameOperatorsInput>;
-  range?: InputMaybe<FilterFindOneSpellRangeOperatorsInput>;
-  ritual?: InputMaybe<FilterFindOneSpellRitualOperatorsInput>;
-  url?: InputMaybe<FilterFindOneSpellUrlOperatorsInput>;
-};
-
-export type FilterFindOneSpellRangeOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneSpellRitualOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['Boolean']>;
-  gte?: InputMaybe<Scalars['Boolean']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['Boolean']>>>;
-  lt?: InputMaybe<Scalars['Boolean']>;
-  lte?: InputMaybe<Scalars['Boolean']>;
-  ne?: InputMaybe<Scalars['Boolean']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['Boolean']>>>;
-};
-
-export type FilterFindOneSpellUrlOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneSpell_IdInput = {
-  select?: InputMaybe<Scalars['JSON']>;
-  type?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindOneSpell_IdOperatorsInput = {
-  type?: InputMaybe<FilterFindOneSpell_IdTypeOperatorsInput>;
-};
-
-export type FilterFindOneSpell_IdTypeOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneSubclassDescOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneSubclassIndexOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneSubclassInput = {
-  AND?: InputMaybe<Array<FilterFindOneSubclassInput>>;
-  OR?: InputMaybe<Array<FilterFindOneSubclassInput>>;
-  _id?: InputMaybe<Scalars['String']>;
-  /** List of *indexed* fields that can be filtered via operators. */
-  _operators?: InputMaybe<FilterFindOneSubclassOperatorsInput>;
-  class?: InputMaybe<FilterFindOneAbilityScoreSkillsInput>;
-  desc?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  index?: InputMaybe<Scalars['String']>;
-  name?: InputMaybe<Scalars['String']>;
-  spells?: InputMaybe<Array<InputMaybe<FilterFindOneSubclassSpellsInput>>>;
-  subclass_flavor?: InputMaybe<Scalars['String']>;
-  subclass_levels?: InputMaybe<Scalars['String']>;
-  url?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindOneSubclassNameOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-/** For performance reason this type contains only *indexed* fields. */
-export type FilterFindOneSubclassOperatorsInput = {
-  _id?: InputMaybe<FilterFindOneSubclass_IdOperatorsInput>;
-  desc?: InputMaybe<FilterFindOneSubclassDescOperatorsInput>;
-  index?: InputMaybe<FilterFindOneSubclassIndexOperatorsInput>;
-  name?: InputMaybe<FilterFindOneSubclassNameOperatorsInput>;
-  subclass_flavor?: InputMaybe<FilterFindOneSubclassSubclass_FlavorOperatorsInput>;
-  subclass_levels?: InputMaybe<FilterFindOneSubclassSubclass_LevelsOperatorsInput>;
-  url?: InputMaybe<FilterFindOneSubclassUrlOperatorsInput>;
-};
-
-export type FilterFindOneSubclassSpellsInput = {
-  prerequisites?: InputMaybe<Array<InputMaybe<FilterFindOneSubclassSpellsPrerequisitesInput>>>;
-  spell?: InputMaybe<FilterFindOneAbilityScoreSkillsInput>;
-};
-
-export type FilterFindOneSubclassSpellsPrerequisitesInput = {
-  index?: InputMaybe<Scalars['String']>;
-  name?: InputMaybe<Scalars['String']>;
-  type?: InputMaybe<Scalars['String']>;
-  url?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindOneSubclassSubclass_FlavorOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneSubclassSubclass_LevelsOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneSubclassUrlOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneSubclass_IdOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneSubraceAbility_BonusesInput = {
-  ability_score?: InputMaybe<FilterFindOneAbilityScoreSkillsInput>;
-  bonus?: InputMaybe<Scalars['Float']>;
-};
-
-export type FilterFindOneSubraceDescOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneSubraceIndexOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneSubraceInput = {
-  AND?: InputMaybe<Array<FilterFindOneSubraceInput>>;
-  OR?: InputMaybe<Array<FilterFindOneSubraceInput>>;
-  _id?: InputMaybe<Scalars['String']>;
-  /** List of *indexed* fields that can be filtered via operators. */
-  _operators?: InputMaybe<FilterFindOneSubraceOperatorsInput>;
-  ability_bonuses?: InputMaybe<Array<InputMaybe<FilterFindOneSubraceAbility_BonusesInput>>>;
-  desc?: InputMaybe<Scalars['String']>;
-  index?: InputMaybe<Scalars['String']>;
-  language_options?: InputMaybe<FilterFindOneSubraceLanguage_OptionsInput>;
-  name?: InputMaybe<Scalars['String']>;
-  race?: InputMaybe<FilterFindOneAbilityScoreSkillsInput>;
-  racial_traits?: InputMaybe<Array<InputMaybe<FilterFindOneAbilityScoreSkillsInput>>>;
-  starting_proficiencies?: InputMaybe<Array<InputMaybe<FilterFindOneAbilityScoreSkillsInput>>>;
-  url?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindOneSubraceLanguage_OptionsInput = {
-  choose?: InputMaybe<Scalars['Float']>;
-  from?: InputMaybe<Array<InputMaybe<FilterFindOneAbilityScoreSkillsInput>>>;
-  type?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindOneSubraceNameOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-/** For performance reason this type contains only *indexed* fields. */
-export type FilterFindOneSubraceOperatorsInput = {
-  _id?: InputMaybe<FilterFindOneSubrace_IdOperatorsInput>;
-  desc?: InputMaybe<FilterFindOneSubraceDescOperatorsInput>;
-  index?: InputMaybe<FilterFindOneSubraceIndexOperatorsInput>;
-  name?: InputMaybe<FilterFindOneSubraceNameOperatorsInput>;
-  url?: InputMaybe<FilterFindOneSubraceUrlOperatorsInput>;
-};
-
-export type FilterFindOneSubraceUrlOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneSubrace_IdOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneTraitDescOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneTraitIndexOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneTraitInput = {
-  AND?: InputMaybe<Array<FilterFindOneTraitInput>>;
-  OR?: InputMaybe<Array<FilterFindOneTraitInput>>;
-  _id?: InputMaybe<Scalars['String']>;
-  /** List of *indexed* fields that can be filtered via operators. */
-  _operators?: InputMaybe<FilterFindOneTraitOperatorsInput>;
-  desc?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  index?: InputMaybe<Scalars['String']>;
-  name?: InputMaybe<Scalars['String']>;
-  parent?: InputMaybe<FilterFindOneAbilityScoreSkillsInput>;
-  proficiencies?: InputMaybe<Array<InputMaybe<FilterFindOneTraitProficienciesInput>>>;
-  proficiency_choices?: InputMaybe<FilterFindOneTraitProficiency_ChoicesInput>;
-  races?: InputMaybe<Array<InputMaybe<FilterFindOneAbilityScoreSkillsInput>>>;
-  subraces?: InputMaybe<Array<InputMaybe<FilterFindOneAbilityScoreSkillsInput>>>;
-  trait_specific?: InputMaybe<FilterFindOneTraitTrait_SpecificInput>;
-  url?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindOneTraitNameOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-/** For performance reason this type contains only *indexed* fields. */
-export type FilterFindOneTraitOperatorsInput = {
-  _id?: InputMaybe<FilterFindOneTrait_IdOperatorsInput>;
-  desc?: InputMaybe<FilterFindOneTraitDescOperatorsInput>;
-  index?: InputMaybe<FilterFindOneTraitIndexOperatorsInput>;
-  name?: InputMaybe<FilterFindOneTraitNameOperatorsInput>;
-  url?: InputMaybe<FilterFindOneTraitUrlOperatorsInput>;
-};
-
-export type FilterFindOneTraitProficienciesInput = {
-  index?: InputMaybe<Scalars['String']>;
-  name?: InputMaybe<Scalars['String']>;
-  url?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindOneTraitProficiency_ChoicesInput = {
-  choose?: InputMaybe<Scalars['Float']>;
-  from?: InputMaybe<Array<InputMaybe<FilterFindOneAbilityScoreSkillsInput>>>;
-  type?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindOneTraitTrait_SpecificBreath_WeaponDamageInput = {
-  damage_at_character_level?: InputMaybe<Scalars['JSON']>;
-  damage_type?: InputMaybe<FilterFindOneAbilityScoreSkillsInput>;
-};
-
-export type FilterFindOneTraitTrait_SpecificBreath_WeaponDcInput = {
-  dc_type?: InputMaybe<FilterFindOneAbilityScoreSkillsInput>;
-  success_type?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindOneTraitTrait_SpecificBreath_WeaponInput = {
-  damage?: InputMaybe<Array<InputMaybe<FilterFindOneTraitTrait_SpecificBreath_WeaponDamageInput>>>;
-  dc?: InputMaybe<FilterFindOneTraitTrait_SpecificBreath_WeaponDcInput>;
-  desc?: InputMaybe<Scalars['String']>;
-  name?: InputMaybe<Scalars['String']>;
-  usage?: InputMaybe<FilterFindOneTraitTrait_SpecificBreath_WeaponUsageInput>;
-};
-
-export type FilterFindOneTraitTrait_SpecificBreath_WeaponUsageInput = {
-  times?: InputMaybe<Scalars['Float']>;
-  type?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindOneTraitTrait_SpecificInput = {
-  breath_weapon?: InputMaybe<FilterFindOneTraitTrait_SpecificBreath_WeaponInput>;
-  damage_type?: InputMaybe<FilterFindOneAbilityScoreSkillsInput>;
-  spell_options?: InputMaybe<FilterFindOneTraitTrait_SpecificSubtrait_OptionsInput>;
-  subtrait_options?: InputMaybe<FilterFindOneTraitTrait_SpecificSubtrait_OptionsInput>;
-};
-
-export type FilterFindOneTraitTrait_SpecificSubtrait_OptionsInput = {
-  choose?: InputMaybe<Scalars['Float']>;
-  from?: InputMaybe<Array<InputMaybe<AbilityScoreSkillsInput>>>;
-  type?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindOneTraitUrlOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneTrait_IdOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneWeaponPropertyDescOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneWeaponPropertyIndexOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneWeaponPropertyInput = {
-  AND?: InputMaybe<Array<FilterFindOneWeaponPropertyInput>>;
-  OR?: InputMaybe<Array<FilterFindOneWeaponPropertyInput>>;
-  _id?: InputMaybe<Scalars['String']>;
-  /** List of *indexed* fields that can be filtered via operators. */
-  _operators?: InputMaybe<FilterFindOneWeaponPropertyOperatorsInput>;
-  desc?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  index?: InputMaybe<Scalars['String']>;
-  name?: InputMaybe<Scalars['String']>;
-  url?: InputMaybe<Scalars['String']>;
-};
-
-export type FilterFindOneWeaponPropertyNameOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-/** For performance reason this type contains only *indexed* fields. */
-export type FilterFindOneWeaponPropertyOperatorsInput = {
-  _id?: InputMaybe<FilterFindOneWeaponProperty_IdOperatorsInput>;
-  desc?: InputMaybe<FilterFindOneWeaponPropertyDescOperatorsInput>;
-  index?: InputMaybe<FilterFindOneWeaponPropertyIndexOperatorsInput>;
-  name?: InputMaybe<FilterFindOneWeaponPropertyNameOperatorsInput>;
-  url?: InputMaybe<FilterFindOneWeaponPropertyUrlOperatorsInput>;
-};
-
-export type FilterFindOneWeaponPropertyUrlOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
-};
-
-export type FilterFindOneWeaponProperty_IdOperatorsInput = {
-  exists?: InputMaybe<Scalars['Boolean']>;
-  gt?: InputMaybe<Scalars['String']>;
-  gte?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  lt?: InputMaybe<Scalars['String']>;
-  lte?: InputMaybe<Scalars['String']>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['RegExpAsString']>;
+export type FighterSpecific = {
+  __typename?: 'FighterSpecific';
+  action_surges: Scalars['Int'];
+  extra_attacks: Scalars['Int'];
+  indomitable_uses: Scalars['Int'];
+};
+
+export type Gear = IEquipment & IEquipmentBase & IGear & {
+  __typename?: 'Gear';
+  cost: Cost;
+  desc?: Maybe<Array<Scalars['String']>>;
+  equipment_category: EquipmentCategory;
+  gear_category: EquipmentCategory;
+  index: Scalars['String'];
+  name: Scalars['String'];
+  weight?: Maybe<Scalars['Float']>;
+};
+
+export type HealingAtLevel = {
+  __typename?: 'HealingAtLevel';
+  healing: Scalars['String'];
+  level: Scalars['Int'];
+};
+
+export type IEquipment = {
+  cost: Cost;
+  desc?: Maybe<Array<Scalars['String']>>;
+  equipment_category: EquipmentCategory;
+  index: Scalars['String'];
+  name: Scalars['String'];
+  weight?: Maybe<Scalars['Float']>;
+};
+
+export type IEquipmentBase = {
+  desc?: Maybe<Array<Scalars['String']>>;
+  equipment_category: EquipmentCategory;
+  index: Scalars['String'];
+  name: Scalars['String'];
+};
+
+export type IGear = {
+  cost: Cost;
+  desc?: Maybe<Array<Scalars['String']>>;
+  equipment_category: EquipmentCategory;
+  gear_category: EquipmentCategory;
+  index: Scalars['String'];
+  name: Scalars['String'];
+  weight?: Maybe<Scalars['Float']>;
+};
+
+export type IdealChoice = {
+  __typename?: 'IdealChoice';
+  choose: Scalars['Int'];
+  from: IdealOptionSet;
+  type: Scalars['String'];
+};
+
+export type IdealOption = {
+  __typename?: 'IdealOption';
+  alignments: Array<Alignment>;
+  desc: Scalars['String'];
+  option_type: Scalars['String'];
+};
+
+export type IdealOptionSet = {
+  __typename?: 'IdealOptionSet';
+  option_set_type: Scalars['String'];
+  options: Array<IdealOption>;
 };
 
 export type Language = {
   __typename?: 'Language';
-  _id: Scalars['String'];
   desc?: Maybe<Scalars['String']>;
-  index?: Maybe<Scalars['String']>;
-  name?: Maybe<Scalars['String']>;
-  script?: Maybe<Scalars['String']>;
-  type?: Maybe<Scalars['String']>;
-  typical_speakers?: Maybe<Array<Maybe<Scalars['String']>>>;
-  url?: Maybe<Scalars['String']>;
+  index: Scalars['String'];
+  name: Scalars['String'];
+  script?: Maybe<LanguageScript>;
+  type: LanguageType;
+  typical_speakers: Array<Scalars['String']>;
+};
+
+export type LanguageChoice = {
+  __typename?: 'LanguageChoice';
+  choose: Scalars['Int'];
+  from: LanguageOptionSet;
+  type: Scalars['String'];
+};
+
+export type LanguageOption = {
+  __typename?: 'LanguageOption';
+  item: Language;
+  option_type: Scalars['String'];
+};
+
+export type LanguageOptionSet = {
+  __typename?: 'LanguageOptionSet';
+  option_set_type: Scalars['String'];
+  options: Array<LanguageOption>;
+};
+
+export type LanguageOrder = {
+  by: LanguageOrderBy;
+  direction?: OrderByDirection;
+  then_by?: InputMaybe<LanguageOrder>;
+};
+
+export enum LanguageOrderBy {
+  Name = 'NAME',
+  Script = 'SCRIPT',
+  Type = 'TYPE'
+}
+
+export enum LanguageScript {
+  Celestial = 'CELESTIAL',
+  Common = 'COMMON',
+  Draconic = 'DRACONIC',
+  Dwarvish = 'DWARVISH',
+  Elvish = 'ELVISH',
+  Infernal = 'INFERNAL'
+}
+
+export enum LanguageType {
+  Exotic = 'EXOTIC',
+  Standard = 'STANDARD'
+}
+
+export type LegendaryAction = {
+  __typename?: 'LegendaryAction';
+  damage?: Maybe<Array<Damage>>;
+  dc?: Maybe<ActionDc>;
+  desc: Scalars['String'];
+  name: Scalars['String'];
 };
 
 export type Level = {
   __typename?: 'Level';
-  _id: Scalars['String'];
-  ability_score_bonuses?: Maybe<Scalars['Float']>;
-  class?: Maybe<AbilityScoreSkills>;
-  class_specific?: Maybe<LevelClass_Specific>;
+  ability_score_bonuses?: Maybe<Scalars['Int']>;
+  class: Class;
+  class_specific?: Maybe<ClassSpecific>;
   features: Array<Feature>;
-  index?: Maybe<Scalars['String']>;
-  level?: Maybe<Scalars['Float']>;
-  prof_bonus?: Maybe<Scalars['Float']>;
+  index: Scalars['String'];
+  level: Scalars['Int'];
+  prof_bonus?: Maybe<Scalars['Int']>;
   spellcasting?: Maybe<LevelSpellcasting>;
-  subclass?: Maybe<AbilityScoreSkills>;
-  subclass_specific?: Maybe<LevelSubclass_Specific>;
-  url?: Maybe<Scalars['String']>;
+  subclass?: Maybe<Subclass>;
+  subclass_specific?: Maybe<SubclassSpecific>;
 };
 
 
 export type LevelFeaturesArgs = {
-  limit?: InputMaybe<Scalars['Int']>;
-  skip?: InputMaybe<Scalars['Int']>;
-  sort?: InputMaybe<SortFindManyFeatureInput>;
+  name?: InputMaybe<Scalars['String']>;
+  order_direction?: InputMaybe<OrderByDirection>;
 };
 
-export type LevelClass_Specific = {
-  __typename?: 'LevelClass_specific';
-  action_surges?: Maybe<Scalars['Float']>;
-  arcane_recovery_levels?: Maybe<Scalars['Float']>;
-  aura_range?: Maybe<Scalars['Float']>;
-  bardic_inspiration_die?: Maybe<Scalars['Float']>;
-  brutal_critical_dice?: Maybe<Scalars['Float']>;
-  channel_divinity_charges?: Maybe<Scalars['Float']>;
-  creating_spell_slots?: Maybe<Array<Maybe<LevelClass_SpecificCreating_Spell_Slots>>>;
-  destroy_undead_cr?: Maybe<Scalars['Float']>;
-  extra_attacks?: Maybe<Scalars['Float']>;
-  favored_enemies?: Maybe<Scalars['Float']>;
-  favored_terrain?: Maybe<Scalars['Float']>;
-  indomitable_uses?: Maybe<Scalars['Float']>;
-  invocations_known?: Maybe<Scalars['Float']>;
-  ki_points?: Maybe<Scalars['Float']>;
-  magical_secrets_max_5?: Maybe<Scalars['Float']>;
-  magical_secrets_max_7?: Maybe<Scalars['Float']>;
-  magical_secrets_max_9?: Maybe<Scalars['Float']>;
-  martial_arts?: Maybe<LevelClass_SpecificMartial_Arts>;
-  metamagic_known?: Maybe<Scalars['Float']>;
-  mystic_arcanum_level_6?: Maybe<Scalars['Float']>;
-  mystic_arcanum_level_7?: Maybe<Scalars['Float']>;
-  mystic_arcanum_level_8?: Maybe<Scalars['Float']>;
-  mystic_arcanum_level_9?: Maybe<Scalars['Float']>;
-  rage_count?: Maybe<Scalars['Float']>;
-  rage_damage_bonus?: Maybe<Scalars['Float']>;
-  sneak_attack?: Maybe<LevelClass_SpecificSneak_Attack>;
-  song_of_rest_die?: Maybe<Scalars['Float']>;
-  sorcery_points?: Maybe<Scalars['Float']>;
-  unarmored_movement?: Maybe<Scalars['Float']>;
-  wild_shape_fly?: Maybe<Scalars['Boolean']>;
-  wild_shape_max_cr?: Maybe<Scalars['Float']>;
-  wild_shape_swim?: Maybe<Scalars['Boolean']>;
+export type LevelOrder = {
+  by: LevelOrderBy;
+  direction?: OrderByDirection;
+  then_by?: InputMaybe<LevelOrder>;
 };
 
-export type LevelClass_SpecificCreating_Spell_Slots = {
-  __typename?: 'LevelClass_specificCreating_spell_slots';
-  sorcery_point_cost?: Maybe<Scalars['Float']>;
-  spell_slot_level?: Maybe<Scalars['Float']>;
-};
-
-export type LevelClass_SpecificMartial_Arts = {
-  __typename?: 'LevelClass_specificMartial_arts';
-  dice_count?: Maybe<Scalars['Float']>;
-  dice_value?: Maybe<Scalars['Float']>;
-};
-
-export type LevelClass_SpecificSneak_Attack = {
-  __typename?: 'LevelClass_specificSneak_attack';
-  dice_count?: Maybe<Scalars['Float']>;
-  dice_value?: Maybe<Scalars['Float']>;
-};
+export enum LevelOrderBy {
+  AbilityScoreBonuses = 'ABILITY_SCORE_BONUSES',
+  Class = 'CLASS',
+  Level = 'LEVEL',
+  ProfBonus = 'PROF_BONUS',
+  Subclass = 'SUBCLASS'
+}
 
 export type LevelSpellcasting = {
   __typename?: 'LevelSpellcasting';
-  cantrips_known?: Maybe<Scalars['Float']>;
-  spell_slots_level_1?: Maybe<Scalars['Float']>;
-  spell_slots_level_2?: Maybe<Scalars['Float']>;
-  spell_slots_level_3?: Maybe<Scalars['Float']>;
-  spell_slots_level_4?: Maybe<Scalars['Float']>;
-  spell_slots_level_5?: Maybe<Scalars['Float']>;
-  spell_slots_level_6?: Maybe<Scalars['Float']>;
-  spell_slots_level_7?: Maybe<Scalars['Float']>;
-  spell_slots_level_8?: Maybe<Scalars['Float']>;
-  spell_slots_level_9?: Maybe<Scalars['Float']>;
-  spells_known?: Maybe<Scalars['Float']>;
+  cantrips_known?: Maybe<Scalars['Int']>;
+  spell_slots_level_1?: Maybe<Scalars['Int']>;
+  spell_slots_level_2?: Maybe<Scalars['Int']>;
+  spell_slots_level_3?: Maybe<Scalars['Int']>;
+  spell_slots_level_4?: Maybe<Scalars['Int']>;
+  spell_slots_level_5?: Maybe<Scalars['Int']>;
+  spell_slots_level_6?: Maybe<Scalars['Int']>;
+  spell_slots_level_7?: Maybe<Scalars['Int']>;
+  spell_slots_level_8?: Maybe<Scalars['Int']>;
+  spell_slots_level_9?: Maybe<Scalars['Int']>;
+  spells_known?: Maybe<Scalars['Int']>;
 };
 
-export type LevelSubclass_Specific = {
-  __typename?: 'LevelSubclass_specific';
-  additional_magical_secrets_max_lvl?: Maybe<Scalars['Float']>;
-  aura_range?: Maybe<Scalars['Float']>;
+export type LoreSpecific = {
+  __typename?: 'LoreSpecific';
+  additional_magical_secrets_max_lvl: Scalars['Int'];
 };
 
-export type MagicItem = {
+export type MagicItem = IEquipmentBase & {
   __typename?: 'MagicItem';
-  _id: Scalars['String'];
-  desc?: Maybe<Array<Maybe<Scalars['String']>>>;
-  equipment_category?: Maybe<AbilityScoreSkills>;
-  index?: Maybe<Scalars['String']>;
-  name?: Maybe<Scalars['String']>;
-  url?: Maybe<Scalars['String']>;
+  desc: Array<Scalars['String']>;
+  equipment_category: EquipmentCategory;
+  index: Scalars['String'];
+  name: Scalars['String'];
+  rarity: MagicItemRarity;
 };
+
+export type MagicItemOrder = {
+  by: MagicItemOrderBy;
+  direction?: OrderByDirection;
+  then_by?: InputMaybe<MagicItemOrder>;
+};
+
+export enum MagicItemOrderBy {
+  EquipmentCategory = 'EQUIPMENT_CATEGORY',
+  Name = 'NAME'
+}
+
+export enum MagicItemRarity {
+  Artifact = 'ARTIFACT',
+  Common = 'COMMON',
+  Legendary = 'LEGENDARY',
+  Rare = 'RARE',
+  Uncommon = 'UNCOMMON',
+  Varies = 'VARIES',
+  VeryRare = 'VERY_RARE'
+}
 
 export type MagicSchool = {
   __typename?: 'MagicSchool';
-  _id: Scalars['String'];
-  desc?: Maybe<Scalars['String']>;
-  index?: Maybe<Scalars['String']>;
-  name?: Maybe<Scalars['String']>;
-  url?: Maybe<Scalars['String']>;
+  desc: Scalars['String'];
+  index: Scalars['String'];
+  name: Scalars['String'];
+  spells: Array<Spell>;
+};
+
+
+export type MagicSchoolSpellsArgs = {
+  area_of_effect?: InputMaybe<AreaOfEffectFilter>;
+  attack_type?: InputMaybe<Scalars['SpellAttackTypeFilter']>;
+  casting_time?: InputMaybe<Scalars['StringFilter']>;
+  class?: InputMaybe<Scalars['StringFilter']>;
+  concentration?: InputMaybe<Scalars['Boolean']>;
+  damage_type?: InputMaybe<Scalars['StringFilter']>;
+  dc_type?: InputMaybe<Scalars['StringFilter']>;
+  level?: InputMaybe<Scalars['IntFilter']>;
+  limit?: Scalars['Int'];
+  name?: InputMaybe<Scalars['String']>;
+  order?: InputMaybe<SpellOrder>;
+  range?: InputMaybe<Scalars['StringFilter']>;
+  ritual?: InputMaybe<Scalars['Boolean']>;
+  skip?: InputMaybe<Scalars['Int']>;
+  subclass?: InputMaybe<Scalars['StringFilter']>;
+};
+
+export type MonkSpecific = {
+  __typename?: 'MonkSpecific';
+  ki_points: Scalars['Int'];
+  martial_arts: Dice;
+  unarmored_movement: Scalars['Int'];
 };
 
 export type Monster = {
   __typename?: 'Monster';
-  _id: Scalars['String'];
-  actions?: Maybe<Array<Maybe<MonsterActions>>>;
-  alignment?: Maybe<Scalars['String']>;
-  armor_class?: Maybe<Scalars['Float']>;
-  challenge_rating?: Maybe<Scalars['Float']>;
-  charisma?: Maybe<Scalars['Float']>;
-  condition_immunities?: Maybe<Array<Maybe<AbilityScoreSkills>>>;
-  constitution?: Maybe<Scalars['Float']>;
-  damage_immunities?: Maybe<Array<Maybe<Scalars['String']>>>;
-  damage_resistances?: Maybe<Array<Maybe<Scalars['String']>>>;
-  damage_vulnerabilities?: Maybe<Array<Maybe<Scalars['String']>>>;
-  dexterity?: Maybe<Scalars['Float']>;
-  forms?: Maybe<Array<Maybe<AbilityScoreSkills>>>;
-  hit_dice?: Maybe<Scalars['String']>;
-  hit_points?: Maybe<Scalars['Float']>;
-  index?: Maybe<Scalars['String']>;
-  intelligence?: Maybe<Scalars['Float']>;
-  languages?: Maybe<Scalars['String']>;
-  legendary_actions?: Maybe<Array<Maybe<MonsterLegendary_Actions>>>;
-  name?: Maybe<Scalars['String']>;
-  proficiencies?: Maybe<Array<Maybe<MonsterProficiencies>>>;
-  reactions?: Maybe<Array<Maybe<MonsterReactions>>>;
-  senses?: Maybe<MonsterSenses>;
-  size?: Maybe<Scalars['String']>;
-  special_abilities?: Maybe<Array<Maybe<MonsterSpecial_Abilities>>>;
-  speed?: Maybe<MonsterSpeed>;
-  strength?: Maybe<Scalars['Float']>;
-  subtype?: Maybe<Scalars['String']>;
-  type?: Maybe<Scalars['String']>;
-  url?: Maybe<Scalars['String']>;
-  wisdom?: Maybe<Scalars['Float']>;
-  xp?: Maybe<Scalars['Float']>;
-};
-
-export type MonsterActions = {
-  __typename?: 'MonsterActions';
-  attack_bonus?: Maybe<Scalars['Float']>;
-  attack_options?: Maybe<MonsterActionsAttack_Options>;
-  attacks?: Maybe<Array<Maybe<MonsterActionsAttack_OptionsFrom>>>;
-  damage?: Maybe<Array<Maybe<MonsterActionsDamage>>>;
-  dc?: Maybe<MonsterActionsDc>;
+  actions?: Maybe<Array<MonsterAction>>;
+  alignment: Scalars['String'];
+  armor_class?: Maybe<Array<Maybe<MonsterArmorClass>>>;
+  challenge_rating: Scalars['Float'];
+  charisma: Scalars['Int'];
+  condition_immunities: Array<Condition>;
+  constitution: Scalars['Int'];
+  damage_immunities: Array<Scalars['String']>;
+  damage_resistances: Array<Scalars['String']>;
+  damage_vulnerabilities: Array<Scalars['String']>;
   desc?: Maybe<Scalars['String']>;
-  name?: Maybe<Scalars['String']>;
-  options?: Maybe<MonsterActionsOptions>;
-  usage?: Maybe<MonsterActionsUsage>;
+  dexterity: Scalars['Int'];
+  forms?: Maybe<Array<Monster>>;
+  hit_dice: Scalars['String'];
+  hit_points: Scalars['Int'];
+  hit_points_roll: Scalars['String'];
+  image?: Maybe<Scalars['String']>;
+  index: Scalars['String'];
+  intelligence: Scalars['Int'];
+  languages: Scalars['String'];
+  legendary_actions?: Maybe<Array<LegendaryAction>>;
+  name: Scalars['String'];
+  proficiencies: Array<MonsterProficiency>;
+  reactions?: Maybe<Array<Reaction>>;
+  senses: Senses;
+  size: Size;
+  special_abilities?: Maybe<Array<SpecialAbility>>;
+  speed: MonsterSpeed;
+  strength: Scalars['Int'];
+  subtype?: Maybe<MonsterSubtype>;
+  type: MonsterType;
+  wisdom: Scalars['Int'];
+  xp: Scalars['Int'];
 };
 
-export type MonsterActionsAttack_Options = {
-  __typename?: 'MonsterActionsAttack_options';
-  choose: Scalars['Float'];
-  from?: Maybe<Array<Maybe<MonsterActionsAttack_OptionsFrom>>>;
+export type MonsterAction = {
+  __typename?: 'MonsterAction';
+  action_options?: Maybe<MonsterActionChoice>;
+  actions?: Maybe<Array<Action>>;
+  attack_bonus?: Maybe<Scalars['Int']>;
+  attacks?: Maybe<Array<Attack>>;
+  damage?: Maybe<Array<ActionDamage>>;
+  dc?: Maybe<ActionDc>;
+  desc: Scalars['String'];
+  multiattack_type?: Maybe<Scalars['String']>;
+  name: Scalars['String'];
+  options?: Maybe<BreathChoice>;
+  usage?: Maybe<Usage>;
+};
+
+export type MonsterActionChoice = {
+  __typename?: 'MonsterActionChoice';
+  choose: Scalars['Int'];
+  from: MonsterActionOptionSet;
   type: Scalars['String'];
 };
 
-export type MonsterActionsAttack_OptionsFrom = {
-  __typename?: 'MonsterActionsAttack_optionsFrom';
-  damage?: Maybe<Array<Maybe<MonsterActionsDamage>>>;
-  dc?: Maybe<MonsterActionsDc>;
-  name?: Maybe<Scalars['String']>;
+export type MonsterActionOption = ActionOption | MultipleActionOption;
+
+export type MonsterActionOptionSet = {
+  __typename?: 'MonsterActionOptionSet';
+  option_set_type: Scalars['String'];
+  options: Array<MonsterActionOption>;
 };
 
-export type MonsterActionsDamage = {
-  __typename?: 'MonsterActionsDamage';
-  damage_dice?: Maybe<Scalars['String']>;
-  damage_type?: Maybe<AbilityScoreSkills>;
-};
-
-export type MonsterActionsDamageInput = {
-  damage_dice?: InputMaybe<Scalars['String']>;
-  damage_type?: InputMaybe<AbilityScoreSkillsInput>;
-};
-
-export type MonsterActionsDc = {
-  __typename?: 'MonsterActionsDc';
-  dc_type?: Maybe<AbilityScoreSkills>;
-  dc_value?: Maybe<Scalars['Float']>;
-  success_type?: Maybe<Scalars['String']>;
-};
-
-export type MonsterActionsDcInput = {
-  dc_type?: InputMaybe<AbilityScoreSkillsInput>;
-  dc_value?: InputMaybe<Scalars['Float']>;
-  success_type?: InputMaybe<Scalars['String']>;
-};
-
-export type MonsterActionsOptions = {
-  __typename?: 'MonsterActionsOptions';
-  choose?: Maybe<Scalars['Float']>;
-  from?: Maybe<Array<Maybe<MonsterActionsOptionsFrom>>>;
-};
-
-export type MonsterActionsOptionsFrom = {
-  __typename?: 'MonsterActionsOptionsFrom';
-  count?: Maybe<Scalars['JSON']>;
-  name?: Maybe<Scalars['String']>;
-  type?: Maybe<Scalars['String']>;
-};
-
-export type MonsterActionsUsage = {
-  __typename?: 'MonsterActionsUsage';
-  dice?: Maybe<Scalars['String']>;
-  min_value?: Maybe<Scalars['Float']>;
-  type?: Maybe<Scalars['String']>;
-};
-
-export type MonsterLegendary_Actions = {
-  __typename?: 'MonsterLegendary_actions';
-  attack_bonus?: Maybe<Scalars['Float']>;
-  damage?: Maybe<Array<Maybe<MonsterActionsDamage>>>;
-  dc?: Maybe<MonsterActionsDc>;
+export type MonsterArmorClass = {
+  __typename?: 'MonsterArmorClass';
+  armor?: Maybe<Array<Maybe<Armor>>>;
+  condition?: Maybe<Condition>;
   desc?: Maybe<Scalars['String']>;
-  name?: Maybe<Scalars['String']>;
+  spell?: Maybe<Spell>;
+  type: MonsterArmorClassType;
+  value: Scalars['Int'];
 };
 
-export type MonsterProficiencies = {
-  __typename?: 'MonsterProficiencies';
-  proficiency?: Maybe<AbilityScoreSkills>;
-  value?: Maybe<Scalars['Float']>;
+export enum MonsterArmorClassType {
+  Armor = 'armor',
+  Condition = 'condition',
+  Dex = 'dex',
+  Natural = 'natural',
+  Spell = 'spell'
+}
+
+export type MonsterOrder = {
+  by: MonsterOrderBy;
+  direction?: OrderByDirection;
+  then_by?: InputMaybe<MonsterOrder>;
 };
 
-export type MonsterReactions = {
-  __typename?: 'MonsterReactions';
-  dc?: Maybe<MonsterActionsDc>;
-  desc?: Maybe<Scalars['String']>;
-  name?: Maybe<Scalars['String']>;
-};
+export enum MonsterOrderBy {
+  ArmorClass = 'ARMOR_CLASS',
+  ChallengeRating = 'CHALLENGE_RATING',
+  Charisma = 'CHARISMA',
+  Constitution = 'CONSTITUTION',
+  Dexterity = 'DEXTERITY',
+  Intelligence = 'INTELLIGENCE',
+  Name = 'NAME',
+  Size = 'SIZE',
+  Strength = 'STRENGTH',
+  Subtype = 'SUBTYPE',
+  Type = 'TYPE',
+  Wisdom = 'WISDOM',
+  Xp = 'XP'
+}
 
-export type MonsterSenses = {
-  __typename?: 'MonsterSenses';
-  blindsight?: Maybe<Scalars['String']>;
-  darkvision?: Maybe<Scalars['String']>;
-  passive_perception?: Maybe<Scalars['Float']>;
-  tremorsense?: Maybe<Scalars['String']>;
-  truesight?: Maybe<Scalars['String']>;
-};
-
-export type MonsterSpecial_Abilities = {
-  __typename?: 'MonsterSpecial_abilities';
-  attack_bonus?: Maybe<Scalars['Float']>;
-  damage?: Maybe<Array<Maybe<MonsterActionsDamage>>>;
-  dc?: Maybe<MonsterActionsDc>;
-  desc?: Maybe<Scalars['String']>;
-  name?: Maybe<Scalars['String']>;
-  spellcasting?: Maybe<MonsterSpecial_AbilitiesSpellcasting>;
-  usage?: Maybe<MonsterSpecial_AbilitiesSpellcastingSpellsUsage>;
-};
-
-export type MonsterSpecial_AbilitiesSpellcasting = {
-  __typename?: 'MonsterSpecial_abilitiesSpellcasting';
-  ability?: Maybe<AbilityScoreSkills>;
-  components_required?: Maybe<Array<Maybe<Scalars['String']>>>;
-  dc?: Maybe<Scalars['Float']>;
-  level?: Maybe<Scalars['Float']>;
-  modifier?: Maybe<Scalars['Float']>;
-  school?: Maybe<Scalars['String']>;
-  slots?: Maybe<Scalars['JSON']>;
-  spells?: Maybe<Array<Maybe<MonsterSpecial_AbilitiesSpellcastingSpells>>>;
-};
-
-export type MonsterSpecial_AbilitiesSpellcastingSpells = {
-  __typename?: 'MonsterSpecial_abilitiesSpellcastingSpells';
-  level?: Maybe<Scalars['Float']>;
-  name?: Maybe<Scalars['String']>;
-  notes?: Maybe<Scalars['String']>;
-  url?: Maybe<Scalars['String']>;
-  usage?: Maybe<MonsterSpecial_AbilitiesSpellcastingSpellsUsage>;
-};
-
-export type MonsterSpecial_AbilitiesSpellcastingSpellsUsage = {
-  __typename?: 'MonsterSpecial_abilitiesSpellcastingSpellsUsage';
-  rest_types?: Maybe<Array<Maybe<Scalars['String']>>>;
-  times?: Maybe<Scalars['Float']>;
-  type?: Maybe<Scalars['String']>;
+export type MonsterProficiency = {
+  __typename?: 'MonsterProficiency';
+  proficiency: Proficiency;
+  value: Scalars['Int'];
 };
 
 export type MonsterSpeed = {
@@ -7404,1748 +972,1175 @@ export type MonsterSpeed = {
   walk?: Maybe<Scalars['String']>;
 };
 
-export type Proficiency = {
-  __typename?: 'Proficiency';
-  _id: Scalars['String'];
-  classes?: Maybe<Array<Maybe<AbilityScoreSkills>>>;
-  index?: Maybe<Scalars['String']>;
-  name?: Maybe<Scalars['String']>;
-  races?: Maybe<Array<Maybe<AbilityScoreSkills>>>;
-  reference?: Maybe<ProficiencyReference>;
-  type?: Maybe<Scalars['String']>;
-  url?: Maybe<Scalars['String']>;
+export type MonsterSpell = {
+  __typename?: 'MonsterSpell';
+  spell: Spell;
+  usage?: Maybe<Usage>;
 };
 
-export type ProficiencyReference = {
-  __typename?: 'ProficiencyReference';
-  index?: Maybe<Scalars['String']>;
-  name?: Maybe<Scalars['String']>;
-  type?: Maybe<Scalars['String']>;
-  url?: Maybe<Scalars['String']>;
+export type MonsterSpellSlot = {
+  __typename?: 'MonsterSpellSlot';
+  level: Scalars['Int'];
+  slots: Scalars['Int'];
+};
+
+export type MonsterSpellcasting = {
+  __typename?: 'MonsterSpellcasting';
+  ability: AbilityScore;
+  components_required?: Maybe<Array<SpellComponent>>;
+  dc?: Maybe<Scalars['Int']>;
+  level?: Maybe<Scalars['Int']>;
+  modifier?: Maybe<Scalars['Int']>;
+  school?: Maybe<Scalars['String']>;
+  slots?: Maybe<Array<MonsterSpellSlot>>;
+  spells: Array<MonsterSpell>;
+};
+
+export enum MonsterSubtype {
+  AnyRace = 'ANY_RACE',
+  Demon = 'DEMON',
+  Devil = 'DEVIL',
+  Dwarf = 'DWARF',
+  Elf = 'ELF',
+  Gnoll = 'GNOLL',
+  Gnome = 'GNOME',
+  Goblinoid = 'GOBLINOID',
+  Grimlock = 'GRIMLOCK',
+  Human = 'HUMAN',
+  Kobold = 'KOBOLD',
+  Lizardfolk = 'LIZARDFOLK',
+  Merfolk = 'MERFOLK',
+  Orc = 'ORC',
+  Sahuagin = 'SAHUAGIN',
+  Shapechanger = 'SHAPECHANGER',
+  Titan = 'TITAN'
+}
+
+export enum MonsterType {
+  Aberration = 'ABERRATION',
+  Beast = 'BEAST',
+  Celestial = 'CELESTIAL',
+  Construct = 'CONSTRUCT',
+  Dragon = 'DRAGON',
+  Elemental = 'ELEMENTAL',
+  Fey = 'FEY',
+  Fiend = 'FIEND',
+  Giant = 'GIANT',
+  Humanoid = 'HUMANOID',
+  Monstrosity = 'MONSTROSITY',
+  Ooze = 'OOZE',
+  Plant = 'PLANT',
+  Swarm = 'SWARM',
+  Undead = 'UNDEAD'
+}
+
+export type Multiclassing = {
+  __typename?: 'Multiclassing';
+  prerequisite_options?: Maybe<PrerequisiteChoice>;
+  prerequisites?: Maybe<Array<AbilityScorePrerequisite>>;
+  proficiencies: Array<Proficiency>;
+  proficiency_choices?: Maybe<Array<ProficiencyChoice>>;
+};
+
+export type MultipleActionOption = {
+  __typename?: 'MultipleActionOption';
+  items: Array<ActionOption>;
+  option_type: Scalars['String'];
+};
+
+export enum OrderByDirection {
+  Ascending = 'ASCENDING',
+  Descending = 'DESCENDING'
+}
+
+export type Pack = IEquipment & IEquipmentBase & IGear & {
+  __typename?: 'Pack';
+  contents: Array<PackQuantity>;
+  cost: Cost;
+  desc?: Maybe<Array<Scalars['String']>>;
+  equipment_category: EquipmentCategory;
+  gear_category: EquipmentCategory;
+  index: Scalars['String'];
+  name: Scalars['String'];
+  weight?: Maybe<Scalars['Float']>;
+};
+
+export type PackQuantity = {
+  __typename?: 'PackQuantity';
+  item: IEquipment;
+  quantity: Scalars['Int'];
+};
+
+export type PaladinSpecific = {
+  __typename?: 'PaladinSpecific';
+  aura_range: Scalars['Int'];
+};
+
+export type PrerequisiteChoice = {
+  __typename?: 'PrerequisiteChoice';
+  choose: Scalars['Int'];
+  from: PrerequisiteOptionSet;
+  type: Scalars['String'];
+};
+
+export type PrerequisiteOption = {
+  __typename?: 'PrerequisiteOption';
+  ability_score: AbilityScore;
+  minimum_score: Scalars['Int'];
+  option_type: Scalars['String'];
+};
+
+export type PrerequisiteOptionSet = {
+  __typename?: 'PrerequisiteOptionSet';
+  option_set_type: Scalars['String'];
+  options: Array<PrerequisiteOption>;
+};
+
+export type Proficiency = {
+  __typename?: 'Proficiency';
+  classes: Array<Class>;
+  index: Scalars['String'];
+  name: Scalars['String'];
+  races: Array<ProficiencyRace>;
+  reference: ProficiencyReference;
+  type: ProficiencyType;
+};
+
+
+export type ProficiencyClassesArgs = {
+  name?: InputMaybe<Scalars['String']>;
+};
+
+
+export type ProficiencyRacesArgs = {
+  name?: InputMaybe<Scalars['String']>;
+};
+
+export type ProficiencyChoice = {
+  __typename?: 'ProficiencyChoice';
+  choose: Scalars['Int'];
+  desc?: Maybe<Scalars['String']>;
+  from: ProficiencyOptionSet;
+  type: Scalars['String'];
+};
+
+export type ProficiencyChoiceOption = {
+  __typename?: 'ProficiencyChoiceOption';
+  choice: ProficiencyChoice;
+  option_type: Scalars['String'];
+};
+
+export type ProficiencyOption = ProficiencyChoiceOption | ProficiencyReferenceOption;
+
+export type ProficiencyOptionSet = {
+  __typename?: 'ProficiencyOptionSet';
+  option_set_type: Scalars['String'];
+  options: Array<ProficiencyOption>;
+};
+
+export type ProficiencyOrder = {
+  by: ProficiencyOrderBy;
+  direction?: OrderByDirection;
+  then_by?: InputMaybe<ProficiencyOrder>;
+};
+
+export enum ProficiencyOrderBy {
+  Name = 'NAME',
+  Type = 'TYPE'
+}
+
+export type ProficiencyPrerequisite = {
+  __typename?: 'ProficiencyPrerequisite';
+  proficiency: Proficiency;
+  type: Scalars['String'];
+};
+
+export type ProficiencyRace = {
+  ability_bonuses: Array<AbilityBonus>;
+  index: Scalars['String'];
+  name: Scalars['String'];
+};
+
+export type ProficiencyReference = AbilityScore | Ammunition | Armor | EquipmentCategory | Gear | Pack | Skill | Tool | Vehicle | Weapon;
+
+export type ProficiencyReferenceOption = {
+  __typename?: 'ProficiencyReferenceOption';
+  item: Proficiency;
+  option_type: Scalars['String'];
+};
+
+export enum ProficiencyType {
+  Armor = 'ARMOR',
+  ArtisansTools = 'ARTISANS_TOOLS',
+  GamingSets = 'GAMING_SETS',
+  MusicalInstruments = 'MUSICAL_INSTRUMENTS',
+  Other = 'OTHER',
+  SavingThrows = 'SAVING_THROWS',
+  Skills = 'SKILLS',
+  Vehicles = 'VEHICLES',
+  Weapons = 'WEAPONS'
+}
+
+export type Quantity = {
+  __typename?: 'Quantity';
+  equipment: IEquipment;
+  quantity: Scalars['Int'];
 };
 
 export type Query = {
   __typename?: 'Query';
   abilityScore?: Maybe<AbilityScore>;
-  abilityScores: Array<AbilityScore>;
+  abilityScores?: Maybe<Array<AbilityScore>>;
   alignment?: Maybe<Alignment>;
-  alignments: Array<Alignment>;
+  alignments?: Maybe<Array<Alignment>>;
   background?: Maybe<Background>;
   backgrounds: Array<Background>;
   class?: Maybe<Class>;
   classes: Array<Class>;
   condition?: Maybe<Condition>;
-  conditions: Array<Condition>;
+  conditions?: Maybe<Array<Condition>>;
   damageType?: Maybe<DamageType>;
-  damageTypes: Array<DamageType>;
-  equipment?: Maybe<Equipment>;
-  equipmentCategories: Array<EquipmentCategory>;
+  damageTypes?: Maybe<Array<DamageType>>;
+  equipment?: Maybe<IEquipment>;
+  equipmentCategories?: Maybe<Array<EquipmentCategory>>;
   equipmentCategory?: Maybe<EquipmentCategory>;
-  equipments: Array<Equipment>;
+  equipments?: Maybe<Array<IEquipment>>;
   feat?: Maybe<Feat>;
-  feats: Array<Feat>;
+  feats?: Maybe<Array<Feat>>;
   feature?: Maybe<Feature>;
-  features: Array<Feature>;
+  features?: Maybe<Array<Feature>>;
   language?: Maybe<Language>;
-  languages: Array<Language>;
+  languages?: Maybe<Array<Language>>;
   level?: Maybe<Level>;
-  levels: Array<Level>;
+  levels?: Maybe<Array<Level>>;
   magicItem?: Maybe<MagicItem>;
-  magicItems: Array<MagicItem>;
+  magicItems?: Maybe<Array<MagicItem>>;
   magicSchool?: Maybe<MagicSchool>;
-  magicSchools: Array<MagicSchool>;
+  magicSchools?: Maybe<Array<MagicSchool>>;
   monster?: Maybe<Monster>;
-  monsters: Array<Monster>;
-  proficiencies: Array<Proficiency>;
+  monsters?: Maybe<Array<Monster>>;
+  proficiencies?: Maybe<Array<Proficiency>>;
   proficiency?: Maybe<Proficiency>;
   race?: Maybe<Race>;
   races: Array<Race>;
   rule?: Maybe<Rule>;
   ruleSection?: Maybe<RuleSection>;
-  ruleSections: Array<RuleSection>;
-  rules: Array<Rule>;
+  ruleSections?: Maybe<Array<RuleSection>>;
+  rules?: Maybe<Array<Maybe<Rule>>>;
   skill?: Maybe<Skill>;
-  skills: Array<Skill>;
+  skills?: Maybe<Array<Skill>>;
   spell?: Maybe<Spell>;
-  spells: Array<Spell>;
+  spells?: Maybe<Array<Spell>>;
   subclass?: Maybe<Subclass>;
   subclasses: Array<Subclass>;
   subrace?: Maybe<Subrace>;
   subraces: Array<Subrace>;
   trait?: Maybe<Trait>;
-  traits: Array<Trait>;
-  weaponProperties: Array<WeaponProperty>;
+  traits?: Maybe<Array<Trait>>;
+  weaponProperties?: Maybe<Array<Maybe<WeaponProperty>>>;
   weaponProperty?: Maybe<WeaponProperty>;
 };
 
 
 export type QueryAbilityScoreArgs = {
-  filter?: InputMaybe<FilterFindOneAbilityScoreInput>;
-  skip?: InputMaybe<Scalars['Int']>;
-  sort?: InputMaybe<SortFindOneAbilityScoreInput>;
+  index?: InputMaybe<Scalars['String']>;
 };
 
 
 export type QueryAbilityScoresArgs = {
-  filter?: InputMaybe<FilterFindManyAbilityScoreInput>;
-  limit?: InputMaybe<Scalars['Int']>;
-  skip?: InputMaybe<Scalars['Int']>;
-  sort?: InputMaybe<SortFindManyAbilityScoreInput>;
+  full_name?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
+  order_direction?: InputMaybe<OrderByDirection>;
 };
 
 
 export type QueryAlignmentArgs = {
-  filter?: InputMaybe<FilterFindOneAlignmentInput>;
-  skip?: InputMaybe<Scalars['Int']>;
-  sort?: InputMaybe<SortFindOneAlignmentInput>;
+  index?: InputMaybe<Scalars['String']>;
 };
 
 
 export type QueryAlignmentsArgs = {
-  filter?: InputMaybe<FilterFindManyAlignmentInput>;
-  limit?: InputMaybe<Scalars['Int']>;
-  skip?: InputMaybe<Scalars['Int']>;
-  sort?: InputMaybe<SortFindManyAlignmentInput>;
+  name?: InputMaybe<Scalars['String']>;
+  order_direction?: InputMaybe<OrderByDirection>;
 };
 
 
 export type QueryBackgroundArgs = {
-  filter?: InputMaybe<FilterFindOneBackgroundInput>;
-  skip?: InputMaybe<Scalars['Int']>;
-  sort?: InputMaybe<SortFindOneBackgroundInput>;
+  index?: InputMaybe<Scalars['String']>;
 };
 
 
 export type QueryBackgroundsArgs = {
-  filter?: InputMaybe<FilterFindManyBackgroundInput>;
-  limit?: InputMaybe<Scalars['Int']>;
-  skip?: InputMaybe<Scalars['Int']>;
-  sort?: InputMaybe<SortFindManyBackgroundInput>;
+  name?: InputMaybe<Scalars['String']>;
+  order_direction?: InputMaybe<OrderByDirection>;
 };
 
 
 export type QueryClassArgs = {
-  filter?: InputMaybe<FilterFindOneClassInput>;
-  skip?: InputMaybe<Scalars['Int']>;
-  sort?: InputMaybe<SortFindOneClassInput>;
+  index?: InputMaybe<Scalars['String']>;
 };
 
 
 export type QueryClassesArgs = {
-  filter?: InputMaybe<FilterFindManyClassInput>;
-  limit?: InputMaybe<Scalars['Int']>;
-  skip?: InputMaybe<Scalars['Int']>;
-  sort?: InputMaybe<SortFindManyClassInput>;
+  hit_die?: InputMaybe<Scalars['IntFilter']>;
+  name?: InputMaybe<Scalars['String']>;
+  order?: InputMaybe<ClassOrder>;
 };
 
 
 export type QueryConditionArgs = {
-  filter?: InputMaybe<FilterFindOneConditionInput>;
-  skip?: InputMaybe<Scalars['Int']>;
-  sort?: InputMaybe<SortFindOneConditionInput>;
+  index?: InputMaybe<Scalars['String']>;
 };
 
 
 export type QueryConditionsArgs = {
-  filter?: InputMaybe<FilterFindManyConditionInput>;
-  limit?: InputMaybe<Scalars['Int']>;
-  skip?: InputMaybe<Scalars['Int']>;
-  sort?: InputMaybe<SortFindManyConditionInput>;
+  name?: InputMaybe<Scalars['String']>;
+  order_direction?: InputMaybe<OrderByDirection>;
 };
 
 
 export type QueryDamageTypeArgs = {
-  filter?: InputMaybe<FilterFindOneDamageTypeInput>;
-  skip?: InputMaybe<Scalars['Int']>;
-  sort?: InputMaybe<SortFindOneDamageTypeInput>;
+  index?: InputMaybe<Scalars['String']>;
 };
 
 
 export type QueryDamageTypesArgs = {
-  filter?: InputMaybe<FilterFindManyDamageTypeInput>;
-  limit?: InputMaybe<Scalars['Int']>;
-  skip?: InputMaybe<Scalars['Int']>;
-  sort?: InputMaybe<SortFindManyDamageTypeInput>;
+  name?: InputMaybe<Scalars['String']>;
+  order_direction?: InputMaybe<OrderByDirection>;
 };
 
 
 export type QueryEquipmentArgs = {
-  filter?: InputMaybe<FilterFindOneEquipmentInput>;
-  skip?: InputMaybe<Scalars['Int']>;
-  sort?: InputMaybe<SortFindOneEquipmentInput>;
+  index?: InputMaybe<Scalars['String']>;
 };
 
 
 export type QueryEquipmentCategoriesArgs = {
-  filter?: InputMaybe<FilterFindManyEquipmentCategoryInput>;
-  limit?: InputMaybe<Scalars['Int']>;
-  skip?: InputMaybe<Scalars['Int']>;
-  sort?: InputMaybe<SortFindManyEquipmentCategoryInput>;
+  name?: InputMaybe<Scalars['String']>;
+  order_direction?: InputMaybe<OrderByDirection>;
 };
 
 
 export type QueryEquipmentCategoryArgs = {
-  filter?: InputMaybe<FilterFindOneEquipmentCategoryInput>;
-  skip?: InputMaybe<Scalars['Int']>;
-  sort?: InputMaybe<SortFindOneEquipmentCategoryInput>;
+  index?: InputMaybe<Scalars['String']>;
 };
 
 
 export type QueryEquipmentsArgs = {
-  filter?: InputMaybe<FilterFindManyEquipmentInput>;
-  limit?: InputMaybe<Scalars['Int']>;
+  equipment_category?: InputMaybe<Scalars['StringFilter']>;
+  limit?: Scalars['Int'];
+  name?: InputMaybe<Scalars['String']>;
+  order?: InputMaybe<EquipmentOrder>;
   skip?: InputMaybe<Scalars['Int']>;
-  sort?: InputMaybe<SortFindManyEquipmentInput>;
 };
 
 
 export type QueryFeatArgs = {
-  filter?: InputMaybe<FilterFindOneFeatInput>;
-  skip?: InputMaybe<Scalars['Int']>;
-  sort?: InputMaybe<SortFindOneFeatInput>;
+  index?: InputMaybe<Scalars['String']>;
 };
 
 
 export type QueryFeatsArgs = {
-  filter?: InputMaybe<FilterFindManyFeatInput>;
-  limit?: InputMaybe<Scalars['Int']>;
-  skip?: InputMaybe<Scalars['Int']>;
-  sort?: InputMaybe<SortFindManyFeatInput>;
+  name?: InputMaybe<Scalars['String']>;
+  order_direction?: InputMaybe<OrderByDirection>;
 };
 
 
 export type QueryFeatureArgs = {
-  filter?: InputMaybe<FilterFindOneFeatureInput>;
-  skip?: InputMaybe<Scalars['Int']>;
-  sort?: InputMaybe<SortFindOneFeatureInput>;
+  index?: InputMaybe<Scalars['String']>;
 };
 
 
 export type QueryFeaturesArgs = {
-  filter?: InputMaybe<FilterFindManyFeatureInput>;
-  limit?: InputMaybe<Scalars['Int']>;
+  class?: InputMaybe<Scalars['StringFilter']>;
+  level?: InputMaybe<Scalars['IntFilter']>;
+  limit?: Scalars['Int'];
+  name?: InputMaybe<Scalars['String']>;
+  order?: InputMaybe<FeatureOrder>;
   skip?: InputMaybe<Scalars['Int']>;
-  sort?: InputMaybe<SortFindManyFeatureInput>;
+  subclass?: InputMaybe<Scalars['StringFilter']>;
 };
 
 
 export type QueryLanguageArgs = {
-  filter?: InputMaybe<FilterFindOneLanguageInput>;
-  skip?: InputMaybe<Scalars['Int']>;
-  sort?: InputMaybe<SortFindOneLanguageInput>;
+  index?: InputMaybe<Scalars['String']>;
 };
 
 
 export type QueryLanguagesArgs = {
-  filter?: InputMaybe<FilterFindManyLanguageInput>;
-  limit?: InputMaybe<Scalars['Int']>;
-  skip?: InputMaybe<Scalars['Int']>;
-  sort?: InputMaybe<SortFindManyLanguageInput>;
+  name?: InputMaybe<Scalars['String']>;
+  order?: InputMaybe<LanguageOrder>;
+  script?: InputMaybe<Scalars['LanguageScriptFilter']>;
+  type?: InputMaybe<LanguageType>;
 };
 
 
 export type QueryLevelArgs = {
-  filter?: InputMaybe<FilterFindOneLevelInput>;
-  skip?: InputMaybe<Scalars['Int']>;
-  sort?: InputMaybe<SortFindOneLevelInput>;
+  index?: InputMaybe<Scalars['String']>;
 };
 
 
 export type QueryLevelsArgs = {
-  filter?: InputMaybe<FilterFindManyLevelInput>;
-  limit?: InputMaybe<Scalars['Int']>;
+  ability_score_bonuses?: InputMaybe<Scalars['IntFilter']>;
+  class?: InputMaybe<Scalars['StringFilter']>;
+  level?: InputMaybe<Scalars['IntFilter']>;
+  limit?: Scalars['Int'];
+  order?: InputMaybe<LevelOrder>;
+  prof_bonus?: InputMaybe<Scalars['IntFilter']>;
   skip?: InputMaybe<Scalars['Int']>;
-  sort?: InputMaybe<SortFindManyLevelInput>;
+  subclass?: InputMaybe<Scalars['StringFilter']>;
 };
 
 
 export type QueryMagicItemArgs = {
-  filter?: InputMaybe<FilterFindOneMagicItemInput>;
-  skip?: InputMaybe<Scalars['Int']>;
-  sort?: InputMaybe<SortFindOneMagicItemInput>;
+  index?: InputMaybe<Scalars['String']>;
 };
 
 
 export type QueryMagicItemsArgs = {
-  filter?: InputMaybe<FilterFindManyMagicItemInput>;
-  limit?: InputMaybe<Scalars['Int']>;
+  equipment_category?: InputMaybe<Scalars['StringFilter']>;
+  limit?: Scalars['Int'];
+  name?: InputMaybe<Scalars['String']>;
+  order?: InputMaybe<MagicItemOrder>;
   skip?: InputMaybe<Scalars['Int']>;
-  sort?: InputMaybe<SortFindManyMagicItemInput>;
 };
 
 
 export type QueryMagicSchoolArgs = {
-  filter?: InputMaybe<FilterFindOneMagicSchoolInput>;
-  skip?: InputMaybe<Scalars['Int']>;
-  sort?: InputMaybe<SortFindOneMagicSchoolInput>;
+  index?: InputMaybe<Scalars['String']>;
 };
 
 
 export type QueryMagicSchoolsArgs = {
-  filter?: InputMaybe<FilterFindManyMagicSchoolInput>;
-  limit?: InputMaybe<Scalars['Int']>;
-  skip?: InputMaybe<Scalars['Int']>;
-  sort?: InputMaybe<SortFindManyMagicSchoolInput>;
+  name?: InputMaybe<Scalars['String']>;
+  order_direction?: InputMaybe<OrderByDirection>;
 };
 
 
 export type QueryMonsterArgs = {
-  filter?: InputMaybe<FilterFindOneMonsterInput>;
-  skip?: InputMaybe<Scalars['Int']>;
-  sort?: InputMaybe<SortFindOneMonsterInput>;
+  index?: InputMaybe<Scalars['String']>;
 };
 
 
 export type QueryMonstersArgs = {
-  filter?: InputMaybe<FilterFindManyMonsterInput>;
-  limit?: InputMaybe<Scalars['Int']>;
+  armor_class?: InputMaybe<Scalars['IntFilter']>;
+  challenge_rating?: InputMaybe<Scalars['FloatFilter']>;
+  charisma?: InputMaybe<Scalars['IntFilter']>;
+  constitution?: InputMaybe<Scalars['IntFilter']>;
+  damage_immunity?: InputMaybe<Scalars['StringFilter']>;
+  damage_resistance?: InputMaybe<Scalars['StringFilter']>;
+  damage_vulnerability?: InputMaybe<Scalars['StringFilter']>;
+  dexterity?: InputMaybe<Scalars['IntFilter']>;
+  intelligence?: InputMaybe<Scalars['IntFilter']>;
+  limit?: Scalars['Int'];
+  name?: InputMaybe<Scalars['String']>;
+  order?: InputMaybe<MonsterOrder>;
+  size?: InputMaybe<Scalars['SizeFilter']>;
   skip?: InputMaybe<Scalars['Int']>;
-  sort?: InputMaybe<SortFindManyMonsterInput>;
+  strength?: InputMaybe<Scalars['IntFilter']>;
+  subtype?: InputMaybe<Scalars['MonsterSubtypeFilter']>;
+  type?: InputMaybe<Scalars['MonsterTypeFilter']>;
+  wisdom?: InputMaybe<Scalars['IntFilter']>;
+  xp?: InputMaybe<Scalars['IntFilter']>;
 };
 
 
 export type QueryProficienciesArgs = {
-  filter?: InputMaybe<FilterFindManyProficiencyInput>;
-  limit?: InputMaybe<Scalars['Int']>;
+  class?: InputMaybe<Scalars['StringFilter']>;
+  limit?: Scalars['Int'];
+  name?: InputMaybe<Scalars['String']>;
+  order?: InputMaybe<ProficiencyOrder>;
+  race?: InputMaybe<Scalars['StringFilter']>;
   skip?: InputMaybe<Scalars['Int']>;
-  sort?: InputMaybe<SortFindManyProficiencyInput>;
+  type?: InputMaybe<Scalars['ProficiencyTypeFilter']>;
 };
 
 
 export type QueryProficiencyArgs = {
-  filter?: InputMaybe<FilterFindOneProficiencyInput>;
-  skip?: InputMaybe<Scalars['Int']>;
-  sort?: InputMaybe<SortFindOneProficiencyInput>;
+  index?: InputMaybe<Scalars['String']>;
 };
 
 
 export type QueryRaceArgs = {
-  filter?: InputMaybe<FilterFindOneRaceInput>;
-  skip?: InputMaybe<Scalars['Int']>;
-  sort?: InputMaybe<SortFindOneRaceInput>;
+  index?: InputMaybe<Scalars['String']>;
 };
 
 
 export type QueryRacesArgs = {
-  filter?: InputMaybe<FilterFindManyRaceInput>;
-  limit?: InputMaybe<Scalars['Int']>;
-  skip?: InputMaybe<Scalars['Int']>;
-  sort?: InputMaybe<SortFindManyRaceInput>;
+  ability_bonus?: InputMaybe<Scalars['StringFilter']>;
+  language?: InputMaybe<Scalars['StringFilter']>;
+  name?: InputMaybe<Scalars['String']>;
+  order?: InputMaybe<RaceOrder>;
+  size?: InputMaybe<Scalars['SizeFilter']>;
+  speed?: InputMaybe<Scalars['IntFilter']>;
 };
 
 
 export type QueryRuleArgs = {
-  filter?: InputMaybe<FilterFindOneRuleInput>;
-  skip?: InputMaybe<Scalars['Int']>;
-  sort?: InputMaybe<SortFindOneRuleInput>;
+  index?: InputMaybe<Scalars['String']>;
 };
 
 
 export type QueryRuleSectionArgs = {
-  filter?: InputMaybe<FilterFindOneRuleSectionInput>;
-  skip?: InputMaybe<Scalars['Int']>;
-  sort?: InputMaybe<SortFindOneRuleSectionInput>;
+  index?: InputMaybe<Scalars['String']>;
 };
 
 
 export type QueryRuleSectionsArgs = {
-  filter?: InputMaybe<FilterFindManyRuleSectionInput>;
-  limit?: InputMaybe<Scalars['Int']>;
-  skip?: InputMaybe<Scalars['Int']>;
-  sort?: InputMaybe<SortFindManyRuleSectionInput>;
+  name?: InputMaybe<Scalars['String']>;
+  order_direction?: InputMaybe<OrderByDirection>;
 };
 
 
 export type QueryRulesArgs = {
-  filter?: InputMaybe<FilterFindManyRuleInput>;
-  limit?: InputMaybe<Scalars['Int']>;
-  skip?: InputMaybe<Scalars['Int']>;
-  sort?: InputMaybe<SortFindManyRuleInput>;
+  name?: InputMaybe<Scalars['String']>;
+  order_direction?: InputMaybe<OrderByDirection>;
 };
 
 
 export type QuerySkillArgs = {
-  filter?: InputMaybe<FilterFindOneSkillInput>;
-  skip?: InputMaybe<Scalars['Int']>;
-  sort?: InputMaybe<SortFindOneSkillInput>;
+  index?: InputMaybe<Scalars['String']>;
 };
 
 
 export type QuerySkillsArgs = {
-  filter?: InputMaybe<FilterFindManySkillInput>;
-  limit?: InputMaybe<Scalars['Int']>;
-  skip?: InputMaybe<Scalars['Int']>;
-  sort?: InputMaybe<SortFindManySkillInput>;
+  ability_score?: InputMaybe<Scalars['StringFilter']>;
+  name?: InputMaybe<Scalars['String']>;
+  order?: InputMaybe<SkillOrder>;
 };
 
 
 export type QuerySpellArgs = {
-  filter?: InputMaybe<FilterFindOneSpellInput>;
-  skip?: InputMaybe<Scalars['Int']>;
-  sort?: InputMaybe<SortFindOneSpellInput>;
+  index?: InputMaybe<Scalars['String']>;
 };
 
 
 export type QuerySpellsArgs = {
-  filter?: InputMaybe<FilterFindManySpellInput>;
-  limit?: InputMaybe<Scalars['Int']>;
+  area_of_effect?: InputMaybe<AreaOfEffectFilter>;
+  attack_type?: InputMaybe<Scalars['SpellAttackTypeFilter']>;
+  casting_time?: InputMaybe<Scalars['StringFilter']>;
+  class?: InputMaybe<Scalars['StringFilter']>;
+  concentration?: InputMaybe<Scalars['Boolean']>;
+  damage_type?: InputMaybe<Scalars['StringFilter']>;
+  dc_type?: InputMaybe<Scalars['StringFilter']>;
+  level?: InputMaybe<Scalars['IntFilter']>;
+  limit?: Scalars['Int'];
+  name?: InputMaybe<Scalars['String']>;
+  order?: InputMaybe<SpellOrder>;
+  range?: InputMaybe<Scalars['StringFilter']>;
+  ritual?: InputMaybe<Scalars['Boolean']>;
+  school?: InputMaybe<Scalars['StringFilter']>;
   skip?: InputMaybe<Scalars['Int']>;
-  sort?: InputMaybe<SortFindManySpellInput>;
+  subclass?: InputMaybe<Scalars['StringFilter']>;
 };
 
 
 export type QuerySubclassArgs = {
-  filter?: InputMaybe<FilterFindOneSubclassInput>;
-  skip?: InputMaybe<Scalars['Int']>;
-  sort?: InputMaybe<SortFindOneSubclassInput>;
+  index?: InputMaybe<Scalars['String']>;
 };
 
 
 export type QuerySubclassesArgs = {
-  filter?: InputMaybe<FilterFindManySubclassInput>;
-  limit?: InputMaybe<Scalars['Int']>;
-  skip?: InputMaybe<Scalars['Int']>;
-  sort?: InputMaybe<SortFindManySubclassInput>;
+  name?: InputMaybe<Scalars['String']>;
+  order_direction?: InputMaybe<OrderByDirection>;
 };
 
 
 export type QuerySubraceArgs = {
-  filter?: InputMaybe<FilterFindOneSubraceInput>;
-  skip?: InputMaybe<Scalars['Int']>;
-  sort?: InputMaybe<SortFindOneSubraceInput>;
+  index?: InputMaybe<Scalars['String']>;
 };
 
 
 export type QuerySubracesArgs = {
-  filter?: InputMaybe<FilterFindManySubraceInput>;
-  limit?: InputMaybe<Scalars['Int']>;
-  skip?: InputMaybe<Scalars['Int']>;
-  sort?: InputMaybe<SortFindManySubraceInput>;
+  name?: InputMaybe<Scalars['String']>;
+  order_direction?: InputMaybe<OrderByDirection>;
 };
 
 
 export type QueryTraitArgs = {
-  filter?: InputMaybe<FilterFindOneTraitInput>;
-  skip?: InputMaybe<Scalars['Int']>;
-  sort?: InputMaybe<SortFindOneTraitInput>;
+  index?: InputMaybe<Scalars['String']>;
 };
 
 
 export type QueryTraitsArgs = {
-  filter?: InputMaybe<FilterFindManyTraitInput>;
-  limit?: InputMaybe<Scalars['Int']>;
-  skip?: InputMaybe<Scalars['Int']>;
-  sort?: InputMaybe<SortFindManyTraitInput>;
+  name?: InputMaybe<Scalars['String']>;
+  order_direction?: InputMaybe<OrderByDirection>;
 };
 
 
 export type QueryWeaponPropertiesArgs = {
-  filter?: InputMaybe<FilterFindManyWeaponPropertyInput>;
-  limit?: InputMaybe<Scalars['Int']>;
-  skip?: InputMaybe<Scalars['Int']>;
-  sort?: InputMaybe<SortFindManyWeaponPropertyInput>;
+  name?: InputMaybe<Scalars['String']>;
+  order_direction?: InputMaybe<OrderByDirection>;
 };
 
 
 export type QueryWeaponPropertyArgs = {
-  filter?: InputMaybe<FilterFindOneWeaponPropertyInput>;
-  skip?: InputMaybe<Scalars['Int']>;
-  sort?: InputMaybe<SortFindOneWeaponPropertyInput>;
+  index?: InputMaybe<Scalars['String']>;
 };
 
-export type Race = {
+export type Race = ProficiencyRace & {
   __typename?: 'Race';
-  _id: Scalars['String'];
-  ability_bonus_options?: Maybe<RaceAbility_Bonus_Options>;
-  ability_bonuses?: Maybe<Array<Maybe<RaceAbility_Bonuses>>>;
-  age?: Maybe<Scalars['String']>;
-  alignment?: Maybe<Scalars['String']>;
-  index?: Maybe<Scalars['String']>;
-  language_desc?: Maybe<Scalars['String']>;
-  language_options?: Maybe<RaceLanguage_Options>;
-  languages?: Maybe<Array<Maybe<AbilityScoreSkills>>>;
-  name?: Maybe<Scalars['String']>;
-  size?: Maybe<Scalars['String']>;
-  size_description?: Maybe<Scalars['String']>;
-  speed?: Maybe<Scalars['Float']>;
-  starting_proficiencies?: Maybe<Array<Maybe<AbilityScoreSkills>>>;
-  starting_proficiency_options?: Maybe<RaceStarting_Proficiency_Options>;
-  subraces?: Maybe<Array<Maybe<AbilityScoreSkills>>>;
+  ability_bonus_options?: Maybe<AbilityBonusChoice>;
+  ability_bonuses: Array<AbilityBonus>;
+  age: Scalars['String'];
+  alignment: Scalars['String'];
+  index: Scalars['String'];
+  language_desc: Scalars['String'];
+  language_options?: Maybe<LanguageChoice>;
+  languages: Array<Language>;
+  name: Scalars['String'];
+  size: Size;
+  size_description: Scalars['String'];
+  speed: Scalars['Int'];
+  starting_proficiencies: Array<Proficiency>;
+  starting_proficiency_options?: Maybe<ProficiencyChoice>;
+  subraces: Array<Subrace>;
   traits: Array<Trait>;
-  url?: Maybe<Scalars['String']>;
+};
+
+
+export type RaceLanguagesArgs = {
+  name?: InputMaybe<Scalars['String']>;
+};
+
+
+export type RaceStarting_ProficienciesArgs = {
+  name?: InputMaybe<Scalars['String']>;
+};
+
+
+export type RaceSubracesArgs = {
+  name?: InputMaybe<Scalars['String']>;
 };
 
 
 export type RaceTraitsArgs = {
-  limit?: InputMaybe<Scalars['Int']>;
-  skip?: InputMaybe<Scalars['Int']>;
-  sort?: InputMaybe<SortFindManyTraitInput>;
+  name?: InputMaybe<Scalars['String']>;
 };
 
-export type RaceAbility_Bonus_Options = {
-  __typename?: 'RaceAbility_bonus_options';
-  choose?: Maybe<Scalars['Float']>;
-  from?: Maybe<Array<Maybe<RaceAbility_Bonus_OptionsFrom>>>;
-  type?: Maybe<Scalars['String']>;
+export type RaceOrder = {
+  by: RaceOrderBy;
+  direction?: OrderByDirection;
+  then_by?: InputMaybe<RaceOrder>;
 };
 
-export type RaceAbility_Bonus_OptionsFrom = {
-  __typename?: 'RaceAbility_bonus_optionsFrom';
-  ability_score?: Maybe<AbilityScoreSkills>;
-  bonus?: Maybe<Scalars['Float']>;
+export enum RaceOrderBy {
+  Name = 'NAME',
+  Size = 'SIZE',
+  Speed = 'SPEED'
+}
+
+export type Range = {
+  __typename?: 'Range';
+  long?: Maybe<Scalars['Int']>;
+  normal: Scalars['Int'];
 };
 
-export type RaceAbility_Bonuses = {
-  __typename?: 'RaceAbility_bonuses';
-  ability_score?: Maybe<AbilityScoreSkills>;
-  bonus?: Maybe<Scalars['Float']>;
+export type RangerSpecific = {
+  __typename?: 'RangerSpecific';
+  favored_enemies: Scalars['Int'];
+  favored_terrain: Scalars['Int'];
 };
 
-export type RaceLanguage_Options = {
-  __typename?: 'RaceLanguage_options';
-  choose?: Maybe<Scalars['Float']>;
-  from?: Maybe<Array<Maybe<AbilityScoreSkills>>>;
-  type?: Maybe<Scalars['String']>;
+export type Reaction = {
+  __typename?: 'Reaction';
+  dc?: Maybe<ActionDc>;
+  desc: Scalars['String'];
+  name: Scalars['String'];
 };
 
-export type RaceStarting_Proficiency_Options = {
-  __typename?: 'RaceStarting_proficiency_options';
-  choose?: Maybe<Scalars['Float']>;
-  from?: Maybe<Array<Maybe<AbilityScoreSkills>>>;
-  type?: Maybe<Scalars['String']>;
+export enum RestType {
+  Long = 'LONG',
+  Short = 'SHORT'
+}
+
+export type RogueSpecific = {
+  __typename?: 'RogueSpecific';
+  sneak_attack: Dice;
 };
 
 export type Rule = {
   __typename?: 'Rule';
-  _id: Scalars['String'];
-  desc?: Maybe<Scalars['String']>;
-  index?: Maybe<Scalars['String']>;
-  name?: Maybe<Scalars['String']>;
+  desc: Scalars['String'];
+  index: Scalars['String'];
+  name: Scalars['String'];
   subsections: Array<RuleSection>;
-  url?: Maybe<Scalars['String']>;
 };
 
 
 export type RuleSubsectionsArgs = {
-  limit?: InputMaybe<Scalars['Int']>;
-  skip?: InputMaybe<Scalars['Int']>;
-  sort?: InputMaybe<SortFindManyRuleSectionInput>;
+  name?: InputMaybe<Scalars['String']>;
 };
 
 export type RuleSection = {
   __typename?: 'RuleSection';
-  _id: Scalars['String'];
-  desc?: Maybe<Scalars['String']>;
-  index?: Maybe<Scalars['String']>;
-  name?: Maybe<Scalars['String']>;
-  url?: Maybe<Scalars['String']>;
+  desc: Scalars['String'];
+  index: Scalars['String'];
+  name: Scalars['String'];
 };
+
+export type Senses = {
+  __typename?: 'Senses';
+  blindsight?: Maybe<Scalars['String']>;
+  darkvision?: Maybe<Scalars['String']>;
+  passive_perception: Scalars['Int'];
+  tremorsense?: Maybe<Scalars['String']>;
+  truesight?: Maybe<Scalars['String']>;
+};
+
+export enum Size {
+  Gargantuan = 'GARGANTUAN',
+  Huge = 'HUGE',
+  Large = 'LARGE',
+  Medium = 'MEDIUM',
+  Small = 'SMALL',
+  Tiny = 'TINY'
+}
 
 export type Skill = {
   __typename?: 'Skill';
-  _id: Scalars['String'];
-  ability_score?: Maybe<AbilityScoreSkills>;
-  desc?: Maybe<Array<Maybe<Scalars['String']>>>;
-  index?: Maybe<Scalars['String']>;
-  name?: Maybe<Scalars['String']>;
-  url?: Maybe<Scalars['String']>;
+  ability_score: AbilityScore;
+  desc: Array<Scalars['String']>;
+  index: Scalars['String'];
+  name: Scalars['String'];
 };
 
-export enum SortFindManyAbilityScoreInput {
-  DescAsc = 'DESC_ASC',
-  DescDesc = 'DESC_DESC',
-  FullNameAsc = 'FULL_NAME_ASC',
-  FullNameDesc = 'FULL_NAME_DESC',
-  IndexAsc = 'INDEX_ASC',
-  IndexDesc = 'INDEX_DESC',
-  NameAsc = 'NAME_ASC',
-  NameDesc = 'NAME_DESC',
-  UrlAsc = 'URL_ASC',
-  UrlDesc = 'URL_DESC',
-  IdAsc = '_ID_ASC',
-  IdDesc = '_ID_DESC'
+export type SkillOrder = {
+  by: SkillOrderBy;
+  direction?: OrderByDirection;
+  then_by?: InputMaybe<SkillOrder>;
+};
+
+export enum SkillOrderBy {
+  AbilityScore = 'ABILITY_SCORE',
+  Name = 'NAME'
 }
 
-export enum SortFindManyAlignmentInput {
-  AbbreviationAsc = 'ABBREVIATION_ASC',
-  AbbreviationDesc = 'ABBREVIATION_DESC',
-  DescAsc = 'DESC_ASC',
-  DescDesc = 'DESC_DESC',
-  IndexAsc = 'INDEX_ASC',
-  IndexDesc = 'INDEX_DESC',
-  NameAsc = 'NAME_ASC',
-  NameDesc = 'NAME_DESC',
-  UrlAsc = 'URL_ASC',
-  UrlDesc = 'URL_DESC',
-  IdAsc = '_ID_ASC',
-  IdDesc = '_ID_DESC'
-}
+export type SorcererSpecific = {
+  __typename?: 'SorcererSpecific';
+  creating_spell_slots: Array<SpellSlotCreation>;
+  metamagic_known: Scalars['Int'];
+  sorcery_points: Scalars['Int'];
+};
 
-export enum SortFindManyBackgroundInput {
-  IndexAsc = 'INDEX_ASC',
-  IndexDesc = 'INDEX_DESC',
-  NameAsc = 'NAME_ASC',
-  NameDesc = 'NAME_DESC',
-  UrlAsc = 'URL_ASC',
-  UrlDesc = 'URL_DESC',
-  IdAsc = '_ID_ASC',
-  IdDesc = '_ID_DESC'
-}
+export type SpecialAbility = {
+  __typename?: 'SpecialAbility';
+  damage?: Maybe<Array<Damage>>;
+  dc?: Maybe<ActionDc>;
+  desc: Scalars['String'];
+  name: Scalars['String'];
+  spellcasting?: Maybe<MonsterSpellcasting>;
+  usage?: Maybe<Usage>;
+};
 
-export enum SortFindManyClassInput {
-  ClassLevelsAsc = 'CLASS_LEVELS_ASC',
-  ClassLevelsDesc = 'CLASS_LEVELS_DESC',
-  HitDieAsc = 'HIT_DIE_ASC',
-  HitDieDesc = 'HIT_DIE_DESC',
-  IndexAsc = 'INDEX_ASC',
-  IndexDesc = 'INDEX_DESC',
-  NameAsc = 'NAME_ASC',
-  NameDesc = 'NAME_DESC',
-  SpellsAsc = 'SPELLS_ASC',
-  SpellsDesc = 'SPELLS_DESC',
-  UrlAsc = 'URL_ASC',
-  UrlDesc = 'URL_DESC',
-  IdAsc = '_ID_ASC',
-  IdDesc = '_ID_DESC'
-}
-
-export enum SortFindManyConditionInput {
-  DescAsc = 'DESC_ASC',
-  DescDesc = 'DESC_DESC',
-  IndexAsc = 'INDEX_ASC',
-  IndexDesc = 'INDEX_DESC',
-  NameAsc = 'NAME_ASC',
-  NameDesc = 'NAME_DESC',
-  UrlAsc = 'URL_ASC',
-  UrlDesc = 'URL_DESC',
-  IdAsc = '_ID_ASC',
-  IdDesc = '_ID_DESC'
-}
-
-export enum SortFindManyDamageTypeInput {
-  DescAsc = 'DESC_ASC',
-  DescDesc = 'DESC_DESC',
-  IndexAsc = 'INDEX_ASC',
-  IndexDesc = 'INDEX_DESC',
-  NameAsc = 'NAME_ASC',
-  NameDesc = 'NAME_DESC',
-  UrlAsc = 'URL_ASC',
-  UrlDesc = 'URL_DESC',
-  IdAsc = '_ID_ASC',
-  IdDesc = '_ID_DESC'
-}
-
-export enum SortFindManyEquipmentCategoryInput {
-  IndexAsc = 'INDEX_ASC',
-  IndexDesc = 'INDEX_DESC',
-  NameAsc = 'NAME_ASC',
-  NameDesc = 'NAME_DESC',
-  UrlAsc = 'URL_ASC',
-  UrlDesc = 'URL_DESC',
-  IdAsc = '_ID_ASC',
-  IdDesc = '_ID_DESC'
-}
-
-export enum SortFindManyEquipmentInput {
-  ArmorCategoryAsc = 'ARMOR_CATEGORY_ASC',
-  ArmorCategoryDesc = 'ARMOR_CATEGORY_DESC',
-  CapacityAsc = 'CAPACITY_ASC',
-  CapacityDesc = 'CAPACITY_DESC',
-  CategoryRangeAsc = 'CATEGORY_RANGE_ASC',
-  CategoryRangeDesc = 'CATEGORY_RANGE_DESC',
-  DescAsc = 'DESC_ASC',
-  DescDesc = 'DESC_DESC',
-  IndexAsc = 'INDEX_ASC',
-  IndexDesc = 'INDEX_DESC',
-  NameAsc = 'NAME_ASC',
-  NameDesc = 'NAME_DESC',
-  QuantityAsc = 'QUANTITY_ASC',
-  QuantityDesc = 'QUANTITY_DESC',
-  SpecialAsc = 'SPECIAL_ASC',
-  SpecialDesc = 'SPECIAL_DESC',
-  StealthDisadvantageAsc = 'STEALTH_DISADVANTAGE_ASC',
-  StealthDisadvantageDesc = 'STEALTH_DISADVANTAGE_DESC',
-  StrMinimumAsc = 'STR_MINIMUM_ASC',
-  StrMinimumDesc = 'STR_MINIMUM_DESC',
-  ToolCategoryAsc = 'TOOL_CATEGORY_ASC',
-  ToolCategoryDesc = 'TOOL_CATEGORY_DESC',
-  UrlAsc = 'URL_ASC',
-  UrlDesc = 'URL_DESC',
-  VehicleCategoryAsc = 'VEHICLE_CATEGORY_ASC',
-  VehicleCategoryDesc = 'VEHICLE_CATEGORY_DESC',
-  WeaponCategoryAsc = 'WEAPON_CATEGORY_ASC',
-  WeaponCategoryDesc = 'WEAPON_CATEGORY_DESC',
-  WeaponRangeAsc = 'WEAPON_RANGE_ASC',
-  WeaponRangeDesc = 'WEAPON_RANGE_DESC',
-  WeightAsc = 'WEIGHT_ASC',
-  WeightDesc = 'WEIGHT_DESC',
-  IdAsc = '_ID_ASC',
-  IdDesc = '_ID_DESC'
-}
-
-export enum SortFindManyFeatInput {
-  DescAsc = 'DESC_ASC',
-  DescDesc = 'DESC_DESC',
-  IndexAsc = 'INDEX_ASC',
-  IndexDesc = 'INDEX_DESC',
-  NameAsc = 'NAME_ASC',
-  NameDesc = 'NAME_DESC',
-  UrlAsc = 'URL_ASC',
-  UrlDesc = 'URL_DESC',
-  IdAsc = '_ID_ASC',
-  IdDesc = '_ID_DESC'
-}
-
-export enum SortFindManyFeatureInput {
-  DescAsc = 'DESC_ASC',
-  DescDesc = 'DESC_DESC',
-  IndexAsc = 'INDEX_ASC',
-  IndexDesc = 'INDEX_DESC',
-  LevelAsc = 'LEVEL_ASC',
-  LevelDesc = 'LEVEL_DESC',
-  NameAsc = 'NAME_ASC',
-  NameDesc = 'NAME_DESC',
-  ReferenceAsc = 'REFERENCE_ASC',
-  ReferenceDesc = 'REFERENCE_DESC',
-  UrlAsc = 'URL_ASC',
-  UrlDesc = 'URL_DESC',
-  IdAsc = '_ID_ASC',
-  IdDesc = '_ID_DESC'
-}
-
-export enum SortFindManyLanguageInput {
-  DescAsc = 'DESC_ASC',
-  DescDesc = 'DESC_DESC',
-  IndexAsc = 'INDEX_ASC',
-  IndexDesc = 'INDEX_DESC',
-  NameAsc = 'NAME_ASC',
-  NameDesc = 'NAME_DESC',
-  ScriptAsc = 'SCRIPT_ASC',
-  ScriptDesc = 'SCRIPT_DESC',
-  TypeAsc = 'TYPE_ASC',
-  TypeDesc = 'TYPE_DESC',
-  TypicalSpeakersAsc = 'TYPICAL_SPEAKERS_ASC',
-  TypicalSpeakersDesc = 'TYPICAL_SPEAKERS_DESC',
-  UrlAsc = 'URL_ASC',
-  UrlDesc = 'URL_DESC',
-  IdAsc = '_ID_ASC',
-  IdDesc = '_ID_DESC'
-}
-
-export enum SortFindManyLevelInput {
-  AbilityScoreBonusesAsc = 'ABILITY_SCORE_BONUSES_ASC',
-  AbilityScoreBonusesDesc = 'ABILITY_SCORE_BONUSES_DESC',
-  IndexAsc = 'INDEX_ASC',
-  IndexDesc = 'INDEX_DESC',
-  LevelAsc = 'LEVEL_ASC',
-  LevelDesc = 'LEVEL_DESC',
-  ProfBonusAsc = 'PROF_BONUS_ASC',
-  ProfBonusDesc = 'PROF_BONUS_DESC',
-  UrlAsc = 'URL_ASC',
-  UrlDesc = 'URL_DESC',
-  IdAsc = '_ID_ASC',
-  IdDesc = '_ID_DESC'
-}
-
-export enum SortFindManyMagicItemInput {
-  DescAsc = 'DESC_ASC',
-  DescDesc = 'DESC_DESC',
-  IndexAsc = 'INDEX_ASC',
-  IndexDesc = 'INDEX_DESC',
-  NameAsc = 'NAME_ASC',
-  NameDesc = 'NAME_DESC',
-  UrlAsc = 'URL_ASC',
-  UrlDesc = 'URL_DESC',
-  IdAsc = '_ID_ASC',
-  IdDesc = '_ID_DESC'
-}
-
-export enum SortFindManyMagicSchoolInput {
-  DescAsc = 'DESC_ASC',
-  DescDesc = 'DESC_DESC',
-  IndexAsc = 'INDEX_ASC',
-  IndexDesc = 'INDEX_DESC',
-  NameAsc = 'NAME_ASC',
-  NameDesc = 'NAME_DESC',
-  UrlAsc = 'URL_ASC',
-  UrlDesc = 'URL_DESC',
-  IdAsc = '_ID_ASC',
-  IdDesc = '_ID_DESC'
-}
-
-export enum SortFindManyMonsterInput {
-  AlignmentAsc = 'ALIGNMENT_ASC',
-  AlignmentDesc = 'ALIGNMENT_DESC',
-  ArmorClassAsc = 'ARMOR_CLASS_ASC',
-  ArmorClassDesc = 'ARMOR_CLASS_DESC',
-  ChallengeRatingAsc = 'CHALLENGE_RATING_ASC',
-  ChallengeRatingDesc = 'CHALLENGE_RATING_DESC',
-  CharismaAsc = 'CHARISMA_ASC',
-  CharismaDesc = 'CHARISMA_DESC',
-  ConstitutionAsc = 'CONSTITUTION_ASC',
-  ConstitutionDesc = 'CONSTITUTION_DESC',
-  DamageImmunitiesAsc = 'DAMAGE_IMMUNITIES_ASC',
-  DamageImmunitiesDesc = 'DAMAGE_IMMUNITIES_DESC',
-  DamageResistancesAsc = 'DAMAGE_RESISTANCES_ASC',
-  DamageResistancesDesc = 'DAMAGE_RESISTANCES_DESC',
-  DamageVulnerabilitiesAsc = 'DAMAGE_VULNERABILITIES_ASC',
-  DamageVulnerabilitiesDesc = 'DAMAGE_VULNERABILITIES_DESC',
-  DexterityAsc = 'DEXTERITY_ASC',
-  DexterityDesc = 'DEXTERITY_DESC',
-  HitDiceAsc = 'HIT_DICE_ASC',
-  HitDiceDesc = 'HIT_DICE_DESC',
-  HitPointsAsc = 'HIT_POINTS_ASC',
-  HitPointsDesc = 'HIT_POINTS_DESC',
-  IndexAsc = 'INDEX_ASC',
-  IndexDesc = 'INDEX_DESC',
-  IntelligenceAsc = 'INTELLIGENCE_ASC',
-  IntelligenceDesc = 'INTELLIGENCE_DESC',
-  LanguagesAsc = 'LANGUAGES_ASC',
-  LanguagesDesc = 'LANGUAGES_DESC',
-  NameAsc = 'NAME_ASC',
-  NameDesc = 'NAME_DESC',
-  SizeAsc = 'SIZE_ASC',
-  SizeDesc = 'SIZE_DESC',
-  StrengthAsc = 'STRENGTH_ASC',
-  StrengthDesc = 'STRENGTH_DESC',
-  SubtypeAsc = 'SUBTYPE_ASC',
-  SubtypeDesc = 'SUBTYPE_DESC',
-  TypeAsc = 'TYPE_ASC',
-  TypeDesc = 'TYPE_DESC',
-  UrlAsc = 'URL_ASC',
-  UrlDesc = 'URL_DESC',
-  WisdomAsc = 'WISDOM_ASC',
-  WisdomDesc = 'WISDOM_DESC',
-  XpAsc = 'XP_ASC',
-  XpDesc = 'XP_DESC',
-  IdAsc = '_ID_ASC',
-  IdDesc = '_ID_DESC'
-}
-
-export enum SortFindManyProficiencyInput {
-  IndexAsc = 'INDEX_ASC',
-  IndexDesc = 'INDEX_DESC',
-  NameAsc = 'NAME_ASC',
-  NameDesc = 'NAME_DESC',
-  TypeAsc = 'TYPE_ASC',
-  TypeDesc = 'TYPE_DESC',
-  UrlAsc = 'URL_ASC',
-  UrlDesc = 'URL_DESC',
-  IdAsc = '_ID_ASC',
-  IdDesc = '_ID_DESC'
-}
-
-export enum SortFindManyRaceInput {
-  AgeAsc = 'AGE_ASC',
-  AgeDesc = 'AGE_DESC',
-  AlignmentAsc = 'ALIGNMENT_ASC',
-  AlignmentDesc = 'ALIGNMENT_DESC',
-  IndexAsc = 'INDEX_ASC',
-  IndexDesc = 'INDEX_DESC',
-  LanguageDescAsc = 'LANGUAGE_DESC_ASC',
-  LanguageDescDesc = 'LANGUAGE_DESC_DESC',
-  NameAsc = 'NAME_ASC',
-  NameDesc = 'NAME_DESC',
-  SizeAsc = 'SIZE_ASC',
-  SizeDesc = 'SIZE_DESC',
-  SizeDescriptionAsc = 'SIZE_DESCRIPTION_ASC',
-  SizeDescriptionDesc = 'SIZE_DESCRIPTION_DESC',
-  SpeedAsc = 'SPEED_ASC',
-  SpeedDesc = 'SPEED_DESC',
-  UrlAsc = 'URL_ASC',
-  UrlDesc = 'URL_DESC',
-  IdAsc = '_ID_ASC',
-  IdDesc = '_ID_DESC'
-}
-
-export enum SortFindManyRuleInput {
-  DescAsc = 'DESC_ASC',
-  DescDesc = 'DESC_DESC',
-  IndexAsc = 'INDEX_ASC',
-  IndexDesc = 'INDEX_DESC',
-  NameAsc = 'NAME_ASC',
-  NameDesc = 'NAME_DESC',
-  UrlAsc = 'URL_ASC',
-  UrlDesc = 'URL_DESC',
-  IdAsc = '_ID_ASC',
-  IdDesc = '_ID_DESC'
-}
-
-export enum SortFindManyRuleSectionInput {
-  DescAsc = 'DESC_ASC',
-  DescDesc = 'DESC_DESC',
-  IndexAsc = 'INDEX_ASC',
-  IndexDesc = 'INDEX_DESC',
-  NameAsc = 'NAME_ASC',
-  NameDesc = 'NAME_DESC',
-  UrlAsc = 'URL_ASC',
-  UrlDesc = 'URL_DESC',
-  IdAsc = '_ID_ASC',
-  IdDesc = '_ID_DESC'
-}
-
-export enum SortFindManySkillInput {
-  DescAsc = 'DESC_ASC',
-  DescDesc = 'DESC_DESC',
-  IndexAsc = 'INDEX_ASC',
-  IndexDesc = 'INDEX_DESC',
-  NameAsc = 'NAME_ASC',
-  NameDesc = 'NAME_DESC',
-  UrlAsc = 'URL_ASC',
-  UrlDesc = 'URL_DESC',
-  IdAsc = '_ID_ASC',
-  IdDesc = '_ID_DESC'
-}
-
-export enum SortFindManySpellInput {
-  AttackTypeAsc = 'ATTACK_TYPE_ASC',
-  AttackTypeDesc = 'ATTACK_TYPE_DESC',
-  CastingTimeAsc = 'CASTING_TIME_ASC',
-  CastingTimeDesc = 'CASTING_TIME_DESC',
-  ComponentsAsc = 'COMPONENTS_ASC',
-  ComponentsDesc = 'COMPONENTS_DESC',
-  ConcentrationAsc = 'CONCENTRATION_ASC',
-  ConcentrationDesc = 'CONCENTRATION_DESC',
-  DescAsc = 'DESC_ASC',
-  DescDesc = 'DESC_DESC',
-  DurationAsc = 'DURATION_ASC',
-  DurationDesc = 'DURATION_DESC',
-  HigherLevelAsc = 'HIGHER_LEVEL_ASC',
-  HigherLevelDesc = 'HIGHER_LEVEL_DESC',
-  IndexAsc = 'INDEX_ASC',
-  IndexDesc = 'INDEX_DESC',
-  MaterialAsc = 'MATERIAL_ASC',
-  MaterialDesc = 'MATERIAL_DESC',
-  NameAsc = 'NAME_ASC',
-  NameDesc = 'NAME_DESC',
-  RangeAsc = 'RANGE_ASC',
-  RangeDesc = 'RANGE_DESC',
-  RitualAsc = 'RITUAL_ASC',
-  RitualDesc = 'RITUAL_DESC',
-  UrlAsc = 'URL_ASC',
-  UrlDesc = 'URL_DESC',
-  IdTypeAsc = '_ID__TYPE_ASC',
-  IdTypeDesc = '_ID__TYPE_DESC'
-}
-
-export enum SortFindManySubclassInput {
-  DescAsc = 'DESC_ASC',
-  DescDesc = 'DESC_DESC',
-  IndexAsc = 'INDEX_ASC',
-  IndexDesc = 'INDEX_DESC',
-  NameAsc = 'NAME_ASC',
-  NameDesc = 'NAME_DESC',
-  SubclassFlavorAsc = 'SUBCLASS_FLAVOR_ASC',
-  SubclassFlavorDesc = 'SUBCLASS_FLAVOR_DESC',
-  SubclassLevelsAsc = 'SUBCLASS_LEVELS_ASC',
-  SubclassLevelsDesc = 'SUBCLASS_LEVELS_DESC',
-  UrlAsc = 'URL_ASC',
-  UrlDesc = 'URL_DESC',
-  IdAsc = '_ID_ASC',
-  IdDesc = '_ID_DESC'
-}
-
-export enum SortFindManySubraceInput {
-  DescAsc = 'DESC_ASC',
-  DescDesc = 'DESC_DESC',
-  IndexAsc = 'INDEX_ASC',
-  IndexDesc = 'INDEX_DESC',
-  NameAsc = 'NAME_ASC',
-  NameDesc = 'NAME_DESC',
-  UrlAsc = 'URL_ASC',
-  UrlDesc = 'URL_DESC',
-  IdAsc = '_ID_ASC',
-  IdDesc = '_ID_DESC'
-}
-
-export enum SortFindManyTraitInput {
-  DescAsc = 'DESC_ASC',
-  DescDesc = 'DESC_DESC',
-  IndexAsc = 'INDEX_ASC',
-  IndexDesc = 'INDEX_DESC',
-  NameAsc = 'NAME_ASC',
-  NameDesc = 'NAME_DESC',
-  UrlAsc = 'URL_ASC',
-  UrlDesc = 'URL_DESC',
-  IdAsc = '_ID_ASC',
-  IdDesc = '_ID_DESC'
-}
-
-export enum SortFindManyWeaponPropertyInput {
-  DescAsc = 'DESC_ASC',
-  DescDesc = 'DESC_DESC',
-  IndexAsc = 'INDEX_ASC',
-  IndexDesc = 'INDEX_DESC',
-  NameAsc = 'NAME_ASC',
-  NameDesc = 'NAME_DESC',
-  UrlAsc = 'URL_ASC',
-  UrlDesc = 'URL_DESC',
-  IdAsc = '_ID_ASC',
-  IdDesc = '_ID_DESC'
-}
-
-export enum SortFindOneAbilityScoreInput {
-  DescAsc = 'DESC_ASC',
-  DescDesc = 'DESC_DESC',
-  FullNameAsc = 'FULL_NAME_ASC',
-  FullNameDesc = 'FULL_NAME_DESC',
-  IndexAsc = 'INDEX_ASC',
-  IndexDesc = 'INDEX_DESC',
-  NameAsc = 'NAME_ASC',
-  NameDesc = 'NAME_DESC',
-  UrlAsc = 'URL_ASC',
-  UrlDesc = 'URL_DESC',
-  IdAsc = '_ID_ASC',
-  IdDesc = '_ID_DESC'
-}
-
-export enum SortFindOneAlignmentInput {
-  AbbreviationAsc = 'ABBREVIATION_ASC',
-  AbbreviationDesc = 'ABBREVIATION_DESC',
-  DescAsc = 'DESC_ASC',
-  DescDesc = 'DESC_DESC',
-  IndexAsc = 'INDEX_ASC',
-  IndexDesc = 'INDEX_DESC',
-  NameAsc = 'NAME_ASC',
-  NameDesc = 'NAME_DESC',
-  UrlAsc = 'URL_ASC',
-  UrlDesc = 'URL_DESC',
-  IdAsc = '_ID_ASC',
-  IdDesc = '_ID_DESC'
-}
-
-export enum SortFindOneBackgroundInput {
-  IndexAsc = 'INDEX_ASC',
-  IndexDesc = 'INDEX_DESC',
-  NameAsc = 'NAME_ASC',
-  NameDesc = 'NAME_DESC',
-  UrlAsc = 'URL_ASC',
-  UrlDesc = 'URL_DESC',
-  IdAsc = '_ID_ASC',
-  IdDesc = '_ID_DESC'
-}
-
-export enum SortFindOneClassInput {
-  ClassLevelsAsc = 'CLASS_LEVELS_ASC',
-  ClassLevelsDesc = 'CLASS_LEVELS_DESC',
-  HitDieAsc = 'HIT_DIE_ASC',
-  HitDieDesc = 'HIT_DIE_DESC',
-  IndexAsc = 'INDEX_ASC',
-  IndexDesc = 'INDEX_DESC',
-  NameAsc = 'NAME_ASC',
-  NameDesc = 'NAME_DESC',
-  SpellsAsc = 'SPELLS_ASC',
-  SpellsDesc = 'SPELLS_DESC',
-  UrlAsc = 'URL_ASC',
-  UrlDesc = 'URL_DESC',
-  IdAsc = '_ID_ASC',
-  IdDesc = '_ID_DESC'
-}
-
-export enum SortFindOneConditionInput {
-  DescAsc = 'DESC_ASC',
-  DescDesc = 'DESC_DESC',
-  IndexAsc = 'INDEX_ASC',
-  IndexDesc = 'INDEX_DESC',
-  NameAsc = 'NAME_ASC',
-  NameDesc = 'NAME_DESC',
-  UrlAsc = 'URL_ASC',
-  UrlDesc = 'URL_DESC',
-  IdAsc = '_ID_ASC',
-  IdDesc = '_ID_DESC'
-}
-
-export enum SortFindOneDamageTypeInput {
-  DescAsc = 'DESC_ASC',
-  DescDesc = 'DESC_DESC',
-  IndexAsc = 'INDEX_ASC',
-  IndexDesc = 'INDEX_DESC',
-  NameAsc = 'NAME_ASC',
-  NameDesc = 'NAME_DESC',
-  UrlAsc = 'URL_ASC',
-  UrlDesc = 'URL_DESC',
-  IdAsc = '_ID_ASC',
-  IdDesc = '_ID_DESC'
-}
-
-export enum SortFindOneEquipmentCategoryInput {
-  IndexAsc = 'INDEX_ASC',
-  IndexDesc = 'INDEX_DESC',
-  NameAsc = 'NAME_ASC',
-  NameDesc = 'NAME_DESC',
-  UrlAsc = 'URL_ASC',
-  UrlDesc = 'URL_DESC',
-  IdAsc = '_ID_ASC',
-  IdDesc = '_ID_DESC'
-}
-
-export enum SortFindOneEquipmentInput {
-  ArmorCategoryAsc = 'ARMOR_CATEGORY_ASC',
-  ArmorCategoryDesc = 'ARMOR_CATEGORY_DESC',
-  CapacityAsc = 'CAPACITY_ASC',
-  CapacityDesc = 'CAPACITY_DESC',
-  CategoryRangeAsc = 'CATEGORY_RANGE_ASC',
-  CategoryRangeDesc = 'CATEGORY_RANGE_DESC',
-  DescAsc = 'DESC_ASC',
-  DescDesc = 'DESC_DESC',
-  IndexAsc = 'INDEX_ASC',
-  IndexDesc = 'INDEX_DESC',
-  NameAsc = 'NAME_ASC',
-  NameDesc = 'NAME_DESC',
-  QuantityAsc = 'QUANTITY_ASC',
-  QuantityDesc = 'QUANTITY_DESC',
-  SpecialAsc = 'SPECIAL_ASC',
-  SpecialDesc = 'SPECIAL_DESC',
-  StealthDisadvantageAsc = 'STEALTH_DISADVANTAGE_ASC',
-  StealthDisadvantageDesc = 'STEALTH_DISADVANTAGE_DESC',
-  StrMinimumAsc = 'STR_MINIMUM_ASC',
-  StrMinimumDesc = 'STR_MINIMUM_DESC',
-  ToolCategoryAsc = 'TOOL_CATEGORY_ASC',
-  ToolCategoryDesc = 'TOOL_CATEGORY_DESC',
-  UrlAsc = 'URL_ASC',
-  UrlDesc = 'URL_DESC',
-  VehicleCategoryAsc = 'VEHICLE_CATEGORY_ASC',
-  VehicleCategoryDesc = 'VEHICLE_CATEGORY_DESC',
-  WeaponCategoryAsc = 'WEAPON_CATEGORY_ASC',
-  WeaponCategoryDesc = 'WEAPON_CATEGORY_DESC',
-  WeaponRangeAsc = 'WEAPON_RANGE_ASC',
-  WeaponRangeDesc = 'WEAPON_RANGE_DESC',
-  WeightAsc = 'WEIGHT_ASC',
-  WeightDesc = 'WEIGHT_DESC',
-  IdAsc = '_ID_ASC',
-  IdDesc = '_ID_DESC'
-}
-
-export enum SortFindOneFeatInput {
-  DescAsc = 'DESC_ASC',
-  DescDesc = 'DESC_DESC',
-  IndexAsc = 'INDEX_ASC',
-  IndexDesc = 'INDEX_DESC',
-  NameAsc = 'NAME_ASC',
-  NameDesc = 'NAME_DESC',
-  UrlAsc = 'URL_ASC',
-  UrlDesc = 'URL_DESC',
-  IdAsc = '_ID_ASC',
-  IdDesc = '_ID_DESC'
-}
-
-export enum SortFindOneFeatureInput {
-  DescAsc = 'DESC_ASC',
-  DescDesc = 'DESC_DESC',
-  IndexAsc = 'INDEX_ASC',
-  IndexDesc = 'INDEX_DESC',
-  LevelAsc = 'LEVEL_ASC',
-  LevelDesc = 'LEVEL_DESC',
-  NameAsc = 'NAME_ASC',
-  NameDesc = 'NAME_DESC',
-  ReferenceAsc = 'REFERENCE_ASC',
-  ReferenceDesc = 'REFERENCE_DESC',
-  UrlAsc = 'URL_ASC',
-  UrlDesc = 'URL_DESC',
-  IdAsc = '_ID_ASC',
-  IdDesc = '_ID_DESC'
-}
-
-export enum SortFindOneLanguageInput {
-  DescAsc = 'DESC_ASC',
-  DescDesc = 'DESC_DESC',
-  IndexAsc = 'INDEX_ASC',
-  IndexDesc = 'INDEX_DESC',
-  NameAsc = 'NAME_ASC',
-  NameDesc = 'NAME_DESC',
-  ScriptAsc = 'SCRIPT_ASC',
-  ScriptDesc = 'SCRIPT_DESC',
-  TypeAsc = 'TYPE_ASC',
-  TypeDesc = 'TYPE_DESC',
-  TypicalSpeakersAsc = 'TYPICAL_SPEAKERS_ASC',
-  TypicalSpeakersDesc = 'TYPICAL_SPEAKERS_DESC',
-  UrlAsc = 'URL_ASC',
-  UrlDesc = 'URL_DESC',
-  IdAsc = '_ID_ASC',
-  IdDesc = '_ID_DESC'
-}
-
-export enum SortFindOneLevelInput {
-  AbilityScoreBonusesAsc = 'ABILITY_SCORE_BONUSES_ASC',
-  AbilityScoreBonusesDesc = 'ABILITY_SCORE_BONUSES_DESC',
-  IndexAsc = 'INDEX_ASC',
-  IndexDesc = 'INDEX_DESC',
-  LevelAsc = 'LEVEL_ASC',
-  LevelDesc = 'LEVEL_DESC',
-  ProfBonusAsc = 'PROF_BONUS_ASC',
-  ProfBonusDesc = 'PROF_BONUS_DESC',
-  UrlAsc = 'URL_ASC',
-  UrlDesc = 'URL_DESC',
-  IdAsc = '_ID_ASC',
-  IdDesc = '_ID_DESC'
-}
-
-export enum SortFindOneMagicItemInput {
-  DescAsc = 'DESC_ASC',
-  DescDesc = 'DESC_DESC',
-  IndexAsc = 'INDEX_ASC',
-  IndexDesc = 'INDEX_DESC',
-  NameAsc = 'NAME_ASC',
-  NameDesc = 'NAME_DESC',
-  UrlAsc = 'URL_ASC',
-  UrlDesc = 'URL_DESC',
-  IdAsc = '_ID_ASC',
-  IdDesc = '_ID_DESC'
-}
-
-export enum SortFindOneMagicSchoolInput {
-  DescAsc = 'DESC_ASC',
-  DescDesc = 'DESC_DESC',
-  IndexAsc = 'INDEX_ASC',
-  IndexDesc = 'INDEX_DESC',
-  NameAsc = 'NAME_ASC',
-  NameDesc = 'NAME_DESC',
-  UrlAsc = 'URL_ASC',
-  UrlDesc = 'URL_DESC',
-  IdAsc = '_ID_ASC',
-  IdDesc = '_ID_DESC'
-}
-
-export enum SortFindOneMonsterInput {
-  AlignmentAsc = 'ALIGNMENT_ASC',
-  AlignmentDesc = 'ALIGNMENT_DESC',
-  ArmorClassAsc = 'ARMOR_CLASS_ASC',
-  ArmorClassDesc = 'ARMOR_CLASS_DESC',
-  ChallengeRatingAsc = 'CHALLENGE_RATING_ASC',
-  ChallengeRatingDesc = 'CHALLENGE_RATING_DESC',
-  CharismaAsc = 'CHARISMA_ASC',
-  CharismaDesc = 'CHARISMA_DESC',
-  ConstitutionAsc = 'CONSTITUTION_ASC',
-  ConstitutionDesc = 'CONSTITUTION_DESC',
-  DamageImmunitiesAsc = 'DAMAGE_IMMUNITIES_ASC',
-  DamageImmunitiesDesc = 'DAMAGE_IMMUNITIES_DESC',
-  DamageResistancesAsc = 'DAMAGE_RESISTANCES_ASC',
-  DamageResistancesDesc = 'DAMAGE_RESISTANCES_DESC',
-  DamageVulnerabilitiesAsc = 'DAMAGE_VULNERABILITIES_ASC',
-  DamageVulnerabilitiesDesc = 'DAMAGE_VULNERABILITIES_DESC',
-  DexterityAsc = 'DEXTERITY_ASC',
-  DexterityDesc = 'DEXTERITY_DESC',
-  HitDiceAsc = 'HIT_DICE_ASC',
-  HitDiceDesc = 'HIT_DICE_DESC',
-  HitPointsAsc = 'HIT_POINTS_ASC',
-  HitPointsDesc = 'HIT_POINTS_DESC',
-  IndexAsc = 'INDEX_ASC',
-  IndexDesc = 'INDEX_DESC',
-  IntelligenceAsc = 'INTELLIGENCE_ASC',
-  IntelligenceDesc = 'INTELLIGENCE_DESC',
-  LanguagesAsc = 'LANGUAGES_ASC',
-  LanguagesDesc = 'LANGUAGES_DESC',
-  NameAsc = 'NAME_ASC',
-  NameDesc = 'NAME_DESC',
-  SizeAsc = 'SIZE_ASC',
-  SizeDesc = 'SIZE_DESC',
-  StrengthAsc = 'STRENGTH_ASC',
-  StrengthDesc = 'STRENGTH_DESC',
-  SubtypeAsc = 'SUBTYPE_ASC',
-  SubtypeDesc = 'SUBTYPE_DESC',
-  TypeAsc = 'TYPE_ASC',
-  TypeDesc = 'TYPE_DESC',
-  UrlAsc = 'URL_ASC',
-  UrlDesc = 'URL_DESC',
-  WisdomAsc = 'WISDOM_ASC',
-  WisdomDesc = 'WISDOM_DESC',
-  XpAsc = 'XP_ASC',
-  XpDesc = 'XP_DESC',
-  IdAsc = '_ID_ASC',
-  IdDesc = '_ID_DESC'
-}
-
-export enum SortFindOneProficiencyInput {
-  IndexAsc = 'INDEX_ASC',
-  IndexDesc = 'INDEX_DESC',
-  NameAsc = 'NAME_ASC',
-  NameDesc = 'NAME_DESC',
-  TypeAsc = 'TYPE_ASC',
-  TypeDesc = 'TYPE_DESC',
-  UrlAsc = 'URL_ASC',
-  UrlDesc = 'URL_DESC',
-  IdAsc = '_ID_ASC',
-  IdDesc = '_ID_DESC'
-}
-
-export enum SortFindOneRaceInput {
-  AgeAsc = 'AGE_ASC',
-  AgeDesc = 'AGE_DESC',
-  AlignmentAsc = 'ALIGNMENT_ASC',
-  AlignmentDesc = 'ALIGNMENT_DESC',
-  IndexAsc = 'INDEX_ASC',
-  IndexDesc = 'INDEX_DESC',
-  LanguageDescAsc = 'LANGUAGE_DESC_ASC',
-  LanguageDescDesc = 'LANGUAGE_DESC_DESC',
-  NameAsc = 'NAME_ASC',
-  NameDesc = 'NAME_DESC',
-  SizeAsc = 'SIZE_ASC',
-  SizeDesc = 'SIZE_DESC',
-  SizeDescriptionAsc = 'SIZE_DESCRIPTION_ASC',
-  SizeDescriptionDesc = 'SIZE_DESCRIPTION_DESC',
-  SpeedAsc = 'SPEED_ASC',
-  SpeedDesc = 'SPEED_DESC',
-  UrlAsc = 'URL_ASC',
-  UrlDesc = 'URL_DESC',
-  IdAsc = '_ID_ASC',
-  IdDesc = '_ID_DESC'
-}
-
-export enum SortFindOneRuleInput {
-  DescAsc = 'DESC_ASC',
-  DescDesc = 'DESC_DESC',
-  IndexAsc = 'INDEX_ASC',
-  IndexDesc = 'INDEX_DESC',
-  NameAsc = 'NAME_ASC',
-  NameDesc = 'NAME_DESC',
-  UrlAsc = 'URL_ASC',
-  UrlDesc = 'URL_DESC',
-  IdAsc = '_ID_ASC',
-  IdDesc = '_ID_DESC'
-}
-
-export enum SortFindOneRuleSectionInput {
-  DescAsc = 'DESC_ASC',
-  DescDesc = 'DESC_DESC',
-  IndexAsc = 'INDEX_ASC',
-  IndexDesc = 'INDEX_DESC',
-  NameAsc = 'NAME_ASC',
-  NameDesc = 'NAME_DESC',
-  UrlAsc = 'URL_ASC',
-  UrlDesc = 'URL_DESC',
-  IdAsc = '_ID_ASC',
-  IdDesc = '_ID_DESC'
-}
-
-export enum SortFindOneSkillInput {
-  DescAsc = 'DESC_ASC',
-  DescDesc = 'DESC_DESC',
-  IndexAsc = 'INDEX_ASC',
-  IndexDesc = 'INDEX_DESC',
-  NameAsc = 'NAME_ASC',
-  NameDesc = 'NAME_DESC',
-  UrlAsc = 'URL_ASC',
-  UrlDesc = 'URL_DESC',
-  IdAsc = '_ID_ASC',
-  IdDesc = '_ID_DESC'
-}
-
-export enum SortFindOneSpellInput {
-  AttackTypeAsc = 'ATTACK_TYPE_ASC',
-  AttackTypeDesc = 'ATTACK_TYPE_DESC',
-  CastingTimeAsc = 'CASTING_TIME_ASC',
-  CastingTimeDesc = 'CASTING_TIME_DESC',
-  ComponentsAsc = 'COMPONENTS_ASC',
-  ComponentsDesc = 'COMPONENTS_DESC',
-  ConcentrationAsc = 'CONCENTRATION_ASC',
-  ConcentrationDesc = 'CONCENTRATION_DESC',
-  DescAsc = 'DESC_ASC',
-  DescDesc = 'DESC_DESC',
-  DurationAsc = 'DURATION_ASC',
-  DurationDesc = 'DURATION_DESC',
-  HigherLevelAsc = 'HIGHER_LEVEL_ASC',
-  HigherLevelDesc = 'HIGHER_LEVEL_DESC',
-  IndexAsc = 'INDEX_ASC',
-  IndexDesc = 'INDEX_DESC',
-  MaterialAsc = 'MATERIAL_ASC',
-  MaterialDesc = 'MATERIAL_DESC',
-  NameAsc = 'NAME_ASC',
-  NameDesc = 'NAME_DESC',
-  RangeAsc = 'RANGE_ASC',
-  RangeDesc = 'RANGE_DESC',
-  RitualAsc = 'RITUAL_ASC',
-  RitualDesc = 'RITUAL_DESC',
-  UrlAsc = 'URL_ASC',
-  UrlDesc = 'URL_DESC',
-  IdTypeAsc = '_ID__TYPE_ASC',
-  IdTypeDesc = '_ID__TYPE_DESC'
-}
-
-export enum SortFindOneSubclassInput {
-  DescAsc = 'DESC_ASC',
-  DescDesc = 'DESC_DESC',
-  IndexAsc = 'INDEX_ASC',
-  IndexDesc = 'INDEX_DESC',
-  NameAsc = 'NAME_ASC',
-  NameDesc = 'NAME_DESC',
-  SubclassFlavorAsc = 'SUBCLASS_FLAVOR_ASC',
-  SubclassFlavorDesc = 'SUBCLASS_FLAVOR_DESC',
-  SubclassLevelsAsc = 'SUBCLASS_LEVELS_ASC',
-  SubclassLevelsDesc = 'SUBCLASS_LEVELS_DESC',
-  UrlAsc = 'URL_ASC',
-  UrlDesc = 'URL_DESC',
-  IdAsc = '_ID_ASC',
-  IdDesc = '_ID_DESC'
-}
-
-export enum SortFindOneSubraceInput {
-  DescAsc = 'DESC_ASC',
-  DescDesc = 'DESC_DESC',
-  IndexAsc = 'INDEX_ASC',
-  IndexDesc = 'INDEX_DESC',
-  NameAsc = 'NAME_ASC',
-  NameDesc = 'NAME_DESC',
-  UrlAsc = 'URL_ASC',
-  UrlDesc = 'URL_DESC',
-  IdAsc = '_ID_ASC',
-  IdDesc = '_ID_DESC'
-}
-
-export enum SortFindOneTraitInput {
-  DescAsc = 'DESC_ASC',
-  DescDesc = 'DESC_DESC',
-  IndexAsc = 'INDEX_ASC',
-  IndexDesc = 'INDEX_DESC',
-  NameAsc = 'NAME_ASC',
-  NameDesc = 'NAME_DESC',
-  UrlAsc = 'URL_ASC',
-  UrlDesc = 'URL_DESC',
-  IdAsc = '_ID_ASC',
-  IdDesc = '_ID_DESC'
-}
-
-export enum SortFindOneWeaponPropertyInput {
-  DescAsc = 'DESC_ASC',
-  DescDesc = 'DESC_DESC',
-  IndexAsc = 'INDEX_ASC',
-  IndexDesc = 'INDEX_DESC',
-  NameAsc = 'NAME_ASC',
-  NameDesc = 'NAME_DESC',
-  UrlAsc = 'URL_ASC',
-  UrlDesc = 'URL_DESC',
-  IdAsc = '_ID_ASC',
-  IdDesc = '_ID_DESC'
-}
+export type Speed = {
+  __typename?: 'Speed';
+  quantity: Scalars['Float'];
+  unit: Scalars['String'];
+};
 
 export type Spell = {
   __typename?: 'Spell';
-  _id: Spell_Id;
-  area_of_effect?: Maybe<SpellArea_Of_Effect>;
-  attack_type?: Maybe<Scalars['String']>;
-  casting_time?: Maybe<Scalars['String']>;
-  classes?: Maybe<Array<Maybe<AbilityScoreSkills>>>;
-  components?: Maybe<Array<Maybe<Scalars['String']>>>;
-  concentration?: Maybe<Scalars['Boolean']>;
+  area_of_effect?: Maybe<AreaOfEffect>;
+  attack_type?: Maybe<SpellAttackType>;
+  casting_time: Scalars['String'];
+  classes: Array<Class>;
+  components?: Maybe<Array<Maybe<SpellComponent>>>;
+  concentration: Scalars['Boolean'];
   damage?: Maybe<SpellDamage>;
   dc?: Maybe<SpellDc>;
-  desc?: Maybe<Array<Maybe<Scalars['String']>>>;
-  duration?: Maybe<Scalars['String']>;
-  heal_at_slot_level?: Maybe<Scalars['JSON']>;
-  higher_level?: Maybe<Array<Maybe<Scalars['String']>>>;
-  index?: Maybe<Scalars['String']>;
-  level: Scalars['Float'];
+  desc: Array<Scalars['String']>;
+  duration: Scalars['String'];
+  heal_at_slot_level?: Maybe<Array<HealingAtLevel>>;
+  higher_level?: Maybe<Array<Scalars['String']>>;
+  index: Scalars['String'];
+  level: Scalars['Int'];
   material?: Maybe<Scalars['String']>;
-  name?: Maybe<Scalars['String']>;
-  range?: Maybe<Scalars['String']>;
-  ritual?: Maybe<Scalars['Boolean']>;
-  school?: Maybe<MagicSchool>;
-  subclasses?: Maybe<Array<Maybe<AbilityScoreSkills>>>;
-  url?: Maybe<Scalars['String']>;
+  name: Scalars['String'];
+  range: Scalars['String'];
+  ritual: Scalars['Boolean'];
+  school: MagicSchool;
+  subclasses: Array<Subclass>;
 };
 
 
-export type SpellSchoolArgs = {
-  skip?: InputMaybe<Scalars['Int']>;
-  sort?: InputMaybe<SortFindOneMagicSchoolInput>;
+export type SpellClassesArgs = {
+  name?: InputMaybe<Scalars['String']>;
 };
 
-export type SpellArea_Of_Effect = {
-  __typename?: 'SpellArea_of_effect';
-  size: Scalars['Float'];
-  type?: Maybe<Scalars['String']>;
+
+export type SpellSubclassesArgs = {
+  name?: InputMaybe<Scalars['String']>;
 };
+
+export enum SpellAttackType {
+  Melee = 'MELEE',
+  Ranged = 'RANGED'
+}
+
+export type SpellChoice = {
+  __typename?: 'SpellChoice';
+  choose: Scalars['Int'];
+  from: SpellOptionSet;
+  type: Scalars['String'];
+};
+
+export enum SpellComponent {
+  M = 'M',
+  S = 'S',
+  V = 'V'
+}
 
 export type SpellDamage = {
   __typename?: 'SpellDamage';
-  damage_at_character_level?: Maybe<Scalars['JSON']>;
-  damage_at_slot_level?: Maybe<Scalars['JSON']>;
-  damage_type?: Maybe<AbilityScoreSkills>;
+  damage_at_character_level?: Maybe<Array<DamageAtLevel>>;
+  damage_at_slot_level?: Maybe<Array<DamageAtLevel>>;
+  damage_type?: Maybe<DamageType>;
 };
 
 export type SpellDc = {
   __typename?: 'SpellDc';
-  dc_success?: Maybe<Scalars['String']>;
-  dc_type?: Maybe<AbilityScoreSkills>;
   desc?: Maybe<Scalars['String']>;
+  success: DcSuccess;
+  type: AbilityScore;
 };
 
-export type Spell_Id = {
-  __typename?: 'Spell_id';
-  select?: Maybe<Scalars['JSON']>;
-  type?: Maybe<Scalars['String']>;
+export type SpellOption = {
+  __typename?: 'SpellOption';
+  item: Spell;
+  option_type: Scalars['String'];
+};
+
+export type SpellOptionSet = {
+  __typename?: 'SpellOptionSet';
+  option_set_type: Scalars['String'];
+  options: Array<SpellOption>;
+};
+
+export type SpellOrder = {
+  by: SpellOrderBy;
+  direction?: OrderByDirection;
+  then_by?: InputMaybe<SpellOrder>;
+};
+
+export enum SpellOrderBy {
+  AreaOfEffectSize = 'AREA_OF_EFFECT_SIZE',
+  Concentration = 'CONCENTRATION',
+  Level = 'LEVEL',
+  Name = 'NAME',
+  Ritual = 'RITUAL',
+  School = 'SCHOOL'
+}
+
+export type SpellPrerequisite = Feature | Level;
+
+export type SpellSlotCreation = {
+  __typename?: 'SpellSlotCreation';
+  sorcery_point_cost: Scalars['Int'];
+  spell_slot_level: Scalars['Int'];
+};
+
+export type SpellWithPrerequisite = {
+  __typename?: 'SpellWithPrerequisite';
+  prerequisites: Array<Maybe<SpellPrerequisite>>;
+  spell: Spell;
+};
+
+export type SpellcastingInfo = {
+  __typename?: 'SpellcastingInfo';
+  desc: Array<Scalars['String']>;
+  name: Scalars['String'];
+};
+
+export type StartingEquipmentChoice = {
+  __typename?: 'StartingEquipmentChoice';
+  choose: Scalars['Int'];
+  desc: Scalars['String'];
+  from: StartingEquipmentOptionSet;
+  type: Scalars['String'];
+};
+
+export type StartingEquipmentOptionSet = EquipmentCategoryOptionSet | EquipmentOptionSet;
+
+export type StringChoice = {
+  __typename?: 'StringChoice';
+  choose: Scalars['Int'];
+  from: StringOptionSet;
+  type: Scalars['String'];
+};
+
+export type StringOption = {
+  __typename?: 'StringOption';
+  option_type: Scalars['String'];
+  string: Scalars['String'];
+};
+
+export type StringOptionSet = {
+  __typename?: 'StringOptionSet';
+  option_set_type: Scalars['String'];
+  options: Array<StringOption>;
 };
 
 export type Subclass = {
   __typename?: 'Subclass';
-  _id: Scalars['String'];
-  class?: Maybe<AbilityScoreSkills>;
-  desc?: Maybe<Array<Maybe<Scalars['String']>>>;
-  index?: Maybe<Scalars['String']>;
-  name?: Maybe<Scalars['String']>;
-  spells?: Maybe<Array<Maybe<SubclassSpells>>>;
-  subclass_flavor?: Maybe<Scalars['String']>;
-  subclass_levels: Array<Level>;
-  url?: Maybe<Scalars['String']>;
+  class: Class;
+  desc: Array<Scalars['String']>;
+  index: Scalars['String'];
+  name: Scalars['String'];
+  spells?: Maybe<Array<SpellWithPrerequisite>>;
+  subclass_flavor: Scalars['String'];
+  subclass_levels: Array<Maybe<Level>>;
 };
 
 
-export type SubclassSubclass_LevelsArgs = {
-  limit?: InputMaybe<Scalars['Int']>;
+export type SubclassSpellsArgs = {
+  area_of_effect?: InputMaybe<AreaOfEffectFilter>;
+  attack_type?: InputMaybe<Scalars['SpellAttackTypeFilter']>;
+  casting_time?: InputMaybe<Scalars['StringFilter']>;
+  class?: InputMaybe<Scalars['StringFilter']>;
+  concentration?: InputMaybe<Scalars['Boolean']>;
+  damage_type?: InputMaybe<Scalars['StringFilter']>;
+  dc_type?: InputMaybe<Scalars['StringFilter']>;
+  level?: InputMaybe<Scalars['IntFilter']>;
+  limit?: Scalars['Int'];
+  name?: InputMaybe<Scalars['String']>;
+  order?: InputMaybe<SpellOrder>;
+  range?: InputMaybe<Scalars['StringFilter']>;
+  ritual?: InputMaybe<Scalars['Boolean']>;
+  school?: InputMaybe<Scalars['StringFilter']>;
   skip?: InputMaybe<Scalars['Int']>;
-  sort?: InputMaybe<SortFindManyLevelInput>;
 };
 
-export type SubclassSpells = {
-  __typename?: 'SubclassSpells';
-  prerequisites?: Maybe<Array<Maybe<SubclassSpellsPrerequisites>>>;
-  spell?: Maybe<AbilityScoreSkills>;
-};
+export type SubclassSpecific = DevotionSpecific | LoreSpecific;
 
-export type SubclassSpellsPrerequisites = {
-  __typename?: 'SubclassSpellsPrerequisites';
-  index?: Maybe<Scalars['String']>;
-  name?: Maybe<Scalars['String']>;
-  type?: Maybe<Scalars['String']>;
-  url?: Maybe<Scalars['String']>;
-};
-
-export type Subrace = {
+export type Subrace = ProficiencyRace & {
   __typename?: 'Subrace';
-  _id: Scalars['String'];
-  ability_bonuses?: Maybe<Array<Maybe<SubraceAbility_Bonuses>>>;
-  desc?: Maybe<Scalars['String']>;
-  index?: Maybe<Scalars['String']>;
-  language_options?: Maybe<SubraceLanguage_Options>;
-  name?: Maybe<Scalars['String']>;
-  race?: Maybe<AbilityScoreSkills>;
+  ability_bonuses: Array<AbilityBonus>;
+  desc: Scalars['String'];
+  index: Scalars['String'];
+  language_options?: Maybe<LanguageChoice>;
+  name: Scalars['String'];
+  race: Race;
   racial_traits: Array<Trait>;
-  starting_proficiencies?: Maybe<Array<Maybe<AbilityScoreSkills>>>;
-  url?: Maybe<Scalars['String']>;
+  starting_proficiencies: Array<Proficiency>;
 };
 
 
 export type SubraceRacial_TraitsArgs = {
-  limit?: InputMaybe<Scalars['Int']>;
-  skip?: InputMaybe<Scalars['Int']>;
-  sort?: InputMaybe<SortFindManyTraitInput>;
+  name?: InputMaybe<Scalars['String']>;
 };
 
-export type SubraceAbility_Bonuses = {
-  __typename?: 'SubraceAbility_bonuses';
-  ability_score?: Maybe<AbilityScoreSkills>;
-  bonus?: Maybe<Scalars['Float']>;
+
+export type SubraceStarting_ProficienciesArgs = {
+  name?: InputMaybe<Scalars['String']>;
 };
 
-export type SubraceLanguage_Options = {
-  __typename?: 'SubraceLanguage_options';
-  choose?: Maybe<Scalars['Float']>;
-  from?: Maybe<Array<Maybe<AbilityScoreSkills>>>;
-  type?: Maybe<Scalars['String']>;
+export type Tool = IEquipment & IEquipmentBase & {
+  __typename?: 'Tool';
+  cost: Cost;
+  desc?: Maybe<Array<Scalars['String']>>;
+  equipment_category: EquipmentCategory;
+  index: Scalars['String'];
+  name: Scalars['String'];
+  tool_category: EquipmentCategory;
+  weight?: Maybe<Scalars['Float']>;
 };
 
 export type Trait = {
   __typename?: 'Trait';
-  _id: Scalars['String'];
-  desc?: Maybe<Array<Maybe<Scalars['String']>>>;
-  index?: Maybe<Scalars['String']>;
-  name?: Maybe<Scalars['String']>;
-  parent?: Maybe<AbilityScoreSkills>;
+  desc: Array<Scalars['String']>;
+  index: Scalars['String'];
+  language_options?: Maybe<LanguageChoice>;
+  name: Scalars['String'];
+  parent?: Maybe<Trait>;
   proficiencies: Array<Proficiency>;
-  proficiency_choices?: Maybe<TraitProficiency_Choices>;
-  races?: Maybe<Array<Maybe<AbilityScoreSkills>>>;
-  subraces?: Maybe<Array<Maybe<AbilityScoreSkills>>>;
-  trait_specific?: Maybe<TraitTrait_Specific>;
-  url?: Maybe<Scalars['String']>;
+  proficiency_choices?: Maybe<ProficiencyChoice>;
+  races: Array<Maybe<Race>>;
+  subraces: Array<Subrace>;
+  trait_specific?: Maybe<TraitSpecific>;
 };
 
 
 export type TraitProficienciesArgs = {
-  limit?: InputMaybe<Scalars['Int']>;
-  skip?: InputMaybe<Scalars['Int']>;
-  sort?: InputMaybe<SortFindManyProficiencyInput>;
+  name?: InputMaybe<Scalars['String']>;
 };
 
-export type TraitProficiency_Choices = {
-  __typename?: 'TraitProficiency_choices';
-  choose?: Maybe<Scalars['Float']>;
-  from?: Maybe<Array<Maybe<AbilityScoreSkills>>>;
-  type?: Maybe<Scalars['String']>;
+
+export type TraitRacesArgs = {
+  name?: InputMaybe<Scalars['String']>;
 };
 
-export type TraitTrait_Specific = {
-  __typename?: 'TraitTrait_specific';
-  breath_weapon?: Maybe<TraitTrait_SpecificBreath_Weapon>;
-  damage_type?: Maybe<AbilityScoreSkills>;
-  spell_options?: Maybe<TraitTrait_SpecificSubtrait_Options>;
-  subtrait_options?: Maybe<TraitTrait_SpecificSubtrait_Options>;
+
+export type TraitSubracesArgs = {
+  name?: InputMaybe<Scalars['String']>;
 };
 
-export type TraitTrait_SpecificBreath_Weapon = {
-  __typename?: 'TraitTrait_specificBreath_weapon';
-  damage?: Maybe<Array<Maybe<TraitTrait_SpecificBreath_WeaponDamage>>>;
-  dc?: Maybe<TraitTrait_SpecificBreath_WeaponDc>;
-  desc?: Maybe<Scalars['String']>;
-  name?: Maybe<Scalars['String']>;
-  usage?: Maybe<TraitTrait_SpecificBreath_WeaponUsage>;
+export type TraitChoice = {
+  __typename?: 'TraitChoice';
+  choose: Scalars['Int'];
+  from: TraitOptionSet;
+  type: Scalars['String'];
 };
 
-export type TraitTrait_SpecificBreath_WeaponDamage = {
-  __typename?: 'TraitTrait_specificBreath_weaponDamage';
-  damage_at_character_level?: Maybe<Scalars['JSON']>;
-  damage_type?: Maybe<AbilityScoreSkills>;
+export type TraitOption = {
+  __typename?: 'TraitOption';
+  item: Trait;
+  option_type: Scalars['String'];
 };
 
-export type TraitTrait_SpecificBreath_WeaponDc = {
-  __typename?: 'TraitTrait_specificBreath_weaponDc';
-  dc_type?: Maybe<AbilityScoreSkills>;
-  success_type?: Maybe<Scalars['String']>;
+export type TraitOptionSet = {
+  __typename?: 'TraitOptionSet';
+  option_set_type: Scalars['String'];
+  options: Array<TraitOption>;
 };
 
-export type TraitTrait_SpecificBreath_WeaponUsage = {
-  __typename?: 'TraitTrait_specificBreath_weaponUsage';
-  times?: Maybe<Scalars['Float']>;
-  type?: Maybe<Scalars['String']>;
+export type TraitSpecific = {
+  __typename?: 'TraitSpecific';
+  breath_weapon?: Maybe<BreathWeaponTrait>;
+  damage_type?: Maybe<DamageType>;
+  spell_options?: Maybe<SpellChoice>;
+  subtrait_options?: Maybe<TraitChoice>;
 };
 
-export type TraitTrait_SpecificSubtrait_Options = {
-  __typename?: 'TraitTrait_specificSubtrait_options';
-  choose?: Maybe<Scalars['Float']>;
-  from?: Maybe<Array<Maybe<AbilityScoreSkills>>>;
-  type?: Maybe<Scalars['String']>;
+export type Usage = {
+  __typename?: 'Usage';
+  dice?: Maybe<Scalars['String']>;
+  min_value?: Maybe<Scalars['Int']>;
+  rest_types?: Maybe<Array<RestType>>;
+  times?: Maybe<Scalars['Int']>;
+  type: UsageType;
+};
+
+export enum UsageType {
+  AtWill = 'AT_WILL',
+  PerDay = 'PER_DAY',
+  PerRest = 'PER_REST',
+  RechargeAfterRest = 'RECHARGE_AFTER_REST',
+  RechargeOnRoll = 'RECHARGE_ON_ROLL'
+}
+
+export type Vehicle = IEquipment & IEquipmentBase & {
+  __typename?: 'Vehicle';
+  capacity?: Maybe<Scalars['String']>;
+  cost: Cost;
+  desc?: Maybe<Array<Scalars['String']>>;
+  equipment_category: EquipmentCategory;
+  index: Scalars['String'];
+  name: Scalars['String'];
+  speed?: Maybe<Speed>;
+  vehicle_category: EquipmentCategory;
+  weight?: Maybe<Scalars['Float']>;
+};
+
+export type WarlockSpecific = {
+  __typename?: 'WarlockSpecific';
+  invocations_known: Scalars['Int'];
+  mystic_arcanum_level_6: Scalars['Int'];
+  mystic_arcanum_level_7: Scalars['Int'];
+  mystic_arcanum_level_8: Scalars['Int'];
+  mystic_arcanum_level_9: Scalars['Int'];
+};
+
+export type Weapon = IEquipment & IEquipmentBase & {
+  __typename?: 'Weapon';
+  category_range: EquipmentCategory;
+  cost: Cost;
+  damage?: Maybe<Damage>;
+  desc?: Maybe<Array<Scalars['String']>>;
+  equipment_category: EquipmentCategory;
+  index: Scalars['String'];
+  name: Scalars['String'];
+  properties: Array<WeaponProperty>;
+  range: Range;
+  special?: Maybe<Array<Scalars['String']>>;
+  throw_range?: Maybe<Range>;
+  two_handed_damage?: Maybe<Damage>;
+  weapon_category: EquipmentCategory;
+  weapon_range: WeaponRange;
+  weight?: Maybe<Scalars['Float']>;
+};
+
+
+export type WeaponPropertiesArgs = {
+  name?: InputMaybe<Scalars['String']>;
 };
 
 export type WeaponProperty = {
   __typename?: 'WeaponProperty';
-  _id: Scalars['String'];
-  desc?: Maybe<Array<Maybe<Scalars['String']>>>;
-  index?: Maybe<Scalars['String']>;
-  name?: Maybe<Scalars['String']>;
-  url?: Maybe<Scalars['String']>;
+  desc: Array<Scalars['String']>;
+  index: Scalars['String'];
+  name: Scalars['String'];
 };
 
-export type GetEquipmentQueryVariables = Exact<{
-  filter?: InputMaybe<FilterFindOneEquipmentInput>;
-}>;
+export enum WeaponRange {
+  Melee = 'MELEE',
+  Ranged = 'RANGED'
+}
+
+export type WizardSpecific = {
+  __typename?: 'WizardSpecific';
+  arcane_recovery_levels: Scalars['Int'];
+};
+
+export type GetEquipmentQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetEquipmentQuery = { __typename?: 'Query', equipment?: { __typename?: 'Equipment', index?: string | null, name?: string | null, armor_category?: string | null, capacity?: string | null, category_range?: string | null, desc?: Array<string | null> | null, quantity?: number | null, special?: Array<string | null> | null, stealth_disadvantage?: boolean | null, str_minimum?: number | null, tool_category?: string | null, url?: string | null, vehicle_category?: string | null, weapon_category?: string | null, weapon_range?: string | null, weight?: number | null, armor_class?: { __typename?: 'EquipmentArmor_class', base?: number | null, dex_bonus?: boolean | null, max_bonus?: number | null } | null, contents?: Array<{ __typename?: 'EquipmentContents', quantity?: number | null, item?: { __typename?: 'AbilityScoreSkills', index?: string | null, name?: string | null, url?: string | null } | null } | null> | null, cost?: { __typename?: 'EquipmentCost', quantity?: number | null, unit?: string | null } | null, damage?: { __typename?: 'EquipmentDamage', damage_dice?: string | null, damage_type?: { __typename?: 'AbilityScoreSkills', index?: string | null, name?: string | null, url?: string | null } | null } | null, equipment_category?: { __typename?: 'AbilityScoreSkills', index?: string | null, name?: string | null, url?: string | null } | null, gear_category?: { __typename?: 'AbilityScoreSkills', index?: string | null, name?: string | null, url?: string | null } | null, properties: Array<{ __typename?: 'WeaponProperty', desc?: Array<string | null> | null, index?: string | null, name?: string | null, url?: string | null }>, range?: { __typename?: 'EquipmentRange', long?: number | null, normal?: number | null } | null, speed?: { __typename?: 'EquipmentSpeed', quantity?: number | null, unit?: string | null } | null, throw_range?: { __typename?: 'EquipmentThrow_range', long?: number | null, normal?: number | null } | null, two_handed_damage?: { __typename?: 'EquipmentTwo_handed_damage', damage_dice?: string | null, damage_type?: { __typename?: 'AbilityScoreSkills', index?: string | null, name?: string | null, url?: string | null } | null } | null } | null };
+export type GetEquipmentQuery = { __typename?: 'Query', equipment?: { __typename?: 'Ammunition', index: string, name: string, desc?: Array<string> | null, weight?: number | null, cost: { __typename?: 'Cost', quantity: number, unit: Currency }, equipment_category: { __typename?: 'EquipmentCategory', index: string, name: string, equipment: Array<{ __typename?: 'Ammunition', desc?: Array<string> | null, index: string, name: string } | { __typename?: 'Armor', desc?: Array<string> | null, index: string, name: string } | { __typename?: 'Gear', desc?: Array<string> | null, index: string, name: string } | { __typename?: 'MagicItem', desc: Array<string>, index: string, name: string } | { __typename?: 'Pack', desc?: Array<string> | null, index: string, name: string } | { __typename?: 'Tool', desc?: Array<string> | null, index: string, name: string } | { __typename?: 'Vehicle', desc?: Array<string> | null, index: string, name: string } | { __typename?: 'Weapon', desc?: Array<string> | null, index: string, name: string }> } } | { __typename?: 'Armor', index: string, name: string, desc?: Array<string> | null, weight?: number | null, cost: { __typename?: 'Cost', quantity: number, unit: Currency }, equipment_category: { __typename?: 'EquipmentCategory', index: string, name: string, equipment: Array<{ __typename?: 'Ammunition', desc?: Array<string> | null, index: string, name: string } | { __typename?: 'Armor', desc?: Array<string> | null, index: string, name: string } | { __typename?: 'Gear', desc?: Array<string> | null, index: string, name: string } | { __typename?: 'MagicItem', desc: Array<string>, index: string, name: string } | { __typename?: 'Pack', desc?: Array<string> | null, index: string, name: string } | { __typename?: 'Tool', desc?: Array<string> | null, index: string, name: string } | { __typename?: 'Vehicle', desc?: Array<string> | null, index: string, name: string } | { __typename?: 'Weapon', desc?: Array<string> | null, index: string, name: string }> } } | { __typename?: 'Gear', index: string, name: string, desc?: Array<string> | null, weight?: number | null, cost: { __typename?: 'Cost', quantity: number, unit: Currency }, equipment_category: { __typename?: 'EquipmentCategory', index: string, name: string, equipment: Array<{ __typename?: 'Ammunition', desc?: Array<string> | null, index: string, name: string } | { __typename?: 'Armor', desc?: Array<string> | null, index: string, name: string } | { __typename?: 'Gear', desc?: Array<string> | null, index: string, name: string } | { __typename?: 'MagicItem', desc: Array<string>, index: string, name: string } | { __typename?: 'Pack', desc?: Array<string> | null, index: string, name: string } | { __typename?: 'Tool', desc?: Array<string> | null, index: string, name: string } | { __typename?: 'Vehicle', desc?: Array<string> | null, index: string, name: string } | { __typename?: 'Weapon', desc?: Array<string> | null, index: string, name: string }> } } | { __typename?: 'Pack', index: string, name: string, desc?: Array<string> | null, weight?: number | null, cost: { __typename?: 'Cost', quantity: number, unit: Currency }, equipment_category: { __typename?: 'EquipmentCategory', index: string, name: string, equipment: Array<{ __typename?: 'Ammunition', desc?: Array<string> | null, index: string, name: string } | { __typename?: 'Armor', desc?: Array<string> | null, index: string, name: string } | { __typename?: 'Gear', desc?: Array<string> | null, index: string, name: string } | { __typename?: 'MagicItem', desc: Array<string>, index: string, name: string } | { __typename?: 'Pack', desc?: Array<string> | null, index: string, name: string } | { __typename?: 'Tool', desc?: Array<string> | null, index: string, name: string } | { __typename?: 'Vehicle', desc?: Array<string> | null, index: string, name: string } | { __typename?: 'Weapon', desc?: Array<string> | null, index: string, name: string }> } } | { __typename?: 'Tool', index: string, name: string, desc?: Array<string> | null, weight?: number | null, cost: { __typename?: 'Cost', quantity: number, unit: Currency }, equipment_category: { __typename?: 'EquipmentCategory', index: string, name: string, equipment: Array<{ __typename?: 'Ammunition', desc?: Array<string> | null, index: string, name: string } | { __typename?: 'Armor', desc?: Array<string> | null, index: string, name: string } | { __typename?: 'Gear', desc?: Array<string> | null, index: string, name: string } | { __typename?: 'MagicItem', desc: Array<string>, index: string, name: string } | { __typename?: 'Pack', desc?: Array<string> | null, index: string, name: string } | { __typename?: 'Tool', desc?: Array<string> | null, index: string, name: string } | { __typename?: 'Vehicle', desc?: Array<string> | null, index: string, name: string } | { __typename?: 'Weapon', desc?: Array<string> | null, index: string, name: string }> } } | { __typename?: 'Vehicle', index: string, name: string, desc?: Array<string> | null, weight?: number | null, cost: { __typename?: 'Cost', quantity: number, unit: Currency }, equipment_category: { __typename?: 'EquipmentCategory', index: string, name: string, equipment: Array<{ __typename?: 'Ammunition', desc?: Array<string> | null, index: string, name: string } | { __typename?: 'Armor', desc?: Array<string> | null, index: string, name: string } | { __typename?: 'Gear', desc?: Array<string> | null, index: string, name: string } | { __typename?: 'MagicItem', desc: Array<string>, index: string, name: string } | { __typename?: 'Pack', desc?: Array<string> | null, index: string, name: string } | { __typename?: 'Tool', desc?: Array<string> | null, index: string, name: string } | { __typename?: 'Vehicle', desc?: Array<string> | null, index: string, name: string } | { __typename?: 'Weapon', desc?: Array<string> | null, index: string, name: string }> } } | { __typename?: 'Weapon', index: string, name: string, desc?: Array<string> | null, weight?: number | null, cost: { __typename?: 'Cost', quantity: number, unit: Currency }, equipment_category: { __typename?: 'EquipmentCategory', index: string, name: string, equipment: Array<{ __typename?: 'Ammunition', desc?: Array<string> | null, index: string, name: string } | { __typename?: 'Armor', desc?: Array<string> | null, index: string, name: string } | { __typename?: 'Gear', desc?: Array<string> | null, index: string, name: string } | { __typename?: 'MagicItem', desc: Array<string>, index: string, name: string } | { __typename?: 'Pack', desc?: Array<string> | null, index: string, name: string } | { __typename?: 'Tool', desc?: Array<string> | null, index: string, name: string } | { __typename?: 'Vehicle', desc?: Array<string> | null, index: string, name: string } | { __typename?: 'Weapon', desc?: Array<string> | null, index: string, name: string }> } } | null };
 
 export type GetEquipmentsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetEquipmentsQuery = { __typename?: 'Query', equipments: Array<{ __typename: 'Equipment', index?: string | null, weight?: number | null, name?: string | null, quantity?: number | null, capacity?: string | null, category_range?: string | null, desc?: Array<string | null> | null, special?: Array<string | null> | null, gear_category?: { __typename?: 'AbilityScoreSkills', name?: string | null } | null, cost?: { __typename: 'EquipmentCost', quantity?: number | null, unit?: string | null } | null, damage?: { __typename?: 'EquipmentDamage', damage_dice?: string | null, damage_type?: { __typename: 'AbilityScoreSkills', name?: string | null } | null } | null }> };
+export type GetEquipmentsQuery = { __typename?: 'Query', equipments?: Array<{ __typename: 'Ammunition', index: string, weight?: number | null, name: string, desc?: Array<string> | null, cost: { __typename: 'Cost', quantity: number, unit: Currency } } | { __typename: 'Armor', index: string, weight?: number | null, name: string, desc?: Array<string> | null, cost: { __typename: 'Cost', quantity: number, unit: Currency } } | { __typename: 'Gear', index: string, weight?: number | null, name: string, desc?: Array<string> | null, cost: { __typename: 'Cost', quantity: number, unit: Currency } } | { __typename: 'Pack', index: string, weight?: number | null, name: string, desc?: Array<string> | null, cost: { __typename: 'Cost', quantity: number, unit: Currency } } | { __typename: 'Tool', index: string, weight?: number | null, name: string, desc?: Array<string> | null, cost: { __typename: 'Cost', quantity: number, unit: Currency } } | { __typename: 'Vehicle', index: string, weight?: number | null, name: string, desc?: Array<string> | null, cost: { __typename: 'Cost', quantity: number, unit: Currency } } | { __typename: 'Weapon', index: string, weight?: number | null, name: string, desc?: Array<string> | null, cost: { __typename: 'Cost', quantity: number, unit: Currency } }> | null };
 
-export type GetMagicalItemQueryVariables = Exact<{
-  filter?: InputMaybe<FilterFindOneMagicItemInput>;
-}>;
+export type GetMagicalItemQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetMagicalItemQuery = { __typename?: 'Query', magicItem?: { __typename?: 'MagicItem', name?: string | null, index?: string | null, desc?: Array<string | null> | null, url?: string | null, equipment_category?: { __typename?: 'AbilityScoreSkills', index?: string | null, name?: string | null, url?: string | null } | null } | null };
+export type GetMagicalItemQuery = { __typename?: 'Query', magicItem?: { __typename?: 'MagicItem', name: string, index: string, desc: Array<string>, rarity: MagicItemRarity, equipment_category: { __typename?: 'EquipmentCategory', index: string, name: string } } | null };
 
 export type GetMagicalItemsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetMagicalItemsQuery = { __typename?: 'Query', magicItems: Array<{ __typename?: 'MagicItem', index?: string | null, name?: string | null, url?: string | null, equipment_category?: { __typename?: 'AbilityScoreSkills', index?: string | null, name?: string | null, url?: string | null } | null }> };
+export type GetMagicalItemsQuery = { __typename?: 'Query', magicItems?: Array<{ __typename?: 'MagicItem', index: string, name: string, equipment_category: { __typename?: 'EquipmentCategory', name: string, index: string } }> | null };
 
 export type GetMonstersListQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetMonstersListQuery = { __typename?: 'Query', monsters: Array<{ __typename: 'Monster', url?: string | null, name?: string | null, challenge_rating?: number | null, hit_dice?: string | null, hit_points?: number | null, type?: string | null, xp?: number | null, armor_class?: number | null, charisma?: number | null, constitution?: number | null, dexterity?: number | null, strength?: number | null, wisdom?: number | null, intelligence?: number | null, damage_immunities?: Array<string | null> | null, damage_resistances?: Array<string | null> | null, speed?: { __typename?: 'MonsterSpeed', burrow?: string | null, climb?: string | null, fly?: string | null, hover?: boolean | null, swim?: string | null, walk?: string | null } | null, special_abilities?: Array<{ __typename?: 'MonsterSpecial_abilities', desc?: string | null, name?: string | null } | null> | null }> };
+export type GetMonstersListQuery = { __typename?: 'Query', monsters?: Array<{ __typename: 'Monster', name: string, challenge_rating: number, hit_dice: string, hit_points: number, type: MonsterType, xp: number, charisma: number, constitution: number, dexterity: number, strength: number, wisdom: number, intelligence: number, damage_immunities: Array<string>, damage_resistances: Array<string>, speed: { __typename?: 'MonsterSpeed', burrow?: string | null, climb?: string | null, fly?: string | null, hover?: boolean | null, swim?: string | null, walk?: string | null }, special_abilities?: Array<{ __typename?: 'SpecialAbility', desc: string, name: string }> | null, armor_class?: Array<{ __typename?: 'MonsterArmorClass', value: number, desc?: string | null } | null> | null }> | null };
 
-export type GetSpellQueryVariables = Exact<{
-  filter?: InputMaybe<FilterFindOneSpellInput>;
-}>;
+export type GetSpellQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetSpellQuery = { __typename?: 'Query', spell?: { __typename?: 'Spell', index?: string | null, level: number, name?: string | null, ritual?: boolean | null, range?: string | null, higher_level?: Array<string | null> | null, heal_at_slot_level?: any | null, duration?: string | null, desc?: Array<string | null> | null, concentration?: boolean | null, components?: Array<string | null> | null, casting_time?: string | null, attack_type?: string | null, material?: string | null, school?: { __typename?: 'MagicSchool', url?: string | null, name?: string | null, index?: string | null, desc?: string | null } | null, subclasses?: Array<{ __typename?: 'AbilityScoreSkills', url?: string | null, name?: string | null, index?: string | null } | null> | null, dc?: { __typename?: 'SpellDc', desc?: string | null, dc_success?: string | null, dc_type?: { __typename?: 'AbilityScoreSkills', index?: string | null, name?: string | null, url?: string | null } | null } | null, classes?: Array<{ __typename?: 'AbilityScoreSkills', url?: string | null, name?: string | null, index?: string | null } | null> | null, area_of_effect?: { __typename?: 'SpellArea_of_effect', type?: string | null, size: number } | null, damage?: { __typename?: 'SpellDamage', damage_at_slot_level?: any | null, damage_at_character_level?: any | null, damage_type?: { __typename?: 'AbilityScoreSkills', url?: string | null, name?: string | null, index?: string | null } | null } | null } | null };
+export type GetSpellQuery = { __typename?: 'Query', spell?: { __typename?: 'Spell', index: string, level: number, name: string, ritual: boolean, range: string, higher_level?: Array<string> | null, duration: string, desc: Array<string>, concentration: boolean, components?: Array<SpellComponent | null> | null, casting_time: string, attack_type?: SpellAttackType | null, material?: string | null, school: { __typename?: 'MagicSchool', name: string, index: string, desc: string }, subclasses: Array<{ __typename?: 'Subclass', name: string, index: string }>, dc?: { __typename?: 'SpellDc', desc?: string | null } | null, classes: Array<{ __typename?: 'Class', name: string, index: string }>, area_of_effect?: { __typename?: 'AreaOfEffect', type: AreaOfEffectType, size: number } | null, damage?: { __typename?: 'SpellDamage', damage_type?: { __typename?: 'DamageType', name: string, index: string } | null } | null } | null };
 
-export type GetSpellsQueryVariables = Exact<{
-  filter?: InputMaybe<FilterFindManySpellInput>;
-}>;
+export type GetSpellsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetSpellsQuery = { __typename?: 'Query', spells: Array<{ __typename: 'Spell', index?: string | null, level: number, name?: string | null, url?: string | null, duration?: string | null, school?: { __typename: 'MagicSchool', name?: string | null, index?: string | null } | null, classes?: Array<{ __typename: 'AbilityScoreSkills', index?: string | null, name?: string | null } | null> | null, subclasses?: Array<{ __typename?: 'AbilityScoreSkills', index?: string | null, name?: string | null } | null> | null }> };
+export type GetSpellsQuery = { __typename?: 'Query', spells?: Array<{ __typename: 'Spell', index: string, level: number, name: string, duration: string, school: { __typename: 'MagicSchool', name: string, index: string }, classes: Array<{ __typename: 'Class', index: string, name: string }>, subclasses: Array<{ __typename?: 'Subclass', index: string, name: string }> }> | null };
 
 
 export const GetEquipmentDocument = gql`
-    query getEquipment($filter: FilterFindOneEquipmentInput) {
-  equipment(filter: $filter) {
+    query getEquipment {
+  equipment {
     index
     name
-    armor_category
-    armor_class {
-      base
-      dex_bonus
-      max_bonus
-    }
-    capacity
-    category_range
-    contents {
-      item {
-        index
-        name
-        url
-      }
-      quantity
-    }
     cost {
       quantity
       unit
-    }
-    damage {
-      damage_dice
-      damage_type {
-        index
-        name
-        url
-      }
     }
     desc
     equipment_category {
       index
       name
-      url
     }
-    gear_category {
-      index
-      name
-      url
-    }
-    properties {
-      desc
-      index
-      name
-      url
-    }
-    quantity
-    range {
-      long
-      normal
-    }
-    special
-    speed {
-      quantity
-      unit
-    }
-    stealth_disadvantage
-    str_minimum
-    throw_range {
-      long
-      normal
-    }
-    tool_category
-    two_handed_damage {
-      damage_dice
-      damage_type {
+    equipment_category {
+      equipment {
+        desc
         index
         name
-        url
       }
+      index
+      name
     }
-    url
-    vehicle_category
-    weapon_category
-    weapon_range
     weight
   }
 }
@@ -9163,7 +2158,6 @@ export const GetEquipmentDocument = gql`
  * @example
  * const { data, loading, error } = useGetEquipmentQuery({
  *   variables: {
- *      filter: // value for 'filter'
  *   },
  * });
  */
@@ -9185,25 +2179,11 @@ export const GetEquipmentsDocument = gql`
     index
     weight
     name
-    quantity
-    capacity
-    category_range
-    gear_category {
-      name
-    }
     desc
-    special
     cost {
       quantity
       unit
       __typename
-    }
-    damage {
-      damage_dice
-      damage_type {
-        name
-        __typename
-      }
     }
   }
 }
@@ -9236,17 +2216,16 @@ export type GetEquipmentsQueryHookResult = ReturnType<typeof useGetEquipmentsQue
 export type GetEquipmentsLazyQueryHookResult = ReturnType<typeof useGetEquipmentsLazyQuery>;
 export type GetEquipmentsQueryResult = Apollo.QueryResult<GetEquipmentsQuery, GetEquipmentsQueryVariables>;
 export const GetMagicalItemDocument = gql`
-    query getMagicalItem($filter: FilterFindOneMagicItemInput) {
-  magicItem(filter: $filter) {
+    query getMagicalItem {
+  magicItem {
     name
     index
     equipment_category {
       index
       name
-      url
     }
     desc
-    url
+    rarity
   }
 }
     `;
@@ -9263,7 +2242,6 @@ export const GetMagicalItemDocument = gql`
  * @example
  * const { data, loading, error } = useGetMagicalItemQuery({
  *   variables: {
- *      filter: // value for 'filter'
  *   },
  * });
  */
@@ -9283,11 +2261,9 @@ export const GetMagicalItemsDocument = gql`
   magicItems(limit: 1000) {
     index
     name
-    url
     equipment_category {
-      index
       name
-      url
+      index
     }
   }
 }
@@ -9321,9 +2297,8 @@ export type GetMagicalItemsLazyQueryHookResult = ReturnType<typeof useGetMagical
 export type GetMagicalItemsQueryResult = Apollo.QueryResult<GetMagicalItemsQuery, GetMagicalItemsQueryVariables>;
 export const GetMonstersListDocument = gql`
     query GetMonstersList {
-  monsters(limit: 1000, sort: CHALLENGE_RATING_ASC) {
+  monsters(limit: 1000) {
     __typename
-    url
     name
     challenge_rating
     hit_dice
@@ -9342,7 +2317,10 @@ export const GetMonstersListDocument = gql`
       name
     }
     xp
-    armor_class
+    armor_class {
+      value
+      desc
+    }
     charisma
     constitution
     dexterity
@@ -9382,41 +2360,31 @@ export type GetMonstersListQueryHookResult = ReturnType<typeof useGetMonstersLis
 export type GetMonstersListLazyQueryHookResult = ReturnType<typeof useGetMonstersListLazyQuery>;
 export type GetMonstersListQueryResult = Apollo.QueryResult<GetMonstersListQuery, GetMonstersListQueryVariables>;
 export const GetSpellDocument = gql`
-    query getSpell($filter: FilterFindOneSpellInput) {
-  spell(filter: $filter) {
+    query getSpell {
+  spell {
     index
     level
     name
     ritual
     school {
-      url
       name
       index
       desc
     }
     subclasses {
-      url
       name
       index
     }
     range
     higher_level
-    heal_at_slot_level
     duration
     desc
     dc {
       desc
-      dc_type {
-        index
-        name
-        url
-      }
-      dc_success
     }
     concentration
     components
     classes {
-      url
       name
       index
     }
@@ -9428,12 +2396,9 @@ export const GetSpellDocument = gql`
     }
     damage {
       damage_type {
-        url
         name
         index
       }
-      damage_at_slot_level
-      damage_at_character_level
     }
     material
   }
@@ -9452,7 +2417,6 @@ export const GetSpellDocument = gql`
  * @example
  * const { data, loading, error } = useGetSpellQuery({
  *   variables: {
- *      filter: // value for 'filter'
  *   },
  * });
  */
@@ -9468,13 +2432,12 @@ export type GetSpellQueryHookResult = ReturnType<typeof useGetSpellQuery>;
 export type GetSpellLazyQueryHookResult = ReturnType<typeof useGetSpellLazyQuery>;
 export type GetSpellQueryResult = Apollo.QueryResult<GetSpellQuery, GetSpellQueryVariables>;
 export const GetSpellsDocument = gql`
-    query getSpells($filter: FilterFindManySpellInput) {
-  spells(filter: $filter, limit: 1000) {
+    query getSpells {
+  spells(limit: 1000) {
     __typename
     index
     level
     name
-    url
     school {
       name
       index
@@ -9506,7 +2469,6 @@ export const GetSpellsDocument = gql`
  * @example
  * const { data, loading, error } = useGetSpellsQuery({
  *   variables: {
- *      filter: // value for 'filter'
  *   },
  * });
  */

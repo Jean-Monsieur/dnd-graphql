@@ -12867,8 +12867,8 @@ packages:
       isexe: 2.0.0
     dev: false
 
-  /word-wrap@1.2.4:
-    resolution: {integrity: sha512-2V81OA4ugVo5pRo46hAoD2ivUJx8jXmWXfUkY4KFNw0hEptvN0QfH3K4nHiwzGeKl5rFKedV48QVoqYavy4YpA==}
+  /word-wrap@1.2.3:
+    resolution: {integrity: sha1-YQY29rH3A4kb00dxzLF/uTtHB5w=}
     engines: {node: '>=0.10.0'}
     dev: false
 

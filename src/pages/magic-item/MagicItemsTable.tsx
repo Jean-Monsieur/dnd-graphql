@@ -1,11 +1,11 @@
-import { FunctionComponent } from "react";
-import { GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
-import { PageContainer } from "../../components/page";
-import { useGetMagicalItemsQuery } from "../../generated/graphql";
-import { useHistory } from "react-router-dom";
-import { MuiTable } from "../../components/table";
-import { Skeleton } from "@mui/material";
-import ErrorPage from "../../components/error-page/ErrorPage";
+import ErrorPage from '../../components/error-page/ErrorPage';
+import { FunctionComponent } from 'react';
+import { GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
+import { MuiTable } from '../../components/table';
+import { PageContainer } from '../../components/page';
+import { Skeleton } from '@mui/material';
+import { useGetMagicalItemsQuery } from '../../generated/graphql';
+import { useHistory } from 'react-router-dom';
 
 const MagicItemsTable: FunctionComponent = () => {
   const { data, error, loading } = useGetMagicalItemsQuery();
@@ -53,7 +53,7 @@ const MagicItemsTable: FunctionComponent = () => {
             autoHeight={true}
             columns={columns}
             onRowDoubleClick={({ id }) => history.push(`/magic-item/${id}`)}
-            rows={data.magicItems.map((m) => ({ ...m, id: m.index }))}
+            rows={data?.magicItems?.map((m) => ({ ...m, id: m.index }))??[]}
           />
         </div>
       </div>
