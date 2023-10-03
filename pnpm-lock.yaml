@@ -2544,7 +2544,8 @@ packages:
       '@jridgewell/sourcemap-codec': 1.4.13
 
   /@leichtgewicht/ip-codec@2.0.4:
-    resolution: {integrity: sha512-Hcv+nVC0kZnQ3tD9GVu5xSMR4VVYOteQIr/hwFPVEvPdlXqgGEuRjiheChHgdM+JyqdgNcmzZOX/tnl0JOiI7A==}
+    resolution: {integrity: sha1-sqxibWy5yHGKtFkWbUu0Bbj/p4s=}
+
     dev: false
 
   /@mdi/js@6.6.96:
@@ -5389,8 +5390,8 @@ packages:
     resolution: {integrity: sha1-s55/HabrCnW6nBcySzR1PEfgZU0=}
     dev: false
 
-  /dns-packet@5.6.0:
-    resolution: {integrity: sha512-rza3UH1LwdHh9qyPXp8lkwpjSNk/AMD3dPytUoRoqnypDUhY0xvbdmVhWOfxO68frEfV9BU8V12Ez7ZsHGZpCQ==}
+  /dns-packet@5.3.1:
+    resolution: {integrity: sha1-65RBN4na7A8Ovi/MIwvcnXyRtD0=}
 
     engines: {node: '>=6'}
     dependencies:
@@ -6206,7 +6207,7 @@ packages:
       object-assign: 4.1.1
       promise: 7.3.1
       setimmediate: 1.0.5
-      ua-parser-js: 0.7.31
+      ua-parser-js: 0.7.35
     transitivePeerDependencies:
       - encoding
     dev: true
@@ -12285,12 +12286,13 @@ packages:
     engines: {node: '>=4.2.0'}
     hasBin: true
 
-  /ua-parser-js@0.7.31:
-    resolution: {integrity: sha1-ZJplaxkd/6tPIdXgU+J8oXy/9cY=}
+  /ua-parser-js@0.7.35:
+    resolution: {integrity: sha512-veRf7dawaj9xaWEu9HoTVn5Pggtc/qj+kqTOFvNiN1l0YdxwC1kvel57UCjThjGa3BHBihE8/UJAHI+uQHmd/g==}
     dev: true
 
   /ua-parser-js@1.0.2:
-    resolution: {integrity: sha1-4pdsNNv7MLFdLDALKlPqyHxXp3U=}
+    resolution: {integrity: sha512-00y/AXhx0/SsnI51fTc0rLRmafiGOM4/O+ny10Ps7f+j/b8p/ZY11ytMgznXkOVo4GQ+KwQG5UQLkLGirsACRg==}
+
     dev: false
 
   /unbox-primitive@1.0.2:
