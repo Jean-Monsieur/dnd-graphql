@@ -2544,7 +2544,7 @@ packages:
       '@jridgewell/sourcemap-codec': 1.4.13
 
   /@leichtgewicht/ip-codec@2.0.4:
-    resolution: {integrity: sha1-sqxibWy5yHGKtFkWbUu0Bbj/p4s=}
+    resolution: {integrity: sha512-Hcv+nVC0kZnQ3tD9GVu5xSMR4VVYOteQIr/hwFPVEvPdlXqgGEuRjiheChHgdM+JyqdgNcmzZOX/tnl0JOiI7A==}
     dev: false
 
   /@mdi/js@6.6.96:
@@ -5389,8 +5389,9 @@ packages:
     resolution: {integrity: sha1-s55/HabrCnW6nBcySzR1PEfgZU0=}
     dev: false
 
-  /dns-packet@5.3.1:
-    resolution: {integrity: sha1-65RBN4na7A8Ovi/MIwvcnXyRtD0=}
+  /dns-packet@5.6.0:
+    resolution: {integrity: sha512-rza3UH1LwdHh9qyPXp8lkwpjSNk/AMD3dPytUoRoqnypDUhY0xvbdmVhWOfxO68frEfV9BU8V12Ez7ZsHGZpCQ==}
+
     engines: {node: '>=6'}
     dependencies:
       '@leichtgewicht/ip-codec': 2.0.4
@@ -9138,7 +9139,7 @@ packages:
     resolution: {integrity: sha1-zwsRXDHpIq6yC2TmVWy+s0zw3Rk=}
     hasBin: true
     dependencies:
-      dns-packet: 5.3.1
+      dns-packet: 5.6.0
       thunky: 1.1.0
     dev: false
 
