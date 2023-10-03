@@ -1,15 +1,15 @@
-import convertWeightUnit from "../../utils/convertWeightUnit";
-import { convertgQLCurrency } from "../../utils/convertGqlCurrency";
-import { CurrencyIcon } from "../../components/currency-icon";
-import { EquipmentCost, useGetEquipmentsQuery } from "../../generated/graphql";
-import { FunctionComponent } from "react";
-import { GqlCurrencies } from "../../types/gqlCurrency";
-import { GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
-import { MuiTable } from "../../components/table";
-import { Skeleton, Typography } from "@mui/material";
-import { useHistory } from "react-router-dom";
-import { WeightUnit } from "../../types";
-import ErrorPage from "../../components/error-page/ErrorPage";
+import convertWeightUnit from '../../utils/convertWeightUnit';
+import ErrorPage from '../../components/error-page/ErrorPage';
+import { convertgQLCurrency } from '../../utils/convertGqlCurrency';
+import { CurrencyIcon } from '../../components/currency-icon';
+import { FunctionComponent } from 'react';
+import { GqlCurrencies } from '../../types/gqlCurrency';
+import { GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
+import { MuiTable } from '../../components/table';
+import { Skeleton, Typography } from '@mui/material';
+import { useGetEquipmentsQuery } from '../../generated/graphql';
+import { useHistory } from 'react-router-dom';
+import { WeightUnit } from '../../types';
 
 const EquipmentPage: FunctionComponent = () => {
   const { data, error, loading } = useGetEquipmentsQuery();
@@ -67,18 +67,18 @@ const EquipmentPage: FunctionComponent = () => {
     {
       field: "cost",
       flex: 1,
-      headerName: "Cost",
-      renderCell: (params: GridRenderCellParams<EquipmentCost>) => (
-        <>
-          <span style={{ marginRight: "0.25rem" }}>
-            {params?.value?.quantity}
-          </span>
-          <CurrencyIcon
-            currency={convertgQLCurrency(params?.value?.unit as GqlCurrencies)}
-          />
-          <Typography sx={unitStyle}>{params?.value?.unit}</Typography>
-        </>
-      ),
+      // headerName: "Cost",
+      // renderCell: (params: GridRenderCellParams) => (
+      //   <>
+      //     <span style={{ marginRight: "0.25rem" }}>
+      //       {params?.value?.quantity}
+      //     </span>
+      //     <CurrencyIcon
+      //       currency={convertgQLCurrency(params?.value?.unit as GqlCurrencies)}
+      //     />
+      //     <Typography sx={unitStyle}>{params?.value?.unit}</Typography>
+      //   </>
+      // ),
     },
   ];
 
@@ -88,7 +88,7 @@ const EquipmentPage: FunctionComponent = () => {
         <MuiTable
           autoHeight={true}
           columns={columns}
-          rows={data.equipments.map((m) => ({ ...m, id: m.index }))}
+          rows={data?.equipments?.map((m) => ({ ...m, id: m.index }))??[]}
           onRowDoubleClick={({ id }) => history.push(`/equipment/${id}`)}
         />
       </div>

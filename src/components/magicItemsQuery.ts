@@ -1,16 +1,14 @@
-import { gql } from "@apollo/client";
+import { gql } from '@apollo/client';
 
 export const QUERY_MAGIC_ITEMS = gql`
-  query getMagicalItems {
-    magicItems(limit: 1000) {
-      index
+query getMagicalItems {
+  magicItems(limit: 1000) {
+    index
+    name
+    equipment_category {
       name
-      url
-      equipment_category {
-        index
-        name
-        url
-      }
+      index
     }
   }
+}
 `;
