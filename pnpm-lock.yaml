@@ -2545,6 +2545,7 @@ packages:
 
   /@leichtgewicht/ip-codec@2.0.4:
     resolution: {integrity: sha1-sqxibWy5yHGKtFkWbUu0Bbj/p4s=}
+
     dev: false
 
   /@mdi/js@6.6.96:
@@ -5391,6 +5392,7 @@ packages:
 
   /dns-packet@5.3.1:
     resolution: {integrity: sha1-65RBN4na7A8Ovi/MIwvcnXyRtD0=}
+
     engines: {node: '>=6'}
     dependencies:
       '@leichtgewicht/ip-codec': 2.0.4
@@ -9138,7 +9140,7 @@ packages:
     resolution: {integrity: sha1-zwsRXDHpIq6yC2TmVWy+s0zw3Rk=}
     hasBin: true
     dependencies:
-      dns-packet: 5.3.1
+      dns-packet: 5.6.0
       thunky: 1.1.0
     dev: false
 
@@ -9393,7 +9395,7 @@ packages:
       levn: 0.3.0
       prelude-ls: 1.1.2
       type-check: 0.3.2
-      word-wrap: 1.2.3
+      word-wrap: 1.2.4
     dev: false
 
   /optionator@0.9.1:
@@ -9405,7 +9407,7 @@ packages:
       levn: 0.4.1
       prelude-ls: 1.2.1
       type-check: 0.4.0
-      word-wrap: 1.2.3
+      word-wrap: 1.2.4
     dev: false
 
   /ora@5.4.1:
@@ -12290,6 +12292,7 @@ packages:
 
   /ua-parser-js@1.0.2:
     resolution: {integrity: sha512-00y/AXhx0/SsnI51fTc0rLRmafiGOM4/O+ny10Ps7f+j/b8p/ZY11ytMgznXkOVo4GQ+KwQG5UQLkLGirsACRg==}
+
     dev: false
 
   /unbox-primitive@1.0.2:
