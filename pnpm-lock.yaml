@@ -8166,15 +8166,17 @@ packages:
       remove-trailing-spaces: 1.0.8
     dev: true
 
-  /json5@1.0.1:
-    resolution: {integrity: sha1-d5+wAYYE+oVOrL9iUhgNg1Q+Pb4=}
+  /json5@1.0.2:
+    resolution: {integrity: sha512-g1MWMLBiz8FKi1e4w0UyVL3w+iJceWAFBAaBnnGKOpNa5f8TLktkbre1+s6oICydWAm+HRUGTmI+//xv2hvXYA==}
+
     hasBin: true
     dependencies:
       minimist: 1.2.6
     dev: false
 
   /json5@2.2.1:
-    resolution: {integrity: sha1-ZV1Q7R5vla0aPKq6vSsO/aELOVw=}
+    resolution: {integrity: sha512-1hqLFMSrGHRHxav9q9gNjJ5EXznIxGVO09xQRrwplcS8qs28pZ8s8hupZAmqDwZUmVZ2Qb2jnyPOWcDH8m8dlA==}
+
     engines: {node: '>=6'}
     hasBin: true
 
@@ -9106,7 +9108,7 @@ packages:
     dev: false
 
   /minimist@1.2.6:
-    resolution: {integrity: sha1-hjelt1nqDW6YcCz7OpKDMjyTr0Q=}
+    resolution: {integrity: sha512-Jsjnk4bw3YJqYzbdyBiNsPWHPfO++UGG749Cxs6peCu5Xg4nrena6OVxOYxrQTqww0Jmwt+Ref8rggumkTLz9Q==}
 
   /mkdirp@0.5.6:
     resolution: {integrity: sha1-fe8D0kMtyuS6HWEURcSDlgYiVfY=}
@@ -12209,7 +12211,7 @@ packages:
     resolution: {integrity: sha1-ugc0WZ6Oo2yGJ5jpILzxYyd7E3o=}
     dependencies:
       '@types/json5': 0.0.29
-      json5: 1.0.1
+      json5: 1.0.2
       minimist: 1.2.6
       strip-bom: 3.0.0
     dev: false
@@ -12286,12 +12288,12 @@ packages:
     engines: {node: '>=4.2.0'}
     hasBin: true
 
-  /ua-parser-js@0.7.35:
-    resolution: {integrity: sha512-veRf7dawaj9xaWEu9HoTVn5Pggtc/qj+kqTOFvNiN1l0YdxwC1kvel57UCjThjGa3BHBihE8/UJAHI+uQHmd/g==}
+  /ua-parser-js@0.7.31:
+    resolution: {integrity: sha1-ZJplaxkd/6tPIdXgU+J8oXy/9cY=}
     dev: true
 
   /ua-parser-js@1.0.2:
-    resolution: {integrity: sha512-00y/AXhx0/SsnI51fTc0rLRmafiGOM4/O+ny10Ps7f+j/b8p/ZY11ytMgznXkOVo4GQ+KwQG5UQLkLGirsACRg==}
+    resolution: {integrity: sha1-4pdsNNv7MLFdLDALKlPqyHxXp3U=}
 
     dev: false
 
