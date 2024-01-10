@@ -2544,8 +2544,7 @@ packages:
       '@jridgewell/sourcemap-codec': 1.4.13
 
   /@leichtgewicht/ip-codec@2.0.4:
-    resolution: {integrity: sha1-sqxibWy5yHGKtFkWbUu0Bbj/p4s=}
-
+    resolution: {integrity: sha512-Hcv+nVC0kZnQ3tD9GVu5xSMR4VVYOteQIr/hwFPVEvPdlXqgGEuRjiheChHgdM+JyqdgNcmzZOX/tnl0JOiI7A==}
     dev: false
 
   /@mdi/js@6.6.96:
@@ -5391,8 +5390,7 @@ packages:
     dev: false
 
   /dns-packet@5.3.1:
-    resolution: {integrity: sha1-65RBN4na7A8Ovi/MIwvcnXyRtD0=}
-
+    resolution: {integrity: sha512-spBwIj0TK0Ey3666GwIdWVfUpLyubpU53BTCu8iPn4r4oXd9O14Hjg3EHw3ts2oed77/SeckunUYCyRlSngqHw==}
     engines: {node: '>=6'}
     dependencies:
       '@leichtgewicht/ip-codec': 2.0.4
@@ -6207,7 +6205,7 @@ packages:
       object-assign: 4.1.1
       promise: 7.3.1
       setimmediate: 1.0.5
-      ua-parser-js: 0.7.35
+      ua-parser-js: 0.7.31
     transitivePeerDependencies:
       - encoding
     dev: true
@@ -6352,8 +6350,8 @@ packages:
     resolution: {integrity: sha512-WIWGi2L3DyTUvUrwRKgGi9TwxQMUEqPOPQBVi71R96jZXJdFskXEmf54BoZaS1kknGODoIGASGEzBUYdyMCBJg==}
     dev: false
 
-  /follow-redirects@1.15.0:
-    resolution: {integrity: sha1-BkQYaCgchtDdpK2L2urS0C3KidQ=}
+  /follow-redirects@1.15.4:
+    resolution: {integrity: sha512-Cr4D/5wlrb0z9dgERpUL3LrmPKVDsETIJhaCMeDfuFYcqa5bldGV6wBsAN6X/vxlXQtFBMrXdXxdL8CbDTGniw==}
     engines: {node: '>=4.0'}
     peerDependencies:
       debug: '*'
@@ -6989,7 +6987,7 @@ packages:
     engines: {node: '>=8.0.0'}
     dependencies:
       eventemitter3: 4.0.7
-      follow-redirects: 1.15.0
+      follow-redirects: 1.15.4
       requires-port: 1.0.0
     transitivePeerDependencies:
       - debug
@@ -8168,7 +8166,6 @@ packages:
 
   /json5@1.0.2:
     resolution: {integrity: sha512-g1MWMLBiz8FKi1e4w0UyVL3w+iJceWAFBAaBnnGKOpNa5f8TLktkbre1+s6oICydWAm+HRUGTmI+//xv2hvXYA==}
-
     hasBin: true
     dependencies:
       minimist: 1.2.6
@@ -8176,7 +8173,6 @@ packages:
 
   /json5@2.2.1:
     resolution: {integrity: sha512-1hqLFMSrGHRHxav9q9gNjJ5EXznIxGVO09xQRrwplcS8qs28pZ8s8hupZAmqDwZUmVZ2Qb2jnyPOWcDH8m8dlA==}
-
     engines: {node: '>=6'}
     hasBin: true
 
@@ -9142,7 +9138,7 @@ packages:
     resolution: {integrity: sha1-zwsRXDHpIq6yC2TmVWy+s0zw3Rk=}
     hasBin: true
     dependencies:
-      dns-packet: 5.6.0
+      dns-packet: 5.3.1
       thunky: 1.1.0
     dev: false
 
@@ -9397,7 +9393,7 @@ packages:
       levn: 0.3.0
       prelude-ls: 1.1.2
       type-check: 0.3.2
-      word-wrap: 1.2.4
+      word-wrap: 1.2.3
     dev: false
 
   /optionator@0.9.1:
@@ -9409,7 +9405,7 @@ packages:
       levn: 0.4.1
       prelude-ls: 1.2.1
       type-check: 0.4.0
-      word-wrap: 1.2.4
+      word-wrap: 1.2.3
     dev: false
 
   /ora@5.4.1:
@@ -12289,12 +12285,11 @@ packages:
     hasBin: true
 
   /ua-parser-js@0.7.31:
-    resolution: {integrity: sha1-ZJplaxkd/6tPIdXgU+J8oXy/9cY=}
+    resolution: {integrity: sha512-qLK/Xe9E2uzmYI3qLeOmI0tEOt+TBBQyUIAh4aAgU05FVYzeZrKUdkAZfBNVGRaHVgV0TDkdEngJSw/SyQchkQ==}
     dev: true
 
   /ua-parser-js@1.0.2:
     resolution: {integrity: sha1-4pdsNNv7MLFdLDALKlPqyHxXp3U=}
-
     dev: false
 
   /unbox-primitive@1.0.2:
@@ -12873,7 +12868,7 @@ packages:
     dev: false
 
   /word-wrap@1.2.3:
-    resolution: {integrity: sha1-YQY29rH3A4kb00dxzLF/uTtHB5w=}
+    resolution: {integrity: sha512-Hz/mrNwitNRh/HUAtM/VT/5VH+ygD6DV7mYKZAtHOrbs8U7lvPS6xf7EJKMF0uW1KJCl0H701g3ZGus+muE5vQ==}
     engines: {node: '>=0.10.0'}
     dev: false
 
